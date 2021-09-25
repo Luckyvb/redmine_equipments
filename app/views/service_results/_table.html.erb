@@ -1,0 +1,43 @@
+<% allow_edit = User.current.allowed_to?(:global_edit_catalogs, nil, :global => true) %>
+<div class="contextual">
+  <%= link_to(t('service_result.action.new.title'), {:controller => 'service_results', :action => 'new', :service => service}, :class => 'icon icon-add') if User.current.allowed_to?(:project_edit_equipments, @project, global: false) %>
+  <%= link_to(t('catalog.title', count: 2), {:controller => 'equipments', :action => 'catalogs'}, :class => 'icon icon-folder') if service.blank? && User.current.allowed_to?(:project_view_catalogs, @project, global: false) %>
+  <%= link_to(t('catalog.global.title', count: 2), {:controller => 'catalogs', :action => 'index'}, :class => 'icon icon-list') if service.blank? && User.current.allowed_to?(:global_view_catalogs, nil, global: true) %>
+</div>
+
+<h2><%= t('service_result.title', count: 2) %></h2>
+
+<table class="list">
+  <thead>
+    <tr>
+      <th><%= t('service_result.attr.id') %></th>
+      <th><%= t('service_result.attr.service') %></th>
+      <th><%= t('service_result.attr.service_result_type') %></th>
+      <th><%= t('service_result.attr.responsible') %></th>
+      <th><%= t('service_result.attr.date') %></th>
+      <th><%= t('service_result.attr.value') %></th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% results.each do |r| %>
+    <tr class="<%= cycle('odd', 'even') %>">
+      <td>r.id</td>
+      <td><%= link_to r.service.to_s, {:controller => 'services', :action => 'show', :id => r.service.id}, :class => 'fas fa-info-circle' %></td>
+      <td><%= link_to r.service_result_type.to_s, {:controller => 'service_result_types', :action => 'show', :id => r.service_result_type.id}, :class => 'fas fa-info-circle' %></td>
+      <td><%= link_to r.responsible.to_s, {:controller => 'users', :action => 'show', :id => r.responsible.id}, :class => 'fas fa-info-circle' %></td>
+      <td><%= r.date %></td>
+      <td><%= r.value %></td>
+      <td class="action">
+        <%= link_to l(:button_edit), {:controller => 'service_results', :action => 'edit', :id => r.id}, :class => 'icon icon-only icon-edit', :title => l(:button_edit), :accesskey => accesskey(:edit) if allow_edit %>
+      </td>
+      <td class="action">
+        <%= link_to l(:button_copy), {:controller => 'service_results', :action => 'copy', :id => r.id}, :class => 'icon icon-only icon-copy', :title => l(:button_copy), :accesskey => accesskey(:copy) if allow_edit %>
+      </td>
+      <td class="action">
+        <%= delete_link({ :controller => 'service_results', :action => 'destroy', :id => r.id}, class: 'icon icon-only icon-del', title: l(:button_delete)) if allow_edit %>
+      </td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>

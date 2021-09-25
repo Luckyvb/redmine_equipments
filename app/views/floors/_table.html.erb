@@ -1,0 +1,28 @@
+<table class="list">
+  <thead>
+    <tr>
+      <th><%= t('floor.attr.address') %></th>
+      <th><%= t('floor.attr.number') %></th>
+      <th><%= t('floor.attr.name') %></th>
+      <th colspan="2"></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% floors.each do |f| %>
+    <tr class="<%= cycle('odd', 'even') %>">
+      <td><%= link_to f.address.to_s, {:controller => 'addresses', :action => 'show', :id => f.address.id}, :class => 'fas fa-info-circle' %></td>
+      <td><%= f.number %></td>
+      <td><%= f.name %></td>
+       <td class="action">
+        <%= link_to l(:button_copy), {:controller => 'floors', :action => 'copy', :id => f.id}, :class => 'icon icon-only icon-copy', :title => l(:button_copy), :accesskey => accesskey(:copy) %>
+      </td>
+      <td class="action">
+        <%= link_to l(:button_edit), {:controller => 'floors', :action => 'edit', :id => f.id}, :class => 'icon icon-only icon-edit', :title => l(:button_edit), :accesskey => accesskey(:edit), :onclick => 'Element.show("edit-floors"); return false;' %>
+      </td>
+      <td class="action">
+        <%= delete_link({ :controller => 'floors', :action => 'destroy', :id => f.id}, class: 'icon icon-only icon-del', title: l(:button_delete)) %>
+      </td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>

@@ -1,0 +1,31 @@
+<% if User.current.allowed_to?(:project_view_equipments, @project, :global => false) %>
+  <% allow_edit = User.current.allowed_to?(:project_edit_catalogs, @project, :global => true) %>
+  <div class="contextual">
+    <%= link_to(t('employee.action.new.title'), {:controller => 'employees', :action => 'new'}, :class => 'icon icon-add') if allow_edit %>
+    <%= link_to(t('employee.action.edit.title'), {:controller => 'employees', :action => 'edit', :id => @employee.id}, :class => 'icon icon-edit') if allow_edit && !@employee.blank? %>
+    <%= link_to(t('employee.action.delete.title'), {:controller => 'employees', :action => 'destroy', :id => @employee.id}, :class => 'icon icon-del') if allow_edit && !@employee.blank? %>
+  </div>
+  <% content_for :sidebar do %>
+    <ul id="options">
+      <li><%= link_to(t('employee.action.new.title'), {:controller => 'employees', :action => 'new'}, :class => 'icon icon-add') if allow_edit %></li>
+      <li><%= link_to(t('employee.action.edit.title'), {:controller => 'employees', :action => 'edit', :id => @employee.id}, :class => 'icon icon-edit') if allow_edit && !@employee.blank? %></li>
+      <li><%= link_to(t('employee.action.delete.title'), {:controller => 'employees', :action => 'destroy', :id => @employee.id}, :class => 'icon icon-del') if allow_edit && !@employee.blank? %></li>
+    </ul>
+  <% end %>
+  <h2><%= t('employee.name', count: 1) %></h2>
+  <% if !@employee.blank? %>
+    <p>
+      <%= t('employee.attr.name') %>:
+      <%= @employee.name %>
+    </p>
+    <p>
+      <%= t('employee.attr.coordinates') %>:
+      <%= @employee.coordinates %>
+    </p>
+    <%= link_to t('button_cancel'), {:controller => 'employees', :action => 'index'} %>
+  <% else %>
+    <p class="nodata"><%=t('data.empty.message')%></p>
+  <% end %>
+<% else %>
+  <p class="nodata"><%=t('permission.denied.message')%></p>
+<% end %>

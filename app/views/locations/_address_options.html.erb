@@ -1,0 +1,11 @@
+<% locations.each do |l| %>
+  <optgroup label="<%= l.short_name %>" >
+  <% l.cities.each do |c| %>
+    <optgroup label="<%= c.name %>" >
+    <% c.addresses.each do |a| %>
+      <option value="<%= a.id %>" data-location-type="Address"><%= a.name %></option>
+    <% end %>
+    </optgroup>
+  <% end %>
+  </optgroup>
+<% end %>

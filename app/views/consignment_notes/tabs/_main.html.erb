@@ -1,0 +1,11 @@
+<div id="consignment_note">
+  <p><%= t('consignment_note.attr.id') %>: <%= @consignment_note.id %></p>
+  <p><%= t('consignment_note.attr.organization') %>: <%= link_to @consignment_note.organization.name, {:controller => 'organizations', :action => 'show', :id => @consignment_note.organization_id}, :class => 'fas fa-info-circle' unless @consignment_note.organization_id.blank? %></p>
+  <p><%= t('consignment_note.attr.seller') %>: <%= link_to @consignment_note.organization.name, {:controller => 'organizations', :action => 'show', :id => @consignment_note.seller_id}, :class => 'fas fa-info-circle' unless @consignment_note.seller_id.blank? %></p>
+  <p><%= t('consignment_note.attr.document_type') %>: <%= link_to @consignment_note.document_type.name, {:controller => 'document_types', :action => 'show', :id => @consignment_note.document_type_id}, :class => 'fas fa-info-circle' unless @consignment_note.document_type_id.blank? %></p>
+  <p><%= t('consignment_note.attr.number') %>: <%= @consignment_note.number %></p>
+  <p><%= t('consignment_note.attr.date') %>: <%= @consignment_note.date %></p>
+  <p><%= t('consignment_note.attr.is_locked') %>: <%= check_box @consignment_note.is_locked, {:label => t('consignment_note.attr.is_locked'), :disabled => true} %></p>
+  <p><%= t('consignment_note.attr.total') %>: <%= @consignment_note.total %></p>
+  <p><%= t('consignment_note.attr.description') %>: <%= @consignment_note.description %></p>
+</div>

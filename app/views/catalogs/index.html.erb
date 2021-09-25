@@ -1,0 +1,26 @@
+<% if User.current.allowed_to?(:global_view_catalogs, nil, :global => true) %>
+  <h2><%= t('catalog.global.title', count: 2) %></h2>
+
+  <ul class='list'>
+    <ol><%= link_to t('organization.title', count: 2), {:controller => 'organizations', :action => :index}, :class => 'fas fa-list field-lookup'
+    %></ol>
+    <ol><%= link_to t('equipment_type.title', count: 2), {:controller => 'equipment_types', :action => :index}, :class => 'fas fa-cog field-lookup' %></ol>
+    <ol><%= link_to t('attribute.title', count: 2), {:controller => 'attributes', :action => :index}, :class => 'fas fa-tag field-lookup' %></ol>
+    <ol><%= link_to t('vendor.title', count: 2), {:controller => 'vendors', :action => :index}, :class => 'fas fa-copyright field-lookup' %></ol>
+    <ol><%= link_to t('vendor_model.title', count: 2), {:controller => 'vendor_models', :action => :index}, :class => 'fas fa-boxes field-lookup' %></ol>
+    <ol><%= link_to t('document_type.title', count: 2), {:controller => 'document_types', :action => :index}, :class => 'fas fa-file field-lookup' %></ol>
+    <ol><%= link_to t('service_type.title', count: 2), {:controller => 'service_types', :action => :index}, :class => 'fas fa-wrench field-lookup' %></ol>
+    <ol><%= link_to t('service_result_type.title', count: 2), {:controller => 'service_result_types', :action => :index}, :class => 'fas fa-wrench field-lookup' %></ol>
+    <ol><%= t('location_type.title', count: 2) %>:
+      <ul class='list'>
+        <ol><%= link_to t('country.title', count: 2), {:controller => 'countries', :action => :index}, :class => 'fas fa-list field-lookup' %></ol>
+        <ol><%= link_to t('city.title', count: 2), {:controller => 'cities', :action => :index}, :class => 'fas fa-list field-lookup' %></ol>
+        <ol><%= link_to t('address.title', count: 2), {:controller => 'addresses', :action => :index}, :class => 'fas fa-list field-lookup' %></ol>
+        <ol><%= link_to t('floor.title', count: 2), {:controller => 'floors', :action => :index}, :class => 'fas fa-list field-lookup' %></ol>
+        <ol><%= link_to t('room.title', count: 2), {:controller => 'rooms', :action => :index}, :class => 'fas fa-list field-lookup' %></ol>
+      </ul>
+    </ol>
+  </ul>
+<% else %>
+  <p class="nodata"><%=t('permission.denied.message')%></p>
+<% end %>

@@ -1,0 +1,35 @@
+<% if User.current.allowed_to?(:global_view_catalogs, nil, :global => true) %>
+  <% allow_edit = User.current.allowed_to?(:global_edit_catalogs, nil, :global => true) %>
+  <div class="contextual">
+    <%= link_to(t('room.action.new.title'), {:controller => 'rooms', :action => 'new'}, :class => 'icon icon-add') unless !allow_edit %>
+    <%= link_to(t('room.action.edit.title'), {:controller => 'rooms', :action => 'edit', :id => @room.id}, :class => 'icon icon-edit') unless !allow_edit && @room.blank? %>
+    <%= link_to(t('room.action.delete.title'), {:controller => 'rooms', :action => 'destroy', :id => @room.id}, :class => 'icon icon-del') unless !allow_edit && @room.blank? %>
+  </div>
+  <% content_for :sidebar do %>
+    <ul id="options">
+      <li><%= link_to(t('room.action.new.title'), {:controller => 'rooms', :action => 'new'}, :class => 'icon icon-add') unless !allow_edit %></li>
+      <li><%= link_to(t('room.action.edit.title'), {:controller => 'rooms', :action => 'edit', :id => @room.id}, :class => 'icon icon-edit') unless !allow_edit && @room.blank? %></li>
+      <li><%= link_to(t('room.action.delete.title'), {:controller => 'rooms', :action => 'destroy', :id => @room.id}, :class => 'icon icon-del') unless !allow_edit && @room.blank? %></li>
+    </ul>
+  <% end %>
+  <h2><%= t('room.title', count: 1) %></h2>
+  <% if !@room.blank? %>
+    <p>
+      <%= t('room.attr.floor') %>:
+      <%= link_to @room.floor.name, {:controller => 'floors', :action => 'show', :id => @room.floor_id}, :class => 'fas fa-info-circle' %>
+    </p>
+    <p>
+      <%= t('room.attr.number') %>:
+      <%= @room.number %>
+    </p>
+    <p>
+      <%= t('room.attr.name') %>:
+      <%= @room.name %>
+    </p>
+    <%= link_to t('button_cancel'), {:controller => 'rooms', :action => 'index'} %>
+  <% else %>
+    <p class="nodata"><%=t('data.empty.message')%></p>
+  <% end %>
+<% else %>
+  <p class="nodata"><%=t('permission.denied.message')%></p>
+<% end %>

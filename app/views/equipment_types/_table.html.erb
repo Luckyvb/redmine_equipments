@@ -1,0 +1,36 @@
+<table class="list">
+  <thead>
+    <tr>
+      <%= sort_header_tag('parent', caption: t('equipment_type.attr.parent')) %>
+      <%= sort_header_tag('name', caption: t('equipment_type.attr.name')) %>
+      <%= sort_header_tag('number_template', caption: t('equipment_type.attr.number_template')) %>
+      <%= sort_header_tag('ancestry', caption: t('equipment_type.attr.ancestry')) %>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% equipment_types.each do |et| %>
+    <tr class="<%= cycle('odd', 'even') %>">
+      <td><%= link_to et.parent.name, {:controller => 'equipment_types', :action => 'show', :id => et.parent_id}, :class => 'fas fa-info-circle' unless et.parent_id.blank? %></td>
+      <td><%= et.name %></td>
+      <td><%= et.number_template %></td>
+      <td><%= et.ancestry %></td>
+      <td class="action">
+        <%= link_to l(:button_edit),
+                            {:controller => 'equipment_types', :action => 'edit', :id => et.id},
+                            :class => 'icon icon-only icon-edit', :title => l(:button_edit),
+                            :accesskey => accesskey(:edit) %>
+      </td>
+      <td class="action">
+        <%= link_to l(:button_copy),
+                            {:controller => 'equipment_types', :action => 'copy', :id => et.id},
+                            :class => 'icon icon-only icon-copy', :title => l(:button_copy),
+                            :accesskey => accesskey(:copy) %>
+      </td>
+      <td class="action">
+        <%= delete_link({ :controller => 'equipment_types', :action => 'destroy', :id => et.id}, class: 'icon icon-only icon-del', title: l(:button_delete)) %>
+      </td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>

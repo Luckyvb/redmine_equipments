@@ -1,0 +1,8 @@
+<% if User.current.allowed_to?(:global_edit_catalogs, nil, :global => true) %>
+  <h1><%= t('room_tenant.action.new.title') %> </h1>
+
+  <%= render partial: 'form', locals: { room_tenant: @room_tenant, action: :create } %>
+<% else %>
+  <p class="nodata"><%=t('permission.denied.message')%></p>
+<% end %>
+<%= link_to t('button_cancel'), {:controller => 'room_tenants', :action => 'index'} %>

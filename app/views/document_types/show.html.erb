@@ -1,0 +1,24 @@
+<% if User.current.allowed_to?(:global_view_catalogs, nil, :global => true) %>
+  <% allow_edit = User.current.allowed_to?(:global_edit_catalogs, nil, :global => true) %>
+  <div class="contextual">
+    <%= link_to(t('document_type.action.new.title'), {:controller => 'document_types', :action => 'new'}, :class => 'icon icon-add') if allow_edit %>
+    <%= link_to(t('document_type.action.edit.title'), {:controller => 'document_types', :action => 'edit', :id => @document_type.id}, :class => 'icon icon-edit') if allow_edit && !@document_type.blank? %>
+    <%= link_to(t('document_type.action.delete.title'), {:controller => 'document_types', :action => 'destroy', :id => @document_type.id}, :class => 'icon icon-del') if allow_edit && !@document_type.blank? %>
+  </div>
+  <% content_for :sidebar do %>
+    <ul id="options">
+      <li><%= link_to(t('document_type.action.new.title'), {:controller => 'document_types', :action => 'new'}, :class => 'icon icon-add') if allow_edit %></li>
+      <li><%= link_to(t('document_type.action.edit.title'), {:controller => 'document_types', :action => 'edit', :id => @document_type.id}, :class => 'icon icon-edit') if allow_edit && !@document_type.blank? %></li>
+      <li><%= link_to(t('document_type.action.delete.title'), {:controller => 'document_types', :action => 'destroy', :id => @document_type.id}, :class => 'icon icon-del') if allow_edit && !@document_type.blank? %></li>
+    </ul>
+  <% end %>
+  <h2><%= t('document_type.title', count: 1) %></h2>
+  <% if !@document_type.blank? %>
+    <p><%= t('document_type.attr.name') %>:<%= @document_type.name %></p>
+    <%= link_to t('button_cancel'), {:controller => 'document_types', :action => 'index'} %>
+  <% else %>
+    <p class="nodata"><%=t('data.empty.message')%></p>
+  <% end %>
+<% else %>
+  <p class="nodata"><%=t('permission.denied.message')%></p>
+<% end %>

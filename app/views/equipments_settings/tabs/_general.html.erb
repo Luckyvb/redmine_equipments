@@ -1,0 +1,9 @@
+<fieldset>
+  <legend>
+    <%= t('settings.general.title') %>
+  </legend>
+  <p>
+    <label><%= t('settings.general.use_fontawesome.label') %></label>
+    <%= check_box_tag('settings[use_fontawesome]', 1, @settings[:use_fontawesome]) %>
+  </p>
+</fieldset>

@@ -1,0 +1,3 @@
+<% location_type=(params[:location_type].blank? ? "" : params[:location_type]) %>
+items="<%= escape_javascript(render(:partial => "locations/#{(@use_simple_location ? "simple" : location_type).downcase}_options", :locals => {:locations => @locations || [], :type => location_type}) || ("<option value='' selected='selected'>"+t('data.empty.message')+"<option>").html_safe) %>"
+$("#equipment_location_id").empty().append(items).prop("disabled", <%= @locations.blank? %>).trigger('change')

@@ -1,0 +1,567 @@
+ru:
+  project_module_equipments: "Оборудование"
+  permission_global_view_equipments: "Просмотр оборудования вне проектов"
+  permission_global_edit_equipments: "Реадктирование оборудования вне проектов"
+  permission_global_view_catalogs: "Просмотр общих катологов"
+  permission_global_edit_catalogs: "Реадктирование общих катологов"
+  permission_project_view_equipments: "Просмотр оборудования"
+  permission_project_edit_equipments: "Реадктирование оборудования"
+  permission_project_manage_equipments: "Управление оборудования"
+  permission_project_view_catalogs: "Просмотр катологов"
+  permission_project_edit_catalogs: "Реадктирование катологов"
+  permission_manage_vendor_catalogs: "Управление катологами"
+  tab_main: "Основное"
+  equipment:
+    title:
+      one: "Оборудование"
+      other: "Оборудование"
+    not_found: "Не найдено"
+    action:
+      show:
+        title: "Просмотр оборудования"
+      new:
+        title: "Новое оборудование"
+        success: "Оборудование создано"
+      edit:
+        title: "Изменить оборудование"
+        success: "Оборудование изменено"
+      delete:
+        title: "Удалить оборудование"
+        success: "Оборудование успешно удалено"
+      expand:
+        title: "Комплектующие"
+    attr:
+      id: "Id"
+      organization: "Организация"
+      equipment_type: "Тип"
+      vendor_model: "Модель"
+      owner_type: "Тип владельца"
+      owner: "Владелец"
+      location_type: "Тип Расположения"
+      location: "Расположение"
+      number: "Номер"
+      sn: "Серийный номер"
+      state: "Состояние"
+      warranty_end: "Гарантия"
+      consignment_note: "Накладная"
+      created_at: "Создан"
+      updated_at: "Изменен"
+      updater: "Изменил"
+      description: "Описание"
+      parent: "Устанвлено в"
+    owner_type:
+      users: "Пользователи"
+      groups: "Группы"
+  equipment_type:
+    title:
+      one: "Тип оборудования"
+      other: "Типы оборудования"
+    action:
+      new:
+        title: "Новый тип оборудования"
+        success: "Тип оборудования создан"
+      edit:
+        title: "Изменить тип оборудования"
+        success: "Тип оборудования изменен"
+      delete:
+        title: "Удалить тип оборудования"
+        success: "Тип оборудования успешно удален"
+      expand:
+        title: "Подтипы"
+    attr:
+      id: "Id"
+      name: "Название"
+      number_template: "Шаблон #"
+      parent: "Категория"
+      ancestry: "Иерархия"
+  document_type:
+    title:
+      one: "Тип документа"
+      other: "Типы документов"
+    action:
+      new:
+        title: "Новый тип документа"
+        success: "Тип документа создан"
+      edit:
+        title: "Изменить тип документа"
+        success: "Тип документа изменен"
+      delete:
+        title: "Удалить тип документа"
+        success: "Тип документа успешно удален"
+      expand:
+        title: "Подтипы"
+    attr:
+      id: "Id"
+      name: "Название"
+      parent: "Категория"
+      ancestry: "Иерархия"
+  employee:
+    title:
+      one: "Сотрудник"
+      other: "Сотрудники"
+    action:
+      new:
+        title: "Новый сотрудник"
+        success: "Сотрудник создан"
+      edit:
+        title: "Изменить сотрудник"
+        success: "Сотрудник изменен"
+      delete:
+        title: "Удалить сотрудник"
+        success: "Сотрудник успешно удален"
+    attr:
+      id: "Id"
+      name: "ФИО"
+  division:
+    title:
+      one: "Подразделение"
+      other: "Подразделения"
+    action:
+      new:
+        title: "Новое подразделение"
+        success: "Подразделение создано"
+      edit:
+        title: "Изменить подразделение"
+        success: "Подразделение изменено"
+      delete:
+        title: "Удалить подразделение"
+        success: "Подразделение успешно удалено"
+    attr:
+      id: "Id"
+      name: "Названия"
+  consignment_note:
+    title:
+      one: "Накладная"
+      other: "Накладные"
+    action:
+      new:
+        title: "Новая накладная"
+        success: "Накладная создана"
+      edit:
+        title: "Изменить накладную"
+        success: "Накладная изменена"
+      delete:
+        title: "Удалить накладную"
+        success: "Накладная успешно удален"
+    attr:
+      id: "Id"
+      organization: "Организация"
+      seller: "Продавец"
+      document_type: "Тип"
+      number: "Номер"
+      date: "Дата"
+      is_locked: "заблокирован"
+      total: "Сумма"
+      description: "Примечание"
+  project_organization:
+    title:
+      one: "Организации"
+      other: "Организации"
+    action:
+      new:
+        title: "Новая организация"
+        success: "Организация создана"
+      edit:
+        title: "Изменить организацию"
+        success: "Организация изменена"
+      delete:
+        title: "Удалить организацию"
+        success: "Организация успешно удален"
+    attr:
+      id: "Id"
+      project: "Проект"
+      organization: "Организация"
+  service_type:
+    title:
+      one: "Тип обслуживания"
+      other: "Типы обслуживания"
+    action:
+      new:
+        title: "Новый тип обслуживания"
+        success: "Тип обслуживания создан"
+      edit:
+        title: "Изменить тип обслуживания"
+        success: "Тип обслуживания изменен"
+      delete:
+        title: "Удалить тип обслуживания"
+        success: "Тип обслуживания успешно удален"
+    attr:
+      id: "Id"
+      name: "Название"
+  service_result_type:
+    title:
+      one: "Тип результата обслуживания"
+      other: "Типы результатов обслуживания"
+    action:
+      new:
+        title: "Новый тип результата обслуживания"
+        success: "Тип результата обслуживания создан"
+      edit:
+        title: "Изменить тип результата обслуживания"
+        success: "Тип результата обслуживания изменен"
+      delete:
+        title: "Удалить тип результата обслуживания"
+        success: "Тип результата обслуживания успешно удален"
+    attr:
+      id: "Id"
+      equipment_type: "Тип оборудования"
+      service_type: "Тип обслуживания"
+      name: "Название"
+      value_format: "Формат значения"
+      description: "Описание"
+  history:
+    title:
+      one: "История"
+      other: "История"
+  service:
+    title:
+      one: "Обслуживание"
+      other: "Обслуживания"
+    action:
+      new:
+        title: "Новое обслуживание"
+        success: "Обслуживание создано"
+      edit:
+        title: "Изменить обслуживание"
+        success: "Обслуживание изменено"
+      delete:
+        title: "Удалить обслуживание"
+        success: "Обслуживание успешно удален"
+    attr:
+      id: "Id"
+      equipment: "Оборудование"
+      organization: "Организация"
+      service_type: "Тип обслуживания"
+      start_date: "Дата отправки"
+      end_date: "Дата возврата"
+      send_by: "Отправил"
+      return_by: "Получил"
+      document_number: "# Документа"
+      description: "Описание"
+  service_result:
+    title:
+      one: "Результат обслуживания"
+      other: "Детали обслуживания"
+    action:
+      new:
+        title: "Новый результат обслуживания"
+        success: "Результат обслуживания создан"
+      edit:
+        title: "Изменить результат обслуживания"
+        success: "Результат обслуживания изменен"
+      delete:
+        title: "Удалить результат обслуживания"
+        sussess: "Результат обслуживания успешно удален"
+    attr:
+      id: "Id"
+      service: "Обслуживание"
+      service_result_type: "Тип"
+      date: "Дата"
+      responsible: "Исполнитель"
+      value: "Значение"
+      description: "Описание"
+  attribute:
+    title:
+      one: "Атрибут"
+      other: "Атрибуты"
+    action:
+      new:
+        title: "Новый атрибут"
+        success: "Атрибут создан"
+      edit:
+        title: "Изменить атрибут"
+        success: "Атрибут изменен"
+      delete:
+        title: "Удалить атрибут"
+        success: "Успешно удален"
+    attr:
+      id: "Id"
+      name: "Название"
+      description: "Описание"
+  attribute_value:
+    title:
+      one: "Значение атрибута"
+      other: "Значение атрибута"
+    action:
+      new:
+        title: "Новое значение аттрибута"
+        success: "Значение аттрибута создан"
+      edit:
+        title: "Изменить значение аттрибута"
+        success: "Значение аттрибута изменен"
+      delete:
+        title: "Удалить значение аттрибута"
+        success: "Успешно удален"
+    attr:
+      id: "Id"
+      attributable_type: "Тип привязки"
+      attributable_id: "Привязан к"
+      attribute_id: "Атрибут"
+      attribute_value: "Значение"
+  vendor:
+    title:
+      one: "Производитель"
+      other: "Производители"
+    action:
+      new:
+        title: "Новый производитель"
+        success: "Производитель создана"
+      edit:
+        title: "Изменить производителя"
+        success: "Производитель изменен"
+      delete:
+        title: "Удалить производителя"
+        success: "Производитель успешно удален"
+    attr:
+      id: "Id"
+      name: "Название"
+      icon: "Иконка"
+      site: "www"
+  vendor_model:
+    title:
+      one: "Модель"
+      other: "Модели"
+    action:
+      new:
+        title: "Новая модель"
+        success: "Модель создана"
+      edit:
+        title: "Изменить модель"
+        success: "Модель изменена"
+      delete:
+        title: "Удалить модель"
+        success: "Модель успешно удалена"
+    attr:
+      id: "Id"
+      equipment_type: "Тип оборудования"
+      vendor: "Производитель"
+      name: "Название"
+      pn: "PN"
+      site: "www"
+  owner_type:
+    division:
+      one: "Отдел"
+      other: "Отделы"
+    employee:
+      one: "Сотрудник"
+      other: "Сотрудники"
+    user:
+      one: "Пользователь"
+      other: "Пользователи"
+    group:
+      one: "Группа"
+      other: "Группы"
+    action:
+      new:
+        title: "Новый тип владельца"
+        success: "Тип владельца создан"
+      edit:
+        title: "Изменить тип владельца"
+        success: "Тип владельца изменен"
+      delete:
+        title: "Удалить тип владельца"
+        success: "Тип владельца успешно удален"
+  location_type:
+    title:
+      one: "Тип Расположения"
+      other: "Типы Расположения"
+    action:
+      new:
+        title: "Новый тип расположения"
+        success: "Тип расположения создан"
+      edit:
+        title: "Изменить тип расположения"
+        success: "Тип расположения изменен"
+      delete:
+        title: "Удалить тип расположения"
+        success: "Тип расположения успешно удален"
+  country:
+    title:
+      one: "Страна"
+      other: "Страны"
+    action:
+      new:
+        title: "Новая страна"
+        success: "Страна создана"
+      edit:
+        title: "Изменить страну"
+        success: "Страна изменена"
+      delete:
+        title: "Удалить страну"
+        success: "Страна успешно удалена"
+    attr:
+      id: "Id"
+      name: "Название"
+      short_name: "Короткое название"
+      iso: "По ISO"
+  city:
+    title:
+      one: "Город"
+      other: "Города"
+    action:
+      new:
+        title: "Новый город"
+        success: "Город создан"
+      edit:
+        title: "Изменить город"
+        success: "Город изменен"
+      delete:
+        title: "Удалить Город"
+        success: "Город успешно удален"
+    attr:
+      id: "Id"
+      contry_id: "Страна"
+      name: "Название"
+  address:
+    title:
+      one: "Адрес"
+      other: "Адреса"
+    action:
+      new:
+        title: "Новый адрес"
+        success: "Адрес создан"
+      edit:
+        title: "Изменить адрес"
+        success: "Адрес изменен"
+      delete:
+        title: "Удалить адрес"
+        success: "Адрес успешно удален"
+    attr:
+      id: "Id"
+      name: "Название"
+      coordinates: "Координаты"
+  floor:
+    title:
+      one: "Этаж"
+      other: "Этажи"
+    action:
+      new:
+        title: "Новый этаж"
+        success: "Этаж создана"
+      edit:
+        title: "Изменить этаж"
+        success: "Этаж изменен"
+      delete:
+        title: "Удалить этаж"
+        success: "Этаж успешно удален"
+    attr:
+      id: "Id"
+      address: "Адрес"
+      number: "Номер"
+      name: "Название"
+  room:
+    title:
+      one: "Комната"
+      other: "Комнаты"
+    action:
+      expand:
+        title: "Арендаторы"
+      new:
+        title: "Новая комната"
+        success: "Комната создана"
+      edit:
+        title: "Изменить комнату"
+        success: "Комната изменена"
+      delete:
+        title: "Удалить комнату"
+        success: "Комната успешно удалена"
+    attr:
+      id: "Id"
+      floor: "Этаж"
+      number: "Номер"
+      name: "Название"
+  room_tenant:
+    title:
+      one: "Арендатор"
+      other: "Арендаторы"
+    action:
+      new:
+        title: "Новый арендатор"
+        success: "Арендатор создан"
+        error: "Ошибка при создании аренды. Проверьте введенные данные"
+      edit:
+        title: "Изменить арендатора"
+        success: "Арендатор изменен"
+        error: "Ошибка при изменении аренды. Проверьте введенные данные"
+      delete:
+        title: "Удалить арендатора"
+        success: "Арендатор успешно удален"
+        error: "Ошибка при удалении аренды. Проверьте введенные данные"
+    attr:
+      id: "Id"
+      room: "Комната"
+      organization: "Организация"
+      start_date: "С"
+      end_date: "По"
+      description: "Описание"
+  store:
+    title:
+      one: "Склад"
+      other: "Склады"
+    action:
+      new:
+        title: "Новый склад"
+        success: "Склад создан"
+      edit:
+        title: "Изменить склад"
+        success: "Склад изменен"
+      delete:
+        title: "Удалить склад"
+        success: "Склад успешно удалена"
+    attr:
+      id: "Id"
+      organization: "Организация"
+      location_type: "Тип расположения"
+      location: "Расположение"
+      name: "Название"
+      is_abstract: "Абстрактный?"
+      responsible_type: "Тип ответственного"
+      responsible: "Ответственный"
+      parent: "Входит в состав"
+      ancestry: "Иерархия"
+  location:
+    title: "Расположение"
+  catalog:
+    title:
+      one: "Каталог"
+      other: "Каталоги"
+    global:
+      title:
+        one: "Общий каталог"
+        other: "Общие каталоги"
+  value_format:
+    string:
+      title: "Строка"
+    text:
+      title: "Текст"
+    dropdown:
+      title: "Выпадающий список"
+    checkbox:
+      title: "Чекбокс"
+  permission:
+    denied:
+      message: "У вас нет прав для просмотра данной страницы. Обратитесь к Администратору."
+  data:
+    empty:
+      message: "Нет данных для отображения."
+  settings:
+    general:
+      title: "Основные"
+      use_fontawesome:
+        label: "Использовать шрифт fontAwesome"
+    import_export:
+      title: "Импорт/Экспорт"
+    backup:
+      title: "Сохранить резервную каталога оборудования"
+      btn:
+        download: "Скачать резервную копию"
+    restore:
+      title: "Восстановить из резервной копии"
+      btn:
+        upload: "Загрузить резервную копию"
+      notice: "Данные успешно восстановлены из резервной копии"
+      error: "Не удалось восстановить из резервной копии"
+    notice:
+      saved: "Настройки успешно сохранены"
+    error:
+      save: "Не удалось сохранить настройки"

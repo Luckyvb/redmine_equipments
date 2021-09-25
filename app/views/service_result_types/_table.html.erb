@@ -1,0 +1,32 @@
+<table class="list">
+  <thead>
+    <tr>
+      <%= sort_header_tag('equipment_type', caption: t('service_result_type.attr.equipment_type')) %>
+      <%= sort_header_tag('service_type', caption: t('service_result_type.attr.service_type')) %>
+      <%= sort_header_tag('name', caption: t('service_result_type.attr.name')) %>
+      <%= sort_header_tag('value_format', caption: t('service_result_type.attr.value_format')) %>
+      <th><%= t('service_result_type.attr.description') %></th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% types.each do |srt| %>
+    <tr class="<%= cycle('odd', 'even') %>">
+      <td><%= link_to srt.equipment_type.name, {:controller => 'equipment_types', :action => 'show', :id => srt.equipment_type.id}, :class => 'fas fa-info-circle' unless srt.equipment_type.blank? %></td>
+      <td><%= link_to srt.service_type.name, {:controller => 'service_types', :action => 'show', :id => srt.service_type.id}, :class => 'fas fa-info-circle' unless srt.service_type.blank? %></td>
+      <td><%= srt.name %></td>
+      <td><%= l('value_format.'+srt.value_format.to_s.downcase+'.title', count: 1) %></td>
+      <td><%= srt.description %></td>
+      <td class="action">
+        <%= link_to l(:button_edit), {:controller => 'service_result_types', :action => 'edit', :id => srt.id}, :class => 'icon icon-only icon-edit', :title => l(:button_edit), :accesskey => accesskey(:edit) %>
+      </td>
+      <td class="action">
+        <%= link_to l(:button_copy), {:controller => 'service_result_types', :action => 'copy', :id => srt.id}, :class => 'icon icon-only icon-copy', :title => l(:button_copy), :accesskey => accesskey(:copy) %>
+      </td>
+      <td class="action">
+        <%= delete_link({ :controller => 'service_result_types', :action => 'destroy', :id => srt.id}, class: 'icon icon-only icon-del', title: l(:button_delete)) %>
+      </td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>

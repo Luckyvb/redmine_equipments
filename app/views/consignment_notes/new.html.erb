@@ -1,0 +1,8 @@
+<% if User.current.allowed_to?(:project_edit_catalogs, @project, global: false) %>
+  <h1><%= t('consignment_note.action.new.title') %> </h1>
+
+  <%= render partial: 'form', locals: { cn: @consignment_note, organizations: @organizations, sellers: @sellers, document_types: @document_types, action: :create } %>
+<% else %>
+  <p class="nodata"><%=t('permission.denied.message')%></p>
+<% end %>
+<%= link_to t('button_cancel'), {:controller => 'consignment_notes', :action => 'index'} %>

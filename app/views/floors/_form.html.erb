@@ -1,0 +1,9 @@
+<%= labelled_form_for floor, url: { controller: :floors, action: action } do |f| %>
+  <div class='box tabular'>
+    <p><%= f.select(:address_id, options_for_select(Address.accessible.map { |a| [a.name, a.id] }, floor.address_id), :label => t('floor.attr.address')) %></p>
+    <p><%= f.text_field :number, :label => t('floor.attr.number') %></p>
+    <p><%= f.text_field :name, :label => t('floor.attr.name') %></p>
+  </div>
+
+  <%= f.submit t('button_save') %>
+<% end %>

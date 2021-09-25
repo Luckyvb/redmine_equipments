@@ -1,0 +1,26 @@
+<% if User.current.allowed_to?(:global_view_catalogs, nil, :global => true) %>
+  <% allow_edit = User.current.allowed_to?(:global_edit_catalogs, nil, :global => true) %>
+  <div class="contextual">
+    <%= link_to(t('vendor.action.new.title'), {:controller => 'vendors', :action => 'new'}, :class => 'icon icon-add') unless !allow_edit %>
+    <%= link_to(t('vendor.action.edit.title'), {:controller => 'vendors', :action => 'edit', :id => @vendor.id}, :class => 'icon icon-edit') unless !allow_edit && @vendor.blank? %>
+    <%= link_to(t('vendor.action.delete.title'), {:controller => 'vendors', :action => 'destroy', :id => @vendor.id}, :class => 'icon icon-del') unless !allow_edit && @vendor.blank? %>
+  </div>
+  <% content_for :sidebar do %>
+    <ul id="options">
+      <li><%= link_to(t('vendor.action.new.title'), {:controller => 'vendors', :action => 'new'}, :class => 'icon icon-add') unless !allow_edit %></li>
+      <li><%= link_to(t('vendor.action.edit.title'), {:controller => 'vendors', :action => 'edit', :id => @vendor.id}, :class => 'icon icon-edit') unless !allow_edit && @vendor.blank? %></li>
+      <li><%= link_to(t('vendor.action.delete.title'), {:controller => 'vendors', :action => 'destroy', :id => @vendor.id}, :class => 'icon icon-del') unless !allow_edit && @vendor.blank? %></li>
+    </ul>
+  <% end %>
+  <h2><%= t('vendor.title', count: 1) %></h2>
+  <% if !@vendor.blank? %>
+    <p><%= t('vendor.attr.name') %>:<%= @vendor.name %></p>
+    <p><%= t('vendor.attr.icon') %>:<%= image_tag(@vendor.icon.preview(resize_to_limit: [32, 32]), :label => t('vendor.attr.icon')) if @vendor.icon.attached? %></p>
+    <p><%= t('vendor.attr.site') %>:<%= link_to @vendor.site, title: @vendor.site do content_tag(:i, '', class: 'fa fa-globe') end unless @vendor.site.blank? %></p>
+    <%= link_to t('button_cancel'), {:controller => 'vendors', :action => 'index'} %>
+  <% else %>
+    <p class="nodata"><%=t('data.empty.message')%></p>
+  <% end %>
+<% else %>
+  <p class="nodata"><%=t('permission.denied.message')%></p>
+<% end %>

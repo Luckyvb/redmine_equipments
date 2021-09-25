@@ -1,0 +1,27 @@
+<% if User.current.allowed_to?(:global_view_catalogs, nil, :global => true) %>
+  <% allow_edit = User.current.allowed_to?(:global_edit_catalogs, nil, :global => true) %>
+  <div class="contextual">
+    <%= link_to(t('attribute_value.action.new.title'), {:controller => 'attribute_values', :action => 'new'}, :class => 'icon icon-add') if allow_edit %>
+    <%= link_to(t('attribute_value.action.edit.title'), {:controller => 'attribute_values', :action => 'edit', :id => @attribute_value.id}, :class => 'icon icon-edit') if allow_edit && !@attribute_value.blank? %>
+    <%= link_to(t('attribute_value.action.delete.title'), {:controller => 'attribute_values', :action => 'destroy', :id => @attribute_value.id}, :class => 'icon icon-del') if allow_edit && !@attribute_value.blank? %>
+  </div>
+  <% content_for :sidebar do %>
+    <ul id="options">
+      <li><%= link_to(t('attribute_value.action.new.title'), {:controller => 'attribute_values', :action => 'new'}, :class => 'icon icon-add') if allow_edit %></li>
+      <li><%= link_to(t('attribute_value.action.edit.title'), {:controller => 'attribute_values', :action => 'edit', :id => @attribute_value.id}, :class => 'icon icon-edit') if allow_edit && !@attribute_value.blank? %></li>
+      <li><%= link_to(t('attribute_value.action.delete.title'), {:controller => 'attribute_values', :action => 'destroy', :id => @attribute_value.id}, :class => 'icon icon-del') if allow_edit && !@attribute_value.blank? %></li>
+    </ul>
+  <% end %>
+  <h2><%= t('attribute_value.title', count: 1) %></h2>
+  <% if !@attribute_value.blank? %>
+    <p><%= t('attribute_value.attr.attributable_type') %>:<%= @attribute_value.attributable_type %></p>
+    <p><%= t('attribute_value.attr.attributable_id') %>:<%= @attribute_value.attributable_id %></p>
+    <p><%= t('attribute_value.attr.attribute_id') %>:<%= @attribute_value.attribute_id %></p>
+    <p><%= t('attribute_value.attr.attribute_value') %>:<%= @attribute_value.attribute_value %></p>
+    <%= link_to t('button_cancel'), {:controller => 'attribute_values', :action => 'index'} %>
+  <% else %>
+    <p class="nodata"><%=t('data.empty.message')%></p>
+  <% end %>
+<% else %>
+  <p class="nodata"><%=t('permission.denied.message')%></p>
+<% end %>

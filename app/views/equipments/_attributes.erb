@@ -1,0 +1,28 @@
+<h2><%= t('attribute.title', count: 2) %></h2>
+<table class="list">
+  <thead>
+    <tr>
+      <th><%= t('attribute_value.attr.attribute_id') %></th>
+      <th><%= t('attribute_value.attr.attribute_value') %></th>
+      <th colspan="2"><%= link_to("", {:controller => 'attribute_values', :action => 'new', :type => attributable_type, :id => attributable_id}, :class => 'icon icon-add', :title => t('attribute.action.new.title')) if User.current.allowed_to?(:project_edit_equipments, @project, :global => false)%></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% attributes.each do |a| %>
+    <tr class="<%= cycle('odd', 'even') %>">
+      <td><%= link_to a.attribute_name.name, {:controller => 'attributes', :action => 'show', :id => a.attribute_id}, :class => 'fas fa-info-circle' %></td>
+      <td><%= a.attribute_value %></td>
+      <td class="action">
+        <%= link_to(t(:button_edit),
+                            {:controller => 'attribute_values', :action => 'edit', :id => a.id},
+                            :class => 'icon icon-only icon-edit', :title => l(:button_edit),
+                            :accesskey => accesskey(:edit),
+                            :onclick => 'Element.show("edit-equipments"); return false;')  if User.current.allowed_to?(:project_edit_equipments, @project, :global => false) %>
+      </td>
+      <td class="action">
+        <%= delete_link({ :controller => 'attribute_values', :action => 'destroy', :id => a.id}, class: 'icon icon-only icon-del', title: t(:button_delete)) if User.current.allowed_to?(:project_edit_equipments, @project, :global => false) %>
+      </td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>

@@ -1,0 +1,31 @@
+<% if User.current.allowed_to?(:global_view_catalogs, nil, :global => true) %>
+  <% allow_edit = User.current.allowed_to?(:global_edit_catalogs, nil, :global => true) %>
+  <div class="contextual">
+    <%= link_to(t('city.action.new.title'), {:controller => 'cities', :action => 'new'}, :class => 'icon icon-add') if allow_edit %>
+    <%= link_to(t('city.action.edit.title'), {:controller => 'cities', :action => 'edit', :id => @city.id}, :class => 'icon icon-edit') if allow_edit && !@city.blank? %>
+    <%= link_to(t('city.action.delete.title'), {:controller => 'cities', :action => 'destroy', :id => @city.id}, :class => 'icon icon-del') if allow_edit && !@city.blank? %>
+  </div>
+  <% content_for :sidebar do %>
+    <ul id="options">
+      <li><%= link_to(t('city.action.new.title'), {:controller => 'cities', :action => 'new'}, :class => 'icon icon-add') if allow_edit %></li>
+      <li><%= link_to(t('city.action.edit.title'), {:controller => 'cities', :action => 'edit', :id => @city.id}, :class => 'icon icon-edit') if allow_edit && !@city.blank? %></li>
+      <li><%= link_to(t('city.action.delete.title'), {:controller => 'cities', :action => 'destroy', :id => @city.id}, :class => 'icon icon-del') if allow_edit && !@city.blank? %></li>
+    </ul>
+  <% end %>
+  <h2><%= t('city.title', count: 1) %></h2>
+  <% if !@city.blank? %>
+    <p>
+      <%= t('city.attr.name') %>:
+      <%= @city.name %>
+    </p>
+    <p>
+      <%= t('city.attr.coordinates') %>:
+      <%= @city.coordinates %>
+    </p>
+    <%= link_to t('button_cancel'), {:controller => 'cities', :action => 'index'} %>
+  <% else %>
+    <p class="nodata"><%=t('data.empty.message')%></p>
+  <% end %>
+<% else %>
+  <p class="nodata"><%=t('permission.denied.message')%></p>
+<% end %>

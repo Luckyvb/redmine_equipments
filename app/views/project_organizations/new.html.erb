@@ -1,0 +1,8 @@
+<% if User.current.allowed_to?(:project_edit_catalogs, nil, :global => true) %>
+  <h1><%= t('project_organization.action.new.title') %> </h1>
+
+  <%= render partial: 'form', locals: { project_organization: @project_organization, action: :create } %>
+<% else %>
+  <p class="nodata"><%=t('permission.denied.message')%></p>
+<% end %>
+<%= link_to t('button_cancel'), {:controller => 'project_organizations', :action => 'index'} %>

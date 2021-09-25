@@ -1,0 +1,5 @@
+<% if @consignment_note.attachments.find {|a| a.description != 'thumbnail' } %>
+  <h2><%= l(:label_attachment_plural) %></h2>
+  <%= link_to_attachments @consignment_note, :thumbnails => true, :author => false %>
+<% end %>
+

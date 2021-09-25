@@ -1,0 +1,15 @@
+<% locations.each do |l| %>
+  <optgroup label="<%= l.name %>" >
+  <% l.cities.each do |c| %>
+    <optgroup label="<%= c.name %>" >
+    <% c.addresses.each do |a| %>
+      <optgroup label="<%= a.name %>" >
+      <% a.floors.each do |f| %>
+        <option value="<%= f.id %>" data-location-type="Floor"><%= "#{f.name} (#{f.number})" %></option>
+      <% end %>
+      </optgroup>
+    <% end %>
+    </optgroup>
+  <% end %>
+  </optgroup>
+<% end %>

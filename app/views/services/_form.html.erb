@@ -1,0 +1,43 @@
+<%= error_messages_for 'service' %>
+
+<%= labelled_form_for service, url: { controller: :services, action: action } do |f| %>
+  <div class='box tabular'>
+    <p><%= f.select(:equipment_id, options_for_select(@equipments.map { |a| [a.to_s, a.id] }, service.equipment_id), :label => t('service.attr.equipment')) %></p>
+    <p><%= f.select(:organization_id, options_for_select(@organizations.map { |a| [a.name, a.id] }, service.organization_id), :label => t('service.attr.organization')) %></p>
+    <p><%= f.select(:service_type_id, options_for_select(@service_types.map { |a| [a.to_s, a.id] }, service.service_type_id), :label => t('service.attr.organization')) %></p>
+    <p><%= f.select(:send_by_id, options_for_select(@users.map { |a| [a.to_s, a.id] }, service.send_by_id), {:include_blank => false, :label => t('service.attr.send_by')}) %></p>
+    <p><%= f.date_field :start_date, :label => t('service.attr.start_date') %></p>
+    <p><%= f.text_field :document_number, :label => t('service.attr.document_number') %></p>
+    <p><%= f.select(:return_by_id, options_for_select(@users.map { |a| [a.to_s, a.id] }, service.return_by_id), {:include_blank => true, :label => t('service.attr.return_by')}) %></p>
+    <p><%= f.date_field :end_date, :label => t('service.attr.end_date') %></p>
+    <p><%= f.text_area :description, cols: 60, rows: 15, class: 'wiki-edit', :label => t('service.attr.description') %></p>
+  </div>
+
+  <% if service.attachments.exists? %>
+    <div class="box">
+      <p>
+        <label><%= l(:label_attachment_plural) %></label>
+        <%= link_to_attachments service, :thumbnails => true, :author => false %>
+      </p>
+    </div>
+  <% end %>
+
+  <div class="box">
+    <p><label><%=l(:label_attachment_add)%></label><%= render :partial => 'attachments/form' %></p>
+  </div>
+
+  <%= f.submit t('button_save') %>
+<% end %>
+<%= wikitoolbar_for 'service_description' %>
+<script>
+    $(document).ready(function() {
+        let lists = [
+            {id: '#service_equipment_id', allowClear: false, disabled: false},
+            {id: '#service_organization_id', allowClear: false, disabled: <%=!service.end_date.blank?%>},
+            {id: '#service_service_type_id', allowClear: false, disabled: <%=!service.end_date.blank?%>},
+            {id: '#service_send_by_id', allowClear: true, disabled: true},
+            {id: '#service_return_by_id', allowClear: true, disabled: true}
+        ];
+        initSelects(lists);
+    });
+</script>

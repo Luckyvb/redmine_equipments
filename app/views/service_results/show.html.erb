@@ -1,0 +1,27 @@
+<% if User.current.allowed_to?(:project_view_catalogs, @project, global: false) %>
+  <% allow_edit = User.current.allowed_to?(:project_edit_catalogs, @project, global: false) %>
+  <div class="contextual">
+    <%= link_to(t('service.action.new.title'), {:controller => 'services', :action => 'new'}, :class => 'icon icon-add') if allow_edit %>
+    <%= link_to(t('service.action.edit.title'), {:controller => 'services', :action => 'edit', :id => @service.id}, :class => 'icon icon-edit') if allow_edit && !@service.blank? %>
+    <%= link_to(t('service.action.delete.title'), {:controller => 'services', :action => 'destroy', :id => @service.id}, :class => 'icon icon-del') if allow_edit && !@service.blank? %>
+  </div>
+  <% content_for :sidebar do %>
+    <ul id="options">
+      <li><%= link_to(t('service.action.new.title'), {:controller => 'services', :action => 'new'}, :class => 'icon icon-add') if allow_edit %></li>
+      <li><%= link_to(t('service.action.edit.title'), {:controller => 'services', :action => 'edit', :id => @service.id}, :class => 'icon icon-edit') if allow_edit && !@service.blank? %></li>
+      <li><%= link_to(t('service.action.delete.title'), {:controller => 'services', :action => 'destroy', :id => @service.id}, :class => 'icon icon-del') if allow_edit && !@service.blank? %></li>
+    </ul>
+  <% end %>
+  <h2><%= t('service.title', count: 1) %></h2>
+  <% if !@service.blank? %>
+    <%= render_tabs service_tabs %>
+
+    <%= link_to l(:button_edit), {:controller => 'services', :action => 'edit', :id => @service.id}, :class => 'icon icon-edit', :title => l(:button_edit), :accesskey => accesskey(:edit) if allow_edit %>
+    <%= link_to t('button_cancel'), path_back_or_default %>
+
+  <% else %>
+    <p class="nodata"><%=t('data.empty.message')%></p>
+  <% end %>
+<% else %>
+  <p class="nodata"><%=t('permission.denied.message')%></p>
+<% end %>

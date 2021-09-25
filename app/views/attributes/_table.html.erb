@@ -1,0 +1,27 @@
+<table class="list">
+  <thead>
+    <tr>
+      <th><%= t('attribute.attr.name') %></th>
+      <th><%= t('attribute.attr.description') %></th>
+      <th colspan="2"></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% attributes.each do |o| %>
+    <tr class="<%= cycle('odd', 'even') %>">
+      <td><%= o.name %></td>
+      <td><%= o.description %></td>
+      <td class="action">
+        <%= link_to l(:button_edit),
+                            {:controller => 'attributes', :action => 'edit', :id => o.id},
+                            :class => 'icon icon-only icon-edit', :title => t(:button_edit),
+                            :accesskey => accesskey(:edit),
+                            :onclick => 'Element.show("edit-attributes"); return false;' %>
+      </td>
+      <td class="action">
+        <%= delete_link({ :controller => 'attributes', :action => 'destroy', :id => o.id}, class: 'icon icon-only icon-del', title: t(:button_delete)) %>
+      </td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>

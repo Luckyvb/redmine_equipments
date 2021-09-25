@@ -1,0 +1,46 @@
+<h2><%= t('vendor_model.title', count: 2) %></h2>
+
+<div class="contextual">
+  <%= link_to(t('vendor_model.action.new.title'), {:controller => 'vendor_models', :action => 'new', :vendor => vendor}, :class => 'icon icon-add') if User.current.allowed_to?(:global_edit_catalogs, nil, :global => true) %>
+  <%= link_to(t('catalog.global.title', count: 2), {:controller => 'catalogs', :action => 'index'}, :class => 'icon icon-list') if vendor.blank? %>
+</div>
+
+<table class="list">
+  <thead>
+    <tr>
+      <%= sort_header_tag('equipment_type', caption: t('vendor_model.attr.equipment_type')) %>
+      <% if vendor.blank? %>
+      <%= sort_header_tag('vendor', caption: t('vendor_model.attr.vendor')) %>
+      <% end %>
+      <%= sort_header_tag('name', caption: t('vendor_model.attr.name')) %>
+      <%= sort_header_tag('pn', caption: t('vendor_model.attr.pn')) %>
+      <th><%= t('vendor_model.attr.site') %></th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% vendor_models.each do |vm| %>
+    <tr class="<%= cycle('odd', 'even') %>">
+      <td><%= link_to vm.equipment_type.name, {:controller => 'equipment_types', :action => 'show', :id => vm.equipment_type_id}, :class => 'fas fa-info-circle' %></td>
+      <% if vendor.blank? %>
+      <td><%= link_to vm.vendor.name, {:controller => 'vendors', :action => 'show', :id => vm.vendor_id}, :class => 'fas fa-info-circle' %></td>
+      <% end %>
+      <td><%= vm.name %></td>
+      <td><%= vm.pn %></td>
+      <td><%= link_to vm.site, title: vm.site do content_tag(:i, '', class: 'fa fa-globe') end unless vm.site.blank? %></td>
+      <td class="action">
+        <%= link_to l(:button_edit), {:controller => 'vendor_models', :action => 'edit', :id => vm.id}, :class => 'icon icon-only icon-edit', :title => l(:button_edit), :accesskey => accesskey(:edit) %>
+      </td>
+      <td class="action">
+        <%= link_to l(:button_copy), {:controller => 'vendor_models', :action => 'copy', :id => vm.id}, :class => 'icon icon-only icon-copy', :title => l(:button_copy), :accesskey => accesskey(:copy) %>
+      </td>
+      <td class="action">
+        <%= delete_link({ :controller => 'vendor_models', :action => 'destroy', :id => vm.id}, class: 'icon icon-only icon-del', title: l(:button_delete)) %>
+      </td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>
+<% if !pages.blank? && !count.blank? %>
+<span class='pagination'><%= pagination_links_full pages, count %></span>
+<% end %>

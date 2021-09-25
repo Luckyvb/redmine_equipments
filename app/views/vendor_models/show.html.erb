@@ -1,0 +1,34 @@
+<% if User.current.allowed_to?(:global_view_catalogs, nil, :global => true) %>
+  <% allow_edit = User.current.allowed_to?(:global_edit_catalogs, nil, :global => true) %>
+  <div class="contextual">
+    <%= link_to(t('vendor_model.action.new.title'), {:controller => 'vendor_models', :action => 'new'}, :class => 'icon icon-add') if allow_edit %>
+    <%= link_to(t('vendor_model.action.edit.title'), {:controller => 'vendor_models', :action => 'edit', :id => @vendor_model.id}, :class => 'icon icon-edit') if allow_edit && !@vendor_model.blank? %>
+    <%= link_to(t('vendor_model.action.delete.title'), {:controller => 'vendor_models', :action => 'destroy', :id => @vendor_model.id}, :class => 'icon icon-del') if allow_edit && !@vendor_model.blank? %>
+  </div>
+  <% content_for :sidebar do %>
+    <ul id="options">
+      <li><%= link_to(t('vendor_model.action.new.title'), {:controller => 'vendor_models', :action => 'new'}, :class => 'icon icon-add') if allow_edit %></li>
+      <li><%= link_to(t('vendor_model.action.edit.title'), {:controller => 'vendor_models', :action => 'edit', :id => @vendor_model.id}, :class => 'icon icon-edit') if allow_edit && !@vendor_model.blank? %></li>
+      <li><%= link_to(t('vendor_model.action.delete.title'), {:controller => 'vendor_models', :action => 'destroy', :id => @vendor_model.id}, :class => 'icon icon-del') if allow_edit && !@vendor_model.blank? %></li>
+    </ul>
+  <% end %>
+  <h2><%= t('vendor_model.title', count: 1) %></h2>
+  <% if !@vendor_model.blank? %>
+    <p>
+      <%= t('vendor_model.attr.equipment_type') %>:
+      <%= link_to @vendor_model.equipment_type.name, {:controller => 'equipment_types', :action => 'show', :id => @vendor_model.equipment_type_id}, :class => 'fas fa-info-circle' %>
+    </p>
+    <p>
+      <%= t('vendor_model.attr.vendor') %>:
+      <%= link_to @vendor_model.vendor.name, {:controller => 'vendors', :action => 'show', :id => @vendor_model.vendor_id}, :class => 'fas fa-info-circle' %>
+    </p>
+    <p><%= t('vendor_model.attr.name') %>:<%= @vendor_model.name %></p>
+    <p><%= t('vendor_model.attr.pn') %>:<%= @vendor_model.pn %></p>
+    <p><%= t('vendor_model.attr.site') %>:<%= link_to @vendor_model.site, title: @vendor_model.site do content_tag(:i, '', class: 'fa fa-globe') end unless @vendor_model.site.blank? %></p>
+    <%= link_to t('button_cancel'), {:controller => 'vendor_models', :action => 'index'} %>
+  <% else %>
+    <p class="nodata"><%=t('data.empty.message')%></p>
+  <% end %>
+<% else %>
+  <p class="nodata"><%=t('permission.denied.message')%></p>
+<% end %>

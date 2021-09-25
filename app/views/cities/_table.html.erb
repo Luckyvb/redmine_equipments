@@ -1,0 +1,27 @@
+<table class="list">
+  <thead>
+    <tr>
+      <th><%= t('city.attr.country') %></th>
+      <th><%= t('city.attr.name') %></th>
+      <th colspan="2"></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% cityes.each do |a| %>
+    <tr class="<%= cycle('odd', 'even') %>">
+      <td><%= link_to a.country.to_s, {:controller => 'countries', :action => 'show', :id => a.country.id}, :class => 'fas fa-info-circle' %></td>
+      <td><%= a.name %></td>
+      <td class="action">
+        <%= link_to l(:button_edit),
+                            {:controller => 'cities', :action => 'edit', :id => a.id},
+                            :class => 'icon icon-only icon-edit', :title => l(:button_edit),
+                            :accesskey => accesskey(:edit),
+                            :onclick => 'Element.show("edit-cities"); return false;' %>
+      </td>
+      <td class="action">
+        <%= delete_link({ :controller => 'cities', :action => 'destroy', :id => a.id}, class: 'icon icon-only icon-del', title: l(:button_delete)) %>
+      </td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>

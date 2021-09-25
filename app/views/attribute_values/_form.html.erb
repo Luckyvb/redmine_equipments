@@ -1,0 +1,26 @@
+<%= labelled_form_for attribute_value, url: { controller: :attribute_values, action: action } do |f| %>
+  <div class='box tabular'>
+    <p><%= f.select(:attributable_type, options_for_select(attributable_types.map { |a| [a[:name], a[:id]]}, attribute_value.attributable_type), :label => t('attribute_value.attr.attributable_type')) %></p>
+    <p><%= f.select(:attributable_id, options_for_select(attributable_objects.map { |e| [e.to_s, e.id]}), :label => t('attribute_value.attr.attributable_id'))%></p>
+    <p><%= f.select(:attribute_id, options_for_select(Attribute.accessible.map { |a| [a.name, a.id] }, attribute_value.attribute_id), :label => t('attribute_value.attr.attribute_id')) %></p>
+    <p><%= f.text_area :attribute_value, :label => t('attribute_value.attr.attribute_value') %></p>
+  </div>
+
+  <%= f.submit t('button_save') %>
+<% end %>
+<script>
+  $(document).ready(function() {
+    let ddl = [{id:'#attribute_value_attributable_type', allowClear: false, disabled: false},
+        {id:'#attribute_value_attributable_id',allowClear:false, disabled: false},
+        {id:'#attribute_value_attribute_id', allowClear: false, disabled: false}];
+    initSelects(ddl);
+    let p = {
+      parentId:'#attribute_value_attributable_type',
+      methodName: 'update_attributable_objects',
+      variableName: 'attributable_type',
+      childId:'#attribute_value_attributable_id',
+      disableChild: true
+    };
+    initCascadingSelect(p);
+  });
+</script>

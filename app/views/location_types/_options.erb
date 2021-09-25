@@ -1,0 +1,5 @@
+<% if !location_types.blank? %>
+  <% location_types.each do |o| %>
+    <option value="<%= o[:id] %>"><%= o[:name].to_s %></option>
+  <% end %>
+<% end %>

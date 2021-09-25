@@ -1,0 +1,9 @@
+<%= labelled_form_for country, url: { controller: :countries, action: action } do |f| %>
+  <div class='box tabular'>
+    <p><%= f.text_field :name, :label => t('country.attr.name') %></p>
+    <p><%= f.text_field :short_name, :label => t('country.attr.short_name') %></p>
+    <p><%= f.text_field :iso, :label => t('country.attr.iso') %></p>
+  </div>
+
+  <%= f.submit t('button_save') %>
+<% end %>

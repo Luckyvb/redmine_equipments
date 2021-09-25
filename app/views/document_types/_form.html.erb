@@ -1,0 +1,7 @@
+<%= labelled_form_for document_type, url: { controller: :document_types, action: action } do |f| %>
+  <div class='box tabular'>
+    <p><%= f.text_field :name, :label => t('document_type.attr.name') %></p>
+  </div>
+
+  <%= f.submit t('button_save') %>
+<% end %>

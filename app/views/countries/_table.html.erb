@@ -1,0 +1,29 @@
+<table class="list">
+  <thead>
+    <tr>
+      <th><%= t('country.attr.name') %></th>
+      <th><%= t('country.attr.short_name') %></th>
+      <th><%= t('country.attr.iso') %></th>
+      <th colspan="2"></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% countryes.each do |a| %>
+    <tr class="<%= cycle('odd', 'even') %>">
+      <td><%= a.name %></td>
+      <td><%= a.short_name %></td>
+      <td><%= a.iso %></td>
+      <td class="action">
+        <%= link_to l(:button_edit),
+                            {:controller => 'countries', :action => 'edit', :id => a.id},
+                            :class => 'icon icon-only icon-edit', :title => l(:button_edit),
+                            :accesskey => accesskey(:edit),
+                            :onclick => 'Element.show("edit-countries"); return false;' %>
+      </td>
+      <td class="action">
+        <%= delete_link({ :controller => 'countries', :action => 'destroy', :id => a.id}, class: 'icon icon-only icon-del', title: l(:button_delete)) %>
+      </td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>

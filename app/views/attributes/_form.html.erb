@@ -1,0 +1,8 @@
+<%= labelled_form_for attribute, url: { controller: :attributes, action: action } do |f| %>
+  <div class='box tabular'>
+    <p><%= f.text_field :name, :label => t('attribute.attr.name') %></p>
+    <p><%= f.text_area :description, :label => t('attribute.attr.description') %></p>
+  </div>
+
+  <%= f.submit t('button_save') %>
+<% end %>

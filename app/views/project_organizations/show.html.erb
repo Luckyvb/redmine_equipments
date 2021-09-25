@@ -1,0 +1,24 @@
+<% if User.current.allowed_to?(:project_view_catalogs, nil, :global => true) %>
+  <% allow_edit = User.current.allowed_to?(:global_edit_catalogs, nil, :global => true) %>
+  <div class="contextual">
+    <%= link_to(t('project_organization.action.new.title'), {:controller => 'project_organizations', :action => 'new'}, :class => 'icon icon-add') if allow_edit %>
+    <%= link_to(t('project_organization.action.edit.title'), {:controller => 'project_organizations', :action => 'edit', :id => @project_organization.id}, :class => 'icon icon-edit') if allow_edit && !@project_organization.blank? %>
+    <%= link_to(t('project_organization.action.delete.title'), {:controller => 'project_organizations', :action => 'destroy', :id => @project_organization.id}, :class => 'icon icon-del') if allow_edit && !@project_organization.blank? %>
+  </div>
+  <% content_for :sidebar do %>
+    <ul id="options">
+      <li><%= link_to(t('project_organization.action.new.title'), {:controller => 'project_organizations', :action => 'new'}, :class => 'icon icon-add') if allow_edit %></li>
+      <li><%= link_to(t('project_organization.action.edit.title'), {:controller => 'project_organizations', :action => 'edit', :id => @project_organization.id}, :class => 'icon icon-edit') if allow_edit && !@project_organization.blank? %></li>
+      <li><%= link_to(t('project_organization.action.delete.title'), {:controller => 'project_organizations', :action => 'destroy', :id => @project_organization.id}, :class => 'icon icon-del') if allow_edit && !@project_organization.blank? %></li>
+    </ul>
+  <% end %>
+  <h2><%= t('project_organization.title', count: 1) %></h2>
+  <% if !@project_organization.blank? %>
+    <p><%= t('project_organization.attr.organization') %>:<%= @project_organization.organization.name %></p>
+    <%= link_to t('button_cancel'), {:controller => 'project_organizations', :action => 'index'} %>
+  <% else %>
+    <p class="nodata"><%=t('data.empty.message')%></p>
+  <% end %>
+<% else %>
+  <p class="nodata"><%=t('permission.denied.message')%></p>
+<% end %>

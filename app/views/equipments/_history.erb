@@ -1,0 +1,41 @@
+<h2><%= t('history.title', count: 1) %></h2>
+<table class="list">
+  <thead>
+    <tr>
+      <%= sort_header_tag('updated_at', caption: t('equipment.attr.updated_at')) %>
+      <%= sort_header_tag('updater', caption: t('equipment.attr.updater')) %>
+      <%= sort_header_tag('equipment_type', caption: t('equipment.attr.equipment_type')) %>
+      <%= sort_header_tag('vendor_model', caption: t('equipment.attr.vendor_model')) %>
+      <%= sort_header_tag('owner', caption: t('equipment.attr.owner')) %>
+      <%= sort_header_tag('location', caption: t('equipment.attr.location')) %>
+      <%= sort_header_tag('number', caption: t('equipment.attr.number')) %>
+      <%= sort_header_tag('sn', caption: t('equipment.attr.sn')) %>
+      <%= sort_header_tag('state', caption: t('equipment.attr.state')) %>
+      <%= sort_header_tag('warranty_end', caption: t('equipment.attr.warranty_end')) %>
+    </tr>
+  </thead>
+  <tbody>
+    <% versions.each do |v| %>
+    <tr class="<%= cycle('odd', 'even') %>">
+      <td><%= v.updated_at.to_date if !v.updated_at.blank? %></td>
+      <td><%= v.updater.blank? ? v.updater_id : v.updater.to_s %></td>
+      <td><%= link_to (v.equipment_type.blank? ? v.equipment_type_id : v.equipment_type.name), {:controller => 'equipment_types', :action => 'show', :id => v.equipment_type_id}, :class => 'fas fa-info-circle' %></td>
+      <td>
+        <%= link_to (v.vendor_model.blank? ? v.vendor_model_id : v.vendor_model.to_s), {:controller => 'vendor_models', :action => 'show', :id => v.vendor_model_id}, :class => 'fas fa-info-circle' %>
+      </td>
+      <td>
+        <%= link_to t("owner_type.#{v.owner_type.downcase}", count:1), {:controller => v.owner_type.downcase+'s', :action => 'index'}, :class => 'fas fa-info-circle' %>:
+        <%= link_to (v.owner.blank? ? v.owner_id : v.owner.to_s), {:controller => v.owner_type.downcase+'s', :action => 'show', :id => v.owner_id}, :class => 'fas fa-info-circle' %>
+      </td>
+      <td>
+        <%= link_to t(v.location_type.downcase+'.title',count:1), {:controller => location_controller_name(v.location_type), :action => 'index'}, :class => 'fas fa-info-circle' unless v.location_type.blank? %>:
+        <%= link_to (v.location.blank? ? v.location_id : v.location.to_s), {:controller => location_controller_name(v.location_type), :action => 'show', :id => v.location_id}, :class => 'fas fa-info-circle' unless v.location_type.blank? %>
+      </td>
+      <td><%= v.number %></td>
+      <td><%= v.sn %></td>
+      <td></td>
+      <td><%= v.warranty_end.to_date if !v.warranty_end.blank? %></td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>

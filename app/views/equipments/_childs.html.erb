@@ -1,0 +1,9 @@
+<% if User.current.allowed_to?(:project_view_equipments, @project, :global => false) %>
+  <div class="contextual">
+    <%= link_to(t('equipment.action.new.title'), {:controller => 'equipments', :action => 'new'}, :class => 'icon icon-add') if User.current.allowed_to?(:project_edit_equipments, @project, :global => false)%>
+  </div>
+  <h2><%= t('equipment.action.expand.title') %></h2>
+  <%= render partial: 'table', locals: { equipments: equipments, parent_id: parent_id } %>
+<% else %>
+  <p class="nodata"><%=t('permission.denied.message')%></p>
+<% end %>

@@ -1,0 +1,5 @@
+<% if User.current.allowed_to?(:project_view_equipments, @project, global: false) %>
+  <%= render partial: 'table', locals: { results: @service_results, service: nil } %>
+<% else %>
+  <p class="nodata"><%=t('permission.denied.message')%></p>
+<% end %>

@@ -1,0 +1,7 @@
+<% cities.each do |a| %>
+<optgroup label="<%= a.name %>" >
+  <% a.floors.each do |f| %>
+    <option value="<%= f.id %>" data-location-type="Floor"><%= "#{f.name} (#{f.number})" %></option>
+  <% end %>
+</optgroup>
+<% end %>

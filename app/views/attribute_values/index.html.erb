@@ -1,0 +1,13 @@
+<% if User.current.allowed_to?(:project_view_equipments, @project, :global => false) %>
+  <div class="contextual">
+    <%= link_to(t('attribute_value.action.new.title'), {:controller => 'attribute_values', :action => 'new'}, :class => 'icon icon-add') if User.current.allowed_to?(:project_edit_equipments, @project, :global => false) %>
+    <%= link_to(t('catalog.title', count: 2), {:controller => 'catalogs', :action => 'index'}, :class => 'icon icon-folder') %>
+    <%= link_to(t('catalog.global.title', count: 2), {:controller => 'catalogs', :action => 'index'}, :class => 'icon icon-list') if User.current.allowed_to?(:global_view_catalogs, nil, :global => true) %>
+  </div>
+
+  <h2><%= t('attribute_value.title', count: 2) %></h2>
+
+  <%= render partial: 'table', locals: { attribute_values: @attribute_values } %>
+<% else %>
+  <p class="nodata"><%=t('permission.denied.message')%></p>
+<% end %>

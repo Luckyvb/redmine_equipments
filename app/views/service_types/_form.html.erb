@@ -1,0 +1,11 @@
+<%= error_messages_for 'service_type' %>
+
+<%= labelled_form_for service_type, url: { controller: :service_types, action: action } do |f| %>
+  <div class='box tabular'>
+    <p><%= f.text_field :name, :label => t('service_type.attr.name') %></p>
+    <p><%= f.text_area :description, cols: 60, rows: 15, class: 'wiki-edit', :label => t('service_type.attr.description') %></p>
+  </div>
+
+  <%= f.submit t('button_save') %>
+<% end %>
+<%= wikitoolbar_for 'service_type_description' %>

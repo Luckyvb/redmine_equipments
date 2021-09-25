@@ -1,0 +1,89 @@
+<%= error_messages_for 'equipment' %>
+
+<% content_for :header_tags do %>
+  <%= stylesheet_link_tag 'jquery.tagit', plugin: 'equipments' %>
+  <%= javascript_include_tag 'tag-it.min.js', plugin: 'equipments' %>
+<% end %>
+
+<%= labelled_form_for :equipment, equipment, url: { controller: :equipments, action: action } do |f| %>
+  <div class='box tabular'>
+    <p><%= f.select(:organization_id, options_for_select(organizations.map { |o| [o[:name], o[:id]]}, equipment.organization_id), :label => t('equipment.attr.organization')) %></p>
+    <p><%= f.select(:parent_id, parent_options_for_select(parents, equipment.parent_id), {:include_blank => true, :label => t('equipment.attr.parent')}) %></p>
+    <p><%= f.select(:equipment_type_id, equipment_type_options_for_select(equipment.equipment_type_id), :label => t('equipment.attr.equipment_type')) %></p>
+    <p><%= f.select(:vendor_model_id, option_groups_from_collection_for_select(vendors, :vendor_models, :name, :id, :name, equipment.vendor_model_id), :label => t('equipment.attr.vendor_model')) %></p>
+    <div id='div_eq_ow_<%=equipment.id%>' style='display: <%=(equipment.parent_id.blank? ? "" : "none")%>;'>
+      <p><%= f.select(:owner_type, options_for_select(owner_types.map { |ot| [ot[:name], ot[:id]]}, equipment.owner_type), :label => t('equipment.attr.owner_type')) %></p>
+      <p><%= f.select(:owner_id, options_for_select(owners.map { |o| [o.to_s, o.id]}, equipment.owner_id), :label => t('equipment.attr.owner')) %></p>
+      <p><%= f.select(:location_type, options_for_select(location_types.map { |ot| [ot[:name], ot[:id]]}, equipment.location_type), :label => t('equipment.attr.location_type')) %></p>
+      <p><%= f.select(:location_id, option_groups_from_collection_for_select(addresses, :rooms, :name, :id, :name, equipment.location_id), :label => t('equipment.attr.location')) %></p>
+    </div>
+    <p><%= f.text_field :number, :label => t('equipment.attr.number') %></p>
+    <p><%= f.text_field :sn, :label => t('equipment.attr.sn') %></p>
+    <p><%= f.date_field :warranty_end, :label => t('equipment.attr.warranty_end') %></p>
+    <p><%= f.select(:consignment_note_id, options_for_select(consignment_notes.map { |o| ["#{o[:number]}, #{o[:date]}", o[:id]]}, equipment.consignment_note), {:include_blank => true, :label => t('equipment.attr.consignment_note')}) %></p>
+    <p><%= f.text_area :description, :size => '60x5', :label => t('equipment.attr.description') %></p>
+    <p><%= f.text_field :tag_list, :size => 80, :value => "#{equipment.tag_list.join(",")}" if false %></p>
+  </div>
+
+  <%= f.submit t('button_save') %>
+<% end %>
+
+<script>
+  $(document).ready(function() {
+<% if false %>
+    $("#article_tag_list").tagit({
+        singleField: true,
+        availableTags: [ <% tags.each do |tag| %>"<%= tag %>",<% end unless tags.blank? %> ]
+    });
+<% end %>
+    let ddl = [{id:'#equipment_organization_id',allowClear:false, disabled: false},
+               {id:'#equipment_parent_id',allowClear:true, disabled: false},
+               {id:'#equipment_equipment_type_id', allowClear: false, disabled: false},
+               {id:'#equipment_vendor_model_id', allowClear: false, disabled: false},
+               {id:'#equipment_owner_type', allowClear: false, disabled: <%=!equipment.parent_id.blank?%>},
+               {id:'#equipment_owner_id', allowClear: false, disabled: <%=!equipment.parent_id.blank?%>},
+               {id:'#equipment_location_type', allowClear: false, disabled: <%=!equipment.parent_id.blank?%>},
+               {id:'#equipment_location_id', allowClear: false, disabled: <%=!equipment.parent_id.blank?%>},
+               {id:'#consignment_note_id', allowClear: true, disabled: false}
+    ];
+    initSelects(ddl);
+    let pa = [{id:'#equipment_parent_id', child:'owner_type', child_id:'#equipment_owner_type', var: 'parent_id'},
+              //{id:'#equipment_parent_id', child:'location_type', child_id:'#equipment_location_type', var: 'parent_id'},
+              {id:'#equipment_equipment_type_id', child:'vendor_model', var: 'equipment_type'},
+              {id:'owner', child:'owner'},
+              {id:'#equipment_owner_id', child:'location_type', child_id:'#equipment_location_type', var: 'owner_id'},
+              {id:'location', child:'location'}
+    ];
+    pa.forEach(function(p) {
+        let prms = {
+            parentId:p.id[0]=='#' ? p.id : '#equipment_'+p.id+'_type',
+            methodName: 'update_'+p.child+'s',
+            variableName: p.var ?? (p.id+'_type'),
+            childId: p.child_id ?? ('#equipment_'+p.child+'_id'),
+            disableChild: true};
+        initCascadingSelect(prms);
+    });
+    $('#equipment_parent_id').on('change', function(evt) {
+      let fields=['#equipment_location_type','#equipment_owner_type'];
+      if($("#equipment_parent_id option:selected").val() !== "") {
+        $('#div_eq_ow_<%=equipment.id%>').css('display','none');
+      } else {
+        $('#div_eq_ow_<%=equipment.id%>').css('display','');
+        fields.forEach( function(el){
+          $(el).next().css('max-width','95%');
+          $(el).next().css('width','');
+        });
+      }
+    });
+    $('#equipment_location_type').on('change', function(evt) {
+        $('#equipment_location_id').next().css('max-width','95%');
+        $('#equipment_location_id').next().css('min-width','200px');
+        $('#equipment_location_id').next().css('width','');
+    });
+    $('#equipment_owner_type').on('change', function(evt) {
+        $('#equipment_owner_id').next().css('max-width','95%');
+        $('#equipment_owner_id').next().css('min-width','200px');
+        $('#equipment_owner_id').next().css('width','');
+    });
+  });
+</script>

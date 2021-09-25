@@ -1,0 +1,7 @@
+<% vendors.each do |v| %>
+<optgroup label="<%= v.name %>" >
+  <% v.vendor_models.each do |vm| %>
+    <option value="<%= vm.id %>" data-location-type="Floor"><%= vm.to_s %></option>
+  <% end %>
+</optgroup>
+<% end %>

@@ -1,0 +1,11 @@
+<% if User.current.allowed_to?(:global_edit_catalogs, nil, :global => true) %>
+  <h1><%= t('store.action.new.title') %> </h1>
+
+  <%= render partial: 'form', locals: { store: @store, organizations: @organizations, parents: @parents,
+                                        responsible_types: @responsible_types, responsibles: @responsibles,
+                                        location_types: @location_types, locations: @locations, addresses: @addresses,
+                                        action: :create } %>
+<% else %>
+  <p class="nodata"><%=t('permission.denied.message')%></p>
+<% end %>
+<%= link_to t('button_cancel'), {:controller => 'stores', :action => 'index'} %>

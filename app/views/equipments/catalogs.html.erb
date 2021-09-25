@@ -1,0 +1,15 @@
+<% if User.current.allowed_to?(:project_view_equipments, @project, :global => false) %>
+  <h2><%= t('catalog.title', count: 2) %></h2>
+
+  <ol><%= link_to t('equipment.title', count: 2), {:controller => 'equipments', :action => :index}, :class => 'fas fa-memory field-lookup' %></ol>
+  <ul class='list'>
+    <ol><%= link_to t('organization.title', count: 2), {:controller => 'project_organizations', :action => :index}, :class => 'fas fa-sitemap field-lookup' %></ol>
+    <ol><%= link_to t('division.title', count: 2), {:controller => 'divisions', :action => :index}, :class => 'fas fa-sitemap field-lookup' %></ol>
+    <ol><%= link_to t('employee.title', count: 2), {:controller => 'employees', :action => :index}, :class => 'fas fa-user field-lookup' %></ol>
+    <ol><%= link_to t('store.title', count: 2), {:controller => 'stores', :action => :index}, :class => 'fas fa-warehouse field-lookup' %></ol>
+    <ol><%= link_to t('consignment_note.title', count: 2), {:controller => 'consignment_notes', :action => :index}, :class => 'fas fa-file-alt field-lookup' %></ol>
+    <ol><%= link_to t('service.title', count: 2), {:controller => 'services', :action => :index}, :class => 'fas fa-wrench field-lookup' %></ol>
+  </ul>
+<% else %>
+  <p class="nodata"><%=t('permission.denied.message')%></p>
+<% end %>

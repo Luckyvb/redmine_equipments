@@ -1,0 +1,43 @@
+<% if User.current.allowed_to?(:global_view_catalogs, nil, :global => true) %>
+  <% allow_edit = User.current.allowed_to?(:global_edit_catalogs, nil, :global => true) %>
+  <div class="contextual">
+    <%= link_to(t('room.action.new.title'), {:controller => 'rooms', :action => 'new'}, :class => 'icon icon-add') unless !allow_edit %>
+    <%= link_to(t('room.action.edit.title'), {:controller => 'rooms', :action => 'edit', :id => @room_tenant_tenant.id}, :class => 'icon icon-edit') unless !allow_edit && @room_tenant_tenant.blank? %>
+    <%= link_to(t('room.action.delete.title'), {:controller => 'rooms', :action => 'destroy', :id => @room_tenant_tenant.id}, :class => 'icon icon-del') unless !allow_edit && @room_tenant_tenant.blank? %>
+  </div>
+  <% content_for :sidebar do %>
+    <ul id="options">
+      <li><%= link_to(t('room.action.new.title'), {:controller => 'rooms', :action => 'new'}, :class => 'icon icon-add') unless !allow_edit %></li>
+      <li><%= link_to(t('room.action.edit.title'), {:controller => 'rooms', :action => 'edit', :id => @room_tenant_tenant.id}, :class => 'icon icon-edit') unless !allow_edit && @room_tenant_tenant.blank? %></li>
+      <li><%= link_to(t('room.action.delete.title'), {:controller => 'rooms', :action => 'destroy', :id => @room_tenant_tenant.id}, :class => 'icon icon-del') unless !allow_edit && @room_tenant_tenant.blank? %></li>
+    </ul>
+  <% end %>
+  <h2><%= t('room.title', count: 1) %></h2>
+  <% if !@room_tenant.blank? %>
+    <p>
+      <%= t('room_tenant.attr.room') %>:
+      <%= link_to @room_tenant.room.to_short_s, {:controller => 'rooms', :action => 'show', :id => @room_tenant_tenant.room_id}, :class => 'fas fa-info-circle' %>
+    </p>
+    <p>
+      <%= t('room_tenant.attr.organization') %>:
+      <%= link_to @room_tenant.organization.name, {:controller => 'organizations', :action => 'show', :id => @room_tenant_tenant.organization_id}, :class => 'fas fa-info-circle' %>
+    </p>
+    <p>
+      <%= t('room_tenant.attr.start_date') %>:
+      <%= @room_tenant.start_date %>
+    </p>
+    <p>
+      <%= t('room_tenant.attr.end_date') %>:
+      <%= @room_tenant.end_date %>
+    </p>
+    <p>
+      <%= t('room_tenant.attr.description') %>:
+      <%= @room_tenant.end_date %>
+    </p>
+    <%= link_to t('button_cancel'), {:controller => 'room_tenants', :action => 'index'} %>
+  <% else %>
+    <p class="nodata"><%=t('data.empty.message')%></p>
+  <% end %>
+<% else %>
+  <p class="nodata"><%=t('permission.denied.message')%></p>
+<% end %>

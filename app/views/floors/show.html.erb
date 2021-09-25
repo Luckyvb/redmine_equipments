@@ -1,0 +1,29 @@
+<% if User.current.allowed_to?(:global_view_catalogs, nil, :global => true) %>
+  <% allow_edit = User.current.allowed_to?(:global_edit_catalogs, nil, :global => true) %>
+  <div class="contextual">
+    <%= link_to(t('floor.action.new.title'), {:controller => 'floors', :action => 'new'}, :class => 'icon icon-add') if allow_edit %>
+    <%= link_to(t('floor.action.edit.title'), {:controller => 'floors', :action => 'edit', :id => @floor.id}, :class => 'icon icon-edit') if allow_edit && !@floor.blank? %>
+    <%= link_to(t('floor.action.delete.title'), {:controller => 'floors', :action => 'destroy', :id => @floor.id}, :class => 'icon icon-del') if allow_edit && !@floor.blank? %>
+  </div>
+  <% content_for :sidebar do %>
+    <ul id="options">
+      <li><%= link_to(t('floor.action.new.title'), {:controller => 'floors', :action => 'new'}, :class => 'icon icon-add') if allow_edit %></li>
+      <li><%= link_to(t('floor.action.edit.title'), {:controller => 'floors', :action => 'edit', :id => @floor.id}, :class => 'icon icon-edit') if allow_edit && !@floor.blank? %></li>
+      <li><%= link_to(t('floor.action.delete.title'), {:controller => 'floors', :action => 'destroy', :id => @floor.id}, :class => 'icon icon-del') if allow_edit && !@floor.blank? %></li>
+    </ul>
+  <% end %>
+  <h2><%= t('floor.title', count: 1) %></h2>
+  <% if !@floor.blank? %>
+    <p>
+      <%= t('floor.attr.address') %>:
+      <%= link_to @floor.address.name, {:controller => 'addresses', :action => 'show', :id => @floor.address.id}, :class => 'fas fa-info-circle' %>
+    </p>
+    <p><%= t('floor.attr.number') %>:<%= @floor.number %></p>
+    <p><%= t('floor.attr.name') %>:<%= @floor.name %></p>
+    <%= link_to t('button_cancel'), {:controller => 'floors', :action => 'index'} %>
+  <% else %>
+    <p class="nodata"><%=t('data.empty.message')%></p>
+  <% end %>
+<% else %>
+  <p class="nodata"><%=t('permission.denied.message')%></p>
+<% end %>

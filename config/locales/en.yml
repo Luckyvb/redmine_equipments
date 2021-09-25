@@ -1,0 +1,571 @@
+en:
+  project_module_equipments: "Equipments"
+  permission_global_view_equipments: "View Global Equipments"
+  permission_global_edit_equipments: "Edit Global Equipments"
+  permission_global_view_catalogs: "View global catalogs"
+  permission_global_edit_catalogs: "Edit global catalogs"
+  permission_view_equipments: "View Equipments"
+  permission_edit_equipments: "Edit Equipments"
+  permission_project_manage_equipments: "Manage Equipments"
+  permission_project_view_catalogs: "View catalogs"
+  permission_project_edit_catalogs: "Edit catalogs"
+  permission_project_manage_vendor_catalogs: "Manage catalogs"
+  tab_main: "Main"
+  equipment:
+    title:
+      one: "Equipment"
+      other: "Equipments"
+    not_found: "Not found"
+    action:
+      show:
+        title: "View equipment"
+      new:
+        title: "New equipment"
+        sussess: "Equipment created"
+      edit:
+        title: "Edit equipment"
+        sussess: "Equipment changed"
+      delete:
+        title: "Delete equipment"
+        sussess: "Equipment deleted"
+      expand:
+        title: "Details"
+    attr:
+      id: "Id"
+      organization: "Organization"
+      equipment_type: "Type"
+      vendor_model: "Model"
+      owner_type: "Owner type"
+      location_type: "Location Type"
+      location: "Location"
+      owner: "Owner"
+      number: "Number"
+      sn: "SN"
+      state: "State"
+      warranty_end: "Warranty"
+      consignment_note: "Consignment Note"
+      created_at: "Created"
+      updated_at: "Updated"
+      updater: "Changed by"
+      description: "Description"
+      parent: "Part of"
+    owner_type:
+      users: "Users"
+      groups: "Groups"
+  equipment_type:
+    title:
+      one: "Equipment Type"
+      other: "Equipment Types"
+    action:
+      new:
+        title: "New equipment type"
+        sussess: "Equipment type created"
+      edit:
+        title: "Edit equipment type"
+        sussess: "Equipment type changed"
+      delete:
+        title: "Delete equipment type"
+        sussess: "Equipment type deleted"
+      expand:
+        title: "Subtypes"
+    attr:
+      id: "Id"
+      name: "Name"
+      number_template: "Template #"
+      parent: "Part of"
+      ancestry: "Hierarchy"
+  document_type:
+    title:
+      one: "Document Type"
+      other: "Document Types"
+    action:
+      new:
+        title: "New document type"
+        sussess: "Document type created"
+      edit:
+        title: "Edit document type"
+        sussess: "Document type changed"
+      delete:
+        title: "Delete document type"
+        sussess: "Document type deleted"
+      expand:
+        title: "Subtypes"
+    attr:
+      id: "Id"
+      name: "Name"
+      parent: "Part of"
+      ancestry: "Hierarchy"
+  service_type:
+    title:
+      one: "Service Type"
+      other: "Service Types"
+    action:
+      new:
+        title: "New service type"
+        sussess: "Service type created"
+      edit:
+        title: "Edit service type"
+        sussess: "Service type changed"
+      delete:
+        title: "Delete service type"
+        sussess: "Service type deleted"
+    attr:
+      id: "Id"
+      name: "Name"
+      parent: "Part of"
+      ancestry: "Hierarchy"
+  service_result_type:
+    title:
+      one: "Service Result Type"
+      other: "Service Result Types"
+    action:
+      new:
+        title: "New service result type"
+        sussess: "Service result type created"
+      edit:
+        title: "Edit service result type"
+        sussess: "Service result type changed"
+      delete:
+        title: "Delete service result type"
+        sussess: "Service result type deleted"
+    attr:
+      id: "Id"
+      equipment_type: "Equipment type"
+      service_type: "Service type"
+      name: "Name"
+      value_format: "Value format"
+      description: "Description"
+  employee:
+    title:
+      one: "Employee"
+      other: "Employees"
+    action:
+      new:
+        title: "New employee"
+        sussess: "Employee created"
+      edit:
+        title: "Edit employee"
+        sussess: "Employee changed"
+      delete:
+        title: "Delete employee"
+        sussess: "Employee deleted"
+    attr:
+      id: "Id"
+      name: "Name"
+  division:
+    title:
+      one: "Division"
+      other: "Divisions"
+    action:
+      new:
+        title: "New division"
+        sussess: "Division created"
+      edit:
+        title: "Edit division"
+        sussess: "Division changed"
+      delete:
+        title: "Delete division"
+        sussess: "Division deleted"
+    attr:
+      id: "Id"
+      name: "Name"
+  consignment_note:
+    title:
+      one: "Consignment note"
+      other: "Consignment notes"
+    action:
+      new:
+        title: "New consignment note"
+        sussess: "Consignment note created"
+      edit:
+        title: "Edit consignment note"
+        sussess: "Consignment note changed"
+      delete:
+        title: "Delete consignment note"
+        sussess: "Consignment note deleted"
+    attr:
+      id: "Id"
+      organization: "Organization"
+      seller: "Seller"
+      document_type: "Type"
+      number: "Number"
+      date: "Date"
+      is_locked: "Locked"
+      total: "Total"
+      description: "Description"
+  project_organization:
+    title:
+      one: "Organization"
+      other: "Organizations"
+    action:
+      new:
+        title: "New organization"
+        sussess: "Organization created"
+      edit:
+        title: "Edit organization"
+        sussess: "Organization changed"
+      delete:
+        title: "Delete organization"
+        sussess: "Organization deleted"
+    attr:
+      id: "Id"
+      project: "Project"
+      organization: "Organization"
+  history:
+    title:
+      one: "History"
+      other: "History"
+  service:
+    title:
+      one: "Service"
+      other: "Services"
+    action:
+      new:
+        title: "New service"
+        sussess: "Service created"
+      edit:
+        title: "Edit service"
+        sussess: "Service changed"
+      delete:
+        title: "Delete service"
+        sussess: "Service deleted"
+    attr:
+      id: "Id"
+      equipment: "Equipment"
+      organization: "Organization"
+      service_type: "Service Type"
+      start_date: "Start Date"
+      end_date: "End Date"
+      send_by: "Send By"
+      return_by: "Return By"
+      document_number: "document #"
+      description: "Description"
+  service_result:
+    title:
+      one: "Service detail"
+      other: "Service details"
+    action:
+      new:
+        title: "New service result"
+        sussess: "Service result created"
+      edit:
+        title: "Edit service result"
+        sussess: "Service result changed"
+      delete:
+        title: "Delete service result"
+        sussess: "Service result deleted"
+    attr:
+      id: "Id"
+      service: "Service"
+      service_result_type: "Type"
+      date: "Date"
+      responsible: "Responsible"
+      value: "Value"
+      description: "Description"
+  attribute:
+    title:
+      one: "Attribute"
+      other: "Attributes"
+    action:
+      new:
+        title: "New attribute"
+        sussess: "Attribute created"
+      edit:
+        title: "Edit attribute"
+        sussess: "Attribute changed"
+      delete:
+        title: "Delete attribute"
+        sussess: "Attribute deleted"
+    attr:
+      id: "Id"
+      name: "Name"
+      description: "Description"
+  attribute_value:
+    title:
+      one: "Attribute value"
+      other: "Attribute values"
+    action:
+      new:
+        title: "New attribute value"
+        sussess: "Attribute value created"
+      edit:
+        title: "Edit attribute value"
+        sussess: "Attribute value changed"
+      delete:
+        title: "Delete attribute value"
+        sussess: "Attribute value deleted"
+    attr:
+      id: "Id"
+      attributable_type: "Set type"
+      attributable_id: "Set to"
+      attribute_id: "Attribute"
+      attribute_value: "Value"
+  vendor:
+    title:
+      one: "Vendor"
+      other: "Vendors"
+    action:
+      new:
+        title: "New vendor"
+        sussess: "Vendor created"
+      edit:
+        title: "Edit vendor"
+        sussess: "Vendor changed"
+      delete:
+        title: "Delete vendor"
+        sussess: "Vendor deleted"
+    attr:
+      id: "Id"
+      name: "Name"
+      icon: "Icon"
+      site: "www"
+  vendor_model:
+    title:
+      one: "Model"
+      other: "Models"
+    action:
+      new:
+        title: "New Model"
+        sussess: "Model created"
+      edit:
+        title: "Edit model"
+        sussess: "Model changed"
+      delete:
+        title: "Delete model"
+        sussess: "Model deleted"
+    attr:
+      id: "Id"
+      equipment_type: "Equipment Type"
+      vendor: "Vendor"
+      name: "Name"
+      pn: "PN"
+      site: "www"
+  owner_type:
+    division:
+      one: "Division"
+      other: "Divisions"
+    employee:
+      one: "Employee"
+      other: "Employees"
+    user:
+      one: "User"
+      other: "Users"
+    group:
+      one: "Group"
+      other: "Groups"
+    action:
+      new:
+        title: "New owner type"
+        success: "Owner type created"
+      edit:
+        title: "Edit owner type"
+        success: "Owner type changed"
+      delete:
+        title: "Delete owner type"
+        success: "Owner type deleted"
+  location_type:
+    title:
+      one: "Location Type"
+      other: "Location Types"
+    action:
+      new:
+        title: "New location Type"
+        success: "Location Type created"
+      edit:
+        title: "Edit location Type"
+        success: "Location Type changed"
+      delete:
+        title: "Delete location Type"
+        success: "Location Type deleted"
+  country:
+    title:
+      one: "Country"
+      other: "Countries"
+    action:
+      new:
+        title: "New country"
+        success: "Country created"
+      edit:
+        title: "Edit country"
+        success: "Country changed"
+      delete:
+        title: "Delete country"
+        success: "Country deleted"
+    attr:
+      id: "Id"
+      name: "Name"
+      short_name: "Short Name"
+      iso: "ISO"
+  city:
+    title:
+      one: "City"
+      other: "Cities"
+    action:
+      new:
+        title: "New city"
+        success: "City created"
+      edit:
+        title: "Edit city"
+        success: "City changed"
+      delete:
+        title: "Delete city"
+        success: "City deleted"
+    attr:
+      id: "Id"
+      country_id: "Country"
+      name: "Name"
+  address:
+    title:
+      one: "Address"
+      other: "Addresses"
+    action:
+      new:
+        title: "New address"
+        success: "Address created"
+      edit:
+        title: "Edit address"
+        success: "Address changed"
+      delete:
+        title: "Delete address"
+        success: "Address deleted"
+    attr:
+      id: "Id"
+      name: "Name"
+      coordinates: "Coordinates"
+  floor:
+    title:
+      one: "Floor"
+      other: "Floors"
+    action:
+      new:
+        title: "New floor"
+        success: "Floor created"
+      edit:
+        title: "Edit floor"
+        success: "Floor changed"
+      delete:
+        title: "Delete floor"
+        success: "Floor deleted"
+    attr:
+      id: "Id"
+      address: "Address"
+      number: "Number"
+      name: "Name"
+  room:
+    title:
+      one: "Room"
+      other: "Rooms"
+    action:
+      expand:
+        title: "Tenants"
+      new:
+        title: "New room"
+        success: "Room created"
+      edit:
+        title: "Edit room"
+        success: "Room changed"
+      delete:
+        title: "Delete room"
+        success: "Room deleted"
+    attr:
+      id: "Id"
+      floor: "Floor"
+      number: "Number"
+      name: "Name"
+  room_tenant:
+    title:
+      one: "Tenant"
+      other: "Tenants"
+    action:
+      new:
+        title: "New tenant"
+        success: "Tenant created"
+        error: "Error at tenant creating. Please check values"
+      edit:
+        title: "Edit tenant"
+        success: "Tenant changed"
+        error: "Error at tenant changing. Please check values"
+      delete:
+        title: "Delete tenant"
+        success: "Tenant deleted"
+        error: "Error at tenant deleting. Please check values"
+    attr:
+      id: "Id"
+      room: "Room"
+      organization: "Organization"
+      start_date: "From"
+      end_date: "To"
+      description: "Description"
+  store:
+    title:
+      one: "Store"
+      other: "Stores"
+    action:
+      new:
+        title: "New store"
+        success: "Store created"
+      edit:
+        title: "Edit store"
+        success: "Store changed"
+      delete:
+        title: "Delete stores"
+        success: "Store deleted"
+    attr:
+      id: "Id"
+      organization: "Organization"
+      location_type: "Location type"
+      location: "Location"
+      name: "Name"
+      is_abstract: "Is Abstract"
+      responsible_type: "Responsible type"
+      responsible: "Responsible"
+      parent: "Parent"
+      ancestry: "Фncestry"
+  location:
+    title:
+      one: "Location"
+      other: "Locations"
+  catalog:
+    title:
+      one: "Catalog"
+      other: "Catalogs"
+    global:
+      title:
+        one: "Global catalog"
+        other: "Global catalogs"
+  value_format:
+    string:
+      title: "String"
+    text:
+      title: "Text"
+    dropdown:
+      title: "DropDown"
+    checkbox:
+      title: "Checkbox"
+  permission:
+    denied:
+      message: "Permissions denied. Ask administrator."
+  data:
+    empty:
+      message: "No data to display."
+  settings:
+    general:
+      title: "General"
+      use_fontawesome:
+        label: "Use font fontAwesome"
+    import_export:
+      title: "Import/Export"
+    backup:
+      title: "Backup equipments"
+      btn:
+        download: "Download backup"
+    restore:
+      title: "Restore from backup"
+      btn:
+        upload: "Upload backup to restore"
+      notice: "Settings restored from backup"
+      error: "Error restoring from backup"
+    notice:
+      saved: "Настройки успешно сохранены"
+    error:
+      save: "Error save settings"

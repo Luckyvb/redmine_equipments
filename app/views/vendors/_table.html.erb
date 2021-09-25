@@ -1,0 +1,48 @@
+<table class="list">
+  <thead>
+    <tr>
+      <%= sort_header_tag('name', caption: t('vendor.attr.name')) %>
+      <th><%= t('vendor.attr.icon') %></th>
+      <th><%= t('vendor.attr.site') %></th>
+      <th colspan="4"></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% vendors.each do |v| %>
+    <tr class="<%= cycle('odd', 'even') %>">
+      <td><%= v.name %></td>
+      <td><%= image_tag(v.icon.preview(resize_to_limit: [16, 16]), :label => t('vendor.attr.icon')) if v.icon.attached? %></td>
+      <td><%= link_to v.site, title: v.site do content_tag(:i, '', class: 'fa fa-globe') end unless v.site.blank? %></td>
+      <td class="action">
+        <%= content_tag(:i, '', :class => 'fas fa-stream expand-details', :title => t('equipment.action.expand.title'), :onclick => 'vendor_detail(this, 0);') %>
+      </td>
+      <td class="action">
+        <%= link_to l(:button_copy), {:controller => 'vendors', :action => 'copy', :id => v.id}, :class => 'icon icon-only icon-copy', :title => l(:button_copy), :accesskey => accesskey(:copy) %>
+      </td>
+      <td class="action">
+        <%= link_to l(:button_edit), {:controller => 'vendors', :action => 'edit', :id => v.id}, :class => 'icon icon-only icon-edit', :title => l(:button_edit), :accesskey => accesskey(:edit), :onclick => 'Element.show("edit-vendors"); return false;' %>
+      </td>
+      <td class="action">
+        <%= delete_link({ :controller => 'vendors', :action => 'destroy', :id => v.id}, class: 'icon icon-only icon-del', title: l(:button_delete)) %>
+      </td>
+    </tr>
+    <tr style="display:none;">
+      <td colspan="7" >
+        <%= render partial: 'vendor_models/table', locals: { vendor_models: v.vendor_models, pages: nil, count: v.vendor_models.count, vendor: v.id } %></td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>
+<span class='pagination'><%= pagination_links_full @v_pages, @v_count %></span>
+<script>
+    function vendor_detail(btn, level){
+        let el = $(btn).parent().parent();
+        for(let i = 0; i < 4; i++) {
+            el = el.next("tr");
+            if(i === level)
+                el.slideToggle();
+            else
+                el.slideUp();
+        }
+    }
+</script>

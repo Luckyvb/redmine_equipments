@@ -1,0 +1,25 @@
+<% if User.current.allowed_to?(:global_view_catalogs, nil, :global => true) %>
+  <% allow_edit = User.current.allowed_to?(:global_edit_catalogs, nil, :global => true) %>
+  <div class="contextual">
+    <%= link_to(t('attribute.action.new.title'), {:controller => 'attributes', :action => 'new'}, :class => 'icon icon-add') if allow_edit %>
+    <%= link_to(t('attribute.action.edit.title'), {:controller => 'attributes', :action => 'edit', :id => @attribute.id}, :class => 'icon icon-edit') if allow_edit && !@attribute.blank? %>
+    <%= link_to(t('attribute.action.delete.title'), {:controller => 'attributes', :action => 'destroy', :id => @attribute.id}, :class => 'icon icon-del') if allow_edit && !@attribute.blank? %>
+  </div>
+  <% content_for :sidebar do %>
+    <ul id="options">
+      <li><%= link_to(t('attribute.action.new.title'), {:controller => 'attributes', :action => 'new'}, :class => 'icon icon-add') if allow_edit %></li>
+      <li><%= link_to(t('attribute.action.edit.title'), {:controller => 'attributes', :action => 'edit', :id => @attribute.id}, :class => 'icon icon-edit') if allow_edit && !@attribute.blank? %></li>
+      <li><%= link_to(t('attribute.action.delete.title'), {:controller => 'attributes', :action => 'destroy', :id => @attribute.id}, :class => 'icon icon-del') if allow_edit && !@attribute.blank? %></li>
+    </ul>
+  <% end %>
+  <h2><%= t('attribute.title', count: 1) %></h2>
+  <% if !@attribute.blank? %>
+    <p><%= t('attribute.attr.name') %>:<%= @attribute.name %></p>
+    <p><%= t('attribute.attr.description') %>:<%= @attribute.description %></p>
+    <%= link_to t('button_cancel'), {:controller => 'attributes', :action => 'index'} %>
+  <% else %>
+    <p class="nodata"><%=t('data.empty.message')%></p>
+  <% end %>
+<% else %>
+  <p class="nodata"><%=t('permission.denied.message')%></p>
+<% end %>

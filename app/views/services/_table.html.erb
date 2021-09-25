@@ -1,0 +1,66 @@
+<% allow_edit = User.current.allowed_to?(:project_edit_catalogs, @project, global: false) %>
+<h2><%= t('service.title', count: 2) %></h2>
+
+<table class="list">
+  <thead>
+    <tr>
+      <th><%= t('service.attr.id') %></th>
+      <% if equipment.blank? %>
+        <%= sort_header_tag('equipment', caption: t('service.attr.equipment')) %>
+      <% end %>
+      <%= sort_header_tag('organization', caption: t('service.attr.organization')) %>
+      <%= sort_header_tag('service_type', caption: t('service.attr.service_type')) %>
+      <%= sort_header_tag('send_by', caption: t('service.attr.send_by')) %>
+      <%= sort_header_tag('start_date', caption: t('service.attr.start_date')) %>
+      <%= sort_header_tag('document_number', caption: t('service.attr.document_number')) %>
+      <%= sort_header_tag('return_by', caption: t('service.attr.return_by')) %>
+      <%= sort_header_tag('end_date', caption: t('service.attr.end_date')) %>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% services.each do |s| %>
+    <tr class="<%= cycle('odd', 'even') %>">
+      <td><%= link_to s.id, {:controller => 'services', :action => 'show', :id => s.id}, :class => 'fas fa-info-circle', :title => "#{t('service.attr.description')}: #{s.description}" if !s.organization_id.blank? %></td>
+      <% if equipment.blank? %>
+        <td><%= link_to s.equipment.to_s, {:controller => 'equipments', :action => 'show', :id => s.equipment_id}, :class => 'fas fa-info-circle' unless s.equipment_id.blank? %></td>
+      <% end %>
+      <td><%= link_to s.organization.name, {:controller => 'organizations', :action => 'show', :id => s.organization_id}, :class => 'fas fa-info-circle' unless s.organization_id.blank? %></td>
+      <td><%= link_to s.service_type.name, {:controller => 'service_types', :action => 'show', :id => s.service_type_id}, :class => 'fas fa-info-circle' unless s.service_type_id.blank? %></td>
+      <td><%= link_to s.send_by.name, {:controller => 'users', :action => 'show', :id => s.send_by_id}, :class => 'fas fa-info-circle' unless s.send_by_id.blank? %></td>
+      <td><%= s.start_date if !s.start_date.blank? %></td>
+      <td><%= s.document_number if !s.document_number.blank? %></td>
+      <td><%= link_to s.return_by.name, {:controller => 'users', :action => 'show', :id => s.return_by_id}, :class => 'fas fa-info-circle' unless s.return_by_id.blank? %></td>
+      <td><%= s.end_date if !s.end_date.blank? %></td>
+      <td class="action">
+        <%= content_tag(:i, '', :class => 'fas fa-stream expand-details', :title => t('service.action.expand.title'), :onclick => 'service_detail(this, 0);') %>
+      </td>
+      <td class="action">
+        <%= link_to l(:button_edit), {:controller => 'services', :action => 'edit', :id => s.id}, :class => 'icon icon-only icon-edit', :title => l(:button_edit), :accesskey => accesskey(:edit) if allow_edit %>
+      </td>
+      <td class="action">
+        <%= link_to l(:button_copy), {:controller => 'services', :action => 'copy', :id => s.id}, :class => 'icon icon-only icon-copy', :title => l(:button_copy), :accesskey => accesskey(:copy) if allow_edit %>
+      </td>
+      <td class="action">
+        <%= delete_link({ :controller => 'services', :action => 'destroy', :id => s.id}, class: 'icon icon-only icon-del', title: l(:button_delete)) if allow_edit %>
+      </td>
+    </tr>
+    <tr style="display:none;">
+      <td colspan="12" >
+        <%= render partial: 'service_results/table', locals: { results: s.service_results, service: s.id } %></td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>
+<script>
+    function service_detail(btn, level){
+        let el = $(btn).parent().parent();
+        for(let i = 0; i < 4; i++) {
+            el = el.next("tr");
+            if(i === level)
+                el.slideToggle();
+            else
+                el.slideUp();
+        }
+    }
+</script>

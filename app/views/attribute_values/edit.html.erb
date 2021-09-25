@@ -1,0 +1,8 @@
+<% if User.current.allowed_to?(:global_edit_catalogs, nil, :global => true) %>
+  <h1><%= t('attribute_value.action.edit.title') %></h1>
+
+  <%= render partial: 'form', locals: {attribute_value: @attribute_value, attributable_types: @attributable, attributable_objects: @attributable_objects, action: :update } %>
+<% else %>
+  <p class="nodata"><%=t('permission.denied.message')%></p>
+<% end %>
+<%= link_to t('button_cancel'), path_back_or_default %>

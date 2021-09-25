@@ -1,0 +1,8 @@
+<% if User.current.allowed_to?(:global_edit_catalogs, nil, :global => true) %>
+  <h1><%= t('vendor_model.action.edit.title') %></h1>
+
+  <%= render partial: 'form', locals: { vendor_model: @vendor_model, action: :update } %>
+<% else %>
+  <p class="nodata"><%=t('permission.denied.message')%></p>
+<% end %>
+<%= link_to t('button_cancel'), {:controller => 'vendor_models', :action => 'index'} %>

@@ -1,0 +1,17 @@
+<table>
+  <tr>
+    <th style="text-align:left"> <%= t('settings.backup.title') %> </th>
+    <th style="text-align:right">
+      <%= button_to(t('settings.backup.btn.download'), {:controller => 'equipments_settings', :action => :backup}, {:disabled => 'disabled'}) %>
+ </th>
+  </tr>
+  <tr>
+    <th style="text-align:left"> <%= t('settings.restore.title') %> </th>
+    <th style="text-align:right">
+      <%= form_tag({:controller => 'equipments_settings', :action => :restore}, method: 'post', multipart: true) do %>
+          <%= file_field_tag :file, {:disabled => 'disabled'} %>
+        <%= submit_tag(t('settings.restore.btn.upload'), {:disabled => 'disabled'}) %>
+      <% end %>
+    </th>
+  </tr>
+</table>

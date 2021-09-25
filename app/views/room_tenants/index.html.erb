@@ -1,0 +1,5 @@
+<% if User.current.allowed_to?(:global_view_catalogs, nil, :global => true) %>
+  <%= render partial: 'table', locals: { room_tenants: @room_tenants, pages: @room_tenants_pages, count: @room_tenants_count, room: nil, project: @project || nil } %>
+<% else %>
+  <p class="nodata"><%=t('permission.denied.message')%></p>
+<% end %>

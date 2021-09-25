@@ -1,0 +1,48 @@
+<table class="list">
+  <thead>
+    <tr>
+      <th class="checkbox hide-when-print">
+         <%= check_box_tag 'check_all', '', false, :class => 'toggle-selection', :title => "#{l(:button_check_all)}/#{l(:button_uncheck_all)}" %>
+      </th>
+      <%= sort_header_tag('id', caption: t('store.attr.id')) %>
+      <%= sort_header_tag('parent', caption: t('store.attr.parent')) %>
+      <%= sort_header_tag('name', caption: t('store.attr.name')) %>
+      <%= sort_header_tag('location', caption: t('store.attr.location')) %>
+      <%= sort_header_tag('is_abstract', caption: t('store.attr.is_abstract')) %>
+      <%= sort_header_tag('responsible', caption: t('store.attr.responsible')) %>
+      <%= sort_header_tag('ancestry', caption: t('store.attr.ancestry')) %>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% stores.each do |store| %>
+    <tr class="<%= cycle('odd', 'even') %>">
+      <td class='checkbox hide-when-print'><%= check_box_tag('ids[]', store.id, false, id: nil) %></td>
+      <td><%= store.id %></td>
+      <td><%= 
+link_to store.parent.name, {:controller => 'stores', :action => 'show', :id => store.parent_id}, :class => 'fas fa-info-circle' unless store.parent_id.blank?
+ %></td>
+      <td><%= store.name %></td>
+      <td>
+        <%= link_to t(store.location_type.downcase+'.title',count:1), {:controller => location_controller_name(store.location_type), :action => 'index'}, :class => 'fas fa-info-circle' unless store.location_type.blank? %>:
+        <%= link_to store.location.to_s, {:controller => location_controller_name(store.location_type), :action => 'show', :id => store.location_id}, :class => 'fas fa-info-circle' unless store.location_type.blank? %>
+      </td>
+      <td><%= store.is_abstract %></td>
+      <td>
+        <%= link_to t("owner_type.#{store.responsible_type.downcase}", count:1), {:controller => store.responsible_type.downcase+'s', :action => 'index'}, :class => 'fas fa-info-circle' %>:
+        <%= link_to store.responsible.to_s, {:controller => store.responsible_type.downcase+'s', :action => 'show', :id => store.responsible_id}, :class => 'fas fa-info-circle' %>
+      </td>
+      <td><%= store.ancestry %></td>
+      <td class="action">
+        <%= link_to l(:button_copy), {:controller => 'stores', :action => 'copy', :id => store.id}, :class => 'icon icon-only icon-copy', :title => l(:button_copy), :accesskey => accesskey(:copy) %>
+      </td>
+      <td class="action">
+        <%= link_to l(:button_edit), {:controller => 'stores', :action => 'edit', :id => store.id}, :class => 'icon icon-only icon-edit', :title => l(:button_edit), :accesskey => accesskey(:edit) %>
+      </td>
+      <td class="action">
+        <%= delete_link({ :controller => 'stores', :action => 'destroy', :id => store.id}, class: 'icon icon-only icon-del', title: l(:button_delete)) %>
+      </td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>

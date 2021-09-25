@@ -1,0 +1,8 @@
+<% if User.current.allowed_to?(:project_edit_catalogs, @project, global: false) %>
+  <h1><%= t('service.action.edit.title') %></h1>
+
+  <%= render partial: 'form', locals: { service: @service, action: :update } %>
+<% else %>
+  <p class="nodata"><%=t('permission.denied.message')%></p>
+<% end %>
+<%= link_to t('button_cancel'), path_back_or_default %>

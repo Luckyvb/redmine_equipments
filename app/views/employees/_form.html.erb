@@ -1,0 +1,8 @@
+<%= labelled_form_for employee, url: { controller: :cities, action: action } do |f| %>
+  <div class='box tabular'>
+    <p><%= f.select(:organization_id, options_for_select(organization.accessible.map { |o| [o.name, o.id] }, employee.organization_id), :label => t('employee.attr.country')) %></p>
+    <p><%= f.text_field :name, :label => t('employee.attr.name') %></p>
+  </div>
+
+  <%= f.submit t('button_save') %>
+<% end %>

@@ -1,0 +1,19 @@
+<%= labelled_form_for service_result_type, url: { controller: :service_result_types, action: action } do |f| %>
+  <div class='box tabular'>
+    <p><%= f.select(:equipment_type_id, srt_equipment_type_options_for_select(service_result_type.equipment_type_id), :label => t('service_result_type.attr.equipment_type')) %></p>
+    <p><%= f.select(:service_type_id, options_for_select(@service_types.map { |a| [a.to_s, a.id] }, service_result_type.service_type_id), {:include_blank => true, :label => t('service_result_type.attr.service_type')}) %></p>
+    <p><%= f.text_field :name, :label => t('service_result_type.attr.name') %></p>
+    <p><%= f.select(:value_format, options_for_select(@value_formats.map { |a| [a[:name], a[:id]] }, service_result_type.value_format), :label => t('service_result_type.attr.value_format')) %></p>
+    <p><%= f.text_area :description, cols: 60, rows: 15, class: 'wiki-edit', :label => t('service_result_type.attr.description') %></p>
+  </div>
+
+  <%= f.submit t('button_save') %>
+<% end %>
+<%= wikitoolbar_for 'service_result_type_description' %>
+<script>
+$(document).ready(function() {
+  let ddl = [{id: '#service_result_type_equipment_type_id', allowClear: true, disabled: false},
+            {id: '#vendor_model_vendor_id', allowClear: true, disabled: false}];
+  initSelects(ddl);
+});
+</script>

@@ -1,0 +1,48 @@
+<%= error_messages_for 'store' %>
+
+<%= labelled_form_for store, url: { controller: :stores, action: action } do |f| %>
+  <div class='box tabular'>
+    <p><%= f.select(:organization_id, options_for_select(organizations.map { |o| [o[:name], o[:id]]}, store.organization_id), :label => t('store.attr.organization')) %></p>
+    <p><%= f.select(:parent_id, parent_options_for_select(parents, store.parent_id), include_blank: true, :label => t('store.attr.parent')) %></p>
+    <p><%= f.text_field :name, :label => t('store.attr.name') %></p>
+    <p><%= f.check_box :is_abstract, :label => t('store.attr.is_abstract') %></p>
+    <p><%= f.select(:location_type, options_for_select(location_types.map { |ot| [ot[:name], ot[:id]]}, store.location_type), :label => t('store.attr.location_type')) %></p>
+    <p><%= f.select(:location_id, option_groups_from_collection_for_select(addresses, :rooms, :name, :id, :name, store.location_id), :label => t('store.attr.location')) %></p>
+    <p><%= f.select(:responsible_type, options_for_select(responsible_types.map { |ot| [ot[:name], ot[:id]]}, store.responsible_type), :label => t('store.attr.responsible_type')) %></p>
+    <p><%= f.select(:responsible_id, options_for_select(responsibles.map { |o| [o.to_s, o.id]}, store.responsible_id), :label => t('store.attr.responsible')) %></p>
+  </div>
+
+  <%= f.submit t('button_save') %>
+<% end %>
+<script>
+  $(document).ready(function() {
+    let ddl = [{id:'#store_organization_id',allowClear:false, disabled: false},
+               {id:'#store_parent_id', allowClear: true, disabled: false},
+               {id:'#store_location_type', allowClear: false, disabled: false},
+               {id:'#store_location_id', allowClear: false, disabled: false},
+               {id:'#store_responsible_type', allowClear: false, disabled: false},
+               {id:'#store_responsible_id', allowClear: false, disabled: false}];
+    initSelects(ddl);
+    let pa = [{id:'responsible',child:'responsible'},
+              {id:'location',child:'location'}];
+    pa.forEach(function(p) {
+        let prms = {
+            parentId:p.id[0]=='#' ? p.id : '#store_'+p.id+'_type',
+            methodName: 'update_'+p.child+'s',
+            variableName: p.var ?? (p.id+'_type'),
+            childId: '#store_'+p.child+'_id',
+            disableChild: true};
+        initCascadingSelect(prms);
+    });
+    $('#store_location_type').on('change', function(evt) {
+        $('#store_location_id').next().css('max-width','95%');
+        $('#store_location_id').next().css('min-width','200px');
+        $('#store_location_id').next().css('width','');
+    });
+    $('#store_responsible_type').on('change', function(evt) {
+        $('#store_responsible_id').next().css('max-width','95%');
+        $('#store_responsible_id').next().css('min-width','200px');
+        $('#store_responsible_id').next().css('width','');
+    });
+  });
+</script>

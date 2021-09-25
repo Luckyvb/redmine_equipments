@@ -1,0 +1,13 @@
+<%  @settings = Setting["plugin_equipments"] %>
+<%- @settings["use_fontawesome"] = true if @settings["use_fontawesome"].nil? -%>
+
+<% tabs = [
+    {name: 'general', partial: 'equipments_settings/tabs/general', label: 'settings.general.title', class: 'fa fa-language'},
+    {name: 'import_export', partial: 'equipments_settings/tabs/import_export', label: 'settings.import_export.title', class: 'fa fa-file-import'}
+] %>
+
+<%= form_tag({:controller => 'equipments_settings', :action => :save}, method: 'post', multipart: true) do %>
+  <%= render_tabs tabs %>
+
+  <%= submit_tag l(:button_apply) if request.fullpath.start_with?('/admin/equipments')%>
+<% end %>

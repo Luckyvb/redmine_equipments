@@ -1,0 +1,31 @@
+<table class="list">
+  <thead>
+    <tr>
+      <th><%= t('attribute_value.attr.attributable_type') %></th>
+      <th><%= t('attribute_value.attr.attributable_id') %></th>
+      <th><%= t('attribute_value.attr.attribute_id') %></th>
+      <th><%= t('attribute_value.attr.attribute_value') %></th>
+      <th colspan="2"></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% attribute_values.each do |o| %>
+    <tr class="<%= cycle('odd', 'even') %>">
+      <td><%= o.attributable_type %></td>
+      <td><%= o.attributable_id %></td>
+      <td><%= link_to o.attribute_name.name, {:controller => 'attributes', :action => 'show', :id => o.attribute_id}, :class => 'fas fa-info-circle' %></td>
+      <td><%= o.attribute_value %></td>
+      <td class="action">
+        <%= link_to l(:button_edit),
+                            {:controller => 'attribute_values', :action => 'edit', :id => o.id},
+                            :class => 'icon icon-only icon-edit', :title => t(:button_edit),
+                            :accesskey => accesskey(:edit),
+                            :onclick => 'Element.show("edit-attribute_values"); return false;' %>
+      </td>
+      <td class="action">
+        <%= delete_link({ :controller => 'attribute_values', :action => 'destroy', :id => o.id}, class: 'icon icon-only icon-del', title: t(:button_delete)) %>
+      </td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>

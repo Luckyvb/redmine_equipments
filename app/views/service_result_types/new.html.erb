@@ -1,0 +1,8 @@
+<% if User.current.allowed_to?(:global_edit_catalogs, nil, :global => true) %>
+  <h1><%= t('service_result_type.action.new.title') %> </h1>
+
+  <%= render partial: 'form', locals: { service_result_type: @service_result_type, action: :create } %>
+<% else %>
+  <p class="nodata"><%=t('permission.denied.message')%></p>
+<% end %>
+<%= link_to t('button_cancel'), {:controller => 'service_result_types', :action => 'index'} %>

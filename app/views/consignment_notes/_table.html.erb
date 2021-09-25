@@ -1,0 +1,45 @@
+<% allow_edit = User.current.allowed_to?(:project_edit_catalogs, @project, global: false) %>
+<table class="list">
+  <thead>
+    <tr>
+      <th class="checkbox hide-when-print">
+        <%= check_box_tag 'check_all', '', false, :class => 'toggle-selection', :title => "#{l(:button_check_all)}/#{l(:button_uncheck_all)}" %>
+      </th>
+      <%= sort_header_tag('id', caption: t('consignment_note.attr.id')) %>
+      <%= sort_header_tag('organization_id', caption: t('consignment_note.attr.organization')) %>
+      <%= sort_header_tag('seller_id', caption: t('consignment_note.attr.seller')) %>
+      <%= sort_header_tag('document_type_id', caption: t('consignment_note.attr.document_type')) %>
+      <%= sort_header_tag('number', caption: t('consignment_note.attr.number')) %>
+      <%= sort_header_tag('date', caption: t('consignment_note.attr.date')) %>
+      <%= sort_header_tag('is_locked', caption: t('consignment_note.attr.is_locked')) %>
+      <%= sort_header_tag('total', caption: t('consignment_note.attr.total')) %>
+      <%= sort_header_tag('description', caption: t('consignment_note.attr.description')) %>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% consignment_notes.each do |cn| %>
+    <tr class="<%= cycle('odd', 'even') %>">
+      <td class='checkbox hide-when-print'><%= check_box_tag('ids[]', cn.id, false, id: nil) %></td>
+      <td><%= link_to cn.id, {:controller => 'consignment_notes', :action => 'show', :id => cn.id}, :class => 'fas fa-info-circle', :title => "#{t('consignment_note.attr.description')}: #{cn.description}" %></td>
+      <td><%= link_to cn.organization.name, {:controller => 'organizations', :action => 'show', :id => cn.organization_id}, :class => 'fas fa-info-circle' unless cn.organization_id.blank? %></td>
+      <td><%= link_to cn.seller.name, {:controller => 'organizations', :action => 'show', :id => cn.seller_id}, :class => 'fas fa-info-circle' unless cn.seller_id.blank? %></td>
+      <td><%= link_to cn.document_type.name, {:controller => 'document_types', :action => 'show', :id => cn.document_type_id}, :class => 'fas fa-info-circle' unless cn.document_type_id.blank? %></td>
+      <td><%= cn.number %></td>
+      <td><%= cn.date %></td>
+      <td><%= check_box_tag "cn_is_locked_#{cn.id}", cn.is_locked, cn.is_locked, {:label => t('consignment_note.attr.is_locked'), :disabled => true} %></td>
+      <td><%= cn.total %></td>
+      <td><%= cn.description %></td>
+      <td class="action">
+        <%= link_to l(:button_edit), {:controller => 'consignment_notes', :action => 'edit', :id => cn.id}, :class => 'icon icon-only icon-edit', :title => l(:button_edit), :accesskey => accesskey(:edit) if allow_edit %>
+      </td>
+      <td class="action">
+        <%= link_to l(:button_copy), {:controller => 'consignment_notes', :action => 'copy', :id => cn.id}, :class => 'icon icon-only icon-copy', :title => l(:button_copy), :accesskey => accesskey(:copy) if allow_edit %>
+      </td>
+      <td class="action">
+        <%= delete_link({ :controller => 'consignment_notes', :action => 'destroy', :id => cn.id}, class: 'icon icon-only icon-del', title: l(:button_delete)) if allow_edit %>
+      </td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>

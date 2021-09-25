@@ -1,0 +1,12 @@
+<div id="service">
+  <p><%= t('service.attr.id') %>: <%= @service.id %></p>
+  <p><%= t('service.attr.equipment') %>: <%= link_to @service.equipment.to_s, {:controller => 'equipments', :action => 'show', :id => @service.equipment_id}, :class => 'fas fa-info-circle' unless @service.equipment_id.blank? %></p>
+  <p><%= t('service.attr.organization') %>: <%= link_to @service.organization.name, {:controller => 'organizations', :action => 'show', :id => @service.organization_id}, :class => 'fas fa-info-circle' unless @service.organization_id.blank? %></p>
+  <p><%= t('service.attr.service_type') %>: <%= link_to @service.service_type.name, {:controller => 'service_types', :action => 'show', :id => @service.service_type_id}, :class => 'fas fa-info-circle' unless @service.service_type_id.blank? %></p>
+  <p><%= t('service.attr.send_by') %>: <%= link_to @service.send_by.name, {:controller => 'users', :action => 'show', :id => @service.send_by_id}, :class => 'fas fa-info-circle' unless @service.send_by_id.blank? %></p>
+  <p><%= t('service.attr.start_date') %>: <%= @service.start_date if !@service.start_date.blank? %></p>
+  <p><%= t('service.attr.document_number') %>: <%= @service.document_number if !@service.document_number.blank? %></p>
+  <p><%= t('service.attr.return_by') %>: <%= link_to @service.return_by.name, {:controller => 'users', :action => 'show', :id => @service.return_by_id}, :class => 'fas fa-info-circle' unless @service.return_by_id.blank? %></p>
+  <p><%= t('service.attr.end_date') %>: <%= @service.end_date if !@service.end_date.blank? %></p>
+  <p><%= t('service.attr.description') %>: <%= @service.description %></p>
+</div>

@@ -1,0 +1,36 @@
+<%= error_messages_for 'consignment_note' %>
+
+<%= labelled_form_for cn, url: { controller: :consignment_notes, action: action } do |f| %>
+  <div class='box tabular'>
+    <p><%= f.select(:organization_id, options_for_select(organizations.map { |o| [o[:name], o[:id]]}, cn.organization_id), :label => t('consignment_note.attr.organization')) %></p>
+    <p><%= f.select(:seller_id, options_for_select(sellers.map { |o| [o[:name], o[:id]]}, cn.seller_id), :label => t('consignment_note.attr.seller')) %></p>
+    <p><%= f.select(:document_type_id, options_for_select(document_types.map { |o| [o[:name], o[:id]]}, cn.document_type_id), :label => t('consignment_note.attr.document_type')) %></p>
+    <p><%= f.text_field :number, :label => t('consignment_note.attr.number') %></p>
+    <p><%= f.date_field :date, :label => t('consignment_note.attr.date') %></p>
+    <p><%= f.check_box :is_locked, {:label => t('consignment_note.attr.is_locked', :disabled => true)} %></p>
+    <p><%= f.text_field :total, :label => t('consignment_note.attr.total') %></p>
+    <p><%= f.text_area :description, :label => t('consignment_note.attr.description') %></p>
+  </div>
+
+  <% if cn.attachments.exists? %>
+    <div class="box">
+      <p>
+        <label><%= l(:label_attachment_plural) %></label>
+        <%= link_to_attachments cn, :thumbnails => true, :author => false %>
+      </p>
+    </div>
+  <% end %>
+
+  <div class="box">
+    <p><label><%=l(:label_attachment_add)%></label><%= render :partial => 'attachments/form' %></p>
+  </div>
+
+  <%= f.submit t('button_save') %>
+<% end %>
+<script>
+    $(document).ready(function() {
+        initSelects([{id:'#organization_id', allowClear: false, disabled: cn.id.blank?}]);
+        initSelects([{id:'#seller_id', allowClear: false, disabled: false}]);
+        initSelects([{id:'#document_type_id', allowClear: false, false}]);
+    });
+</script>

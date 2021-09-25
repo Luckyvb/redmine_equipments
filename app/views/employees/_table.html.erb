@@ -1,0 +1,27 @@
+<table class="list">
+  <thead>
+    <tr>
+      <th><%= t('employee.attr.organization') %></th>
+      <th><%= t('employee.attr.name') %></th>
+      <th colspan="2"></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% employeees.each do |e| %>
+    <tr class="<%= cycle('odd', 'even') %>">
+      <td><%= link_to e.organization.to_s, {:controller => 'organizations', :action => 'show', :id => e.organization.id}, :class => 'fas fa-info-circle' %></td>
+      <td><%= e.name %></td>
+      <td class="action">
+        <%= link_to l(:button_edit),
+                            {:controller => 'employees', :action => 'edit', :id => e.id},
+                            :class => 'icon icon-only icon-edit', :title => l(:button_edit),
+                            :accesskey => accesskey(:edit),
+                            :onclick => 'Element.show("edit-employees"); return false;' %>
+      </td>
+      <td class="action">
+        <%= delete_link({ :controller => 'employees', :action => 'destroy', :id => e.id}, class: 'icon icon-only icon-del', title: l(:button_delete)) %>
+      </td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>

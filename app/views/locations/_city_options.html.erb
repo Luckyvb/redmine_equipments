@@ -1,0 +1,7 @@
+<% locations.each do |l| %>
+  <optgroup label="<%= l.name %>" >
+  <% l.cities.each do |c| %>
+    <option value="<%= c.id %>" data-location-type="Country"><%= c.name %></option>
+  <% end %>
+  </optgroup>
+<% end %>

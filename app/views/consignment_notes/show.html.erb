@@ -1,0 +1,25 @@
+<% if  User.current.allowed_to?(:project_view_catalogs, @project, global: false) %>
+  <% allow_edit =  User.current.allowed_to?(:project_edit_catalogs, @project, global: false) %>
+  <div class="contextual">
+    <%= link_to(t('consignment_note.action.new.title'), {:controller => 'consignment_notes', :action => 'new'}, :class => 'icon icon-add') if allow_edit %>
+    <%= link_to(t('consignment_note.action.edit.title'), {:controller => 'consignment_notes', :action => 'edit', :id => @consignment_note.id}, :class => 'icon icon-edit') if allow_edit && !@consignment_note.blank? %>
+    <%= link_to(t('consignment_note.action.delete.title'), {:controller => 'consignment_notes', :action => 'destroy', :id => @consignment_note.id}, :class => 'icon icon-del') if allow_edit && !@consignment_note.blank? %>
+  </div>
+  <% content_for :sidebar do %>
+    <ul id="options">
+      <li><%= link_to(t('consignment_note.action.new.title'), {:controller => 'consignment_notes', :action => 'new'}, :class => 'icon icon-add') if allow_edit %></li>
+      <li><%= link_to(t('consignment_note.action.edit.title'), {:controller => 'consignment_notes', :action => 'edit', :id => @consignment_note.id}, :class => 'icon icon-edit') if allow_edit && !@consignment_note.blank? %></li>
+      <li><%= link_to(t('consignment_note.action.delete.title'), {:controller => 'consignment_notes', :action => 'destroy', :id => @consignment_note.id}, :class => 'icon icon-del') if allow_edit && !@consignment_note.blank? %></li>
+    </ul>
+  <% end %>
+  <h2><%= t('consignment_note.title', count: 1) %></h2>
+  <% if !@consignment_note.blank? %>
+    <%= render_tabs consignment_note_tabs %>
+    <%= link_to l(:button_edit), {:controller => 'consignment_notes', :action => 'edit', :id => @consignment_note.id}, :class => 'icon icon-edit', :title => l(:button_edit), :accesskey => accesskey(:edit) if allow_edit %>
+    <%= link_to t('button_cancel'), path_back_or_default, :class => 'icon icon-cancel', :title => l(:button_cancel) %>
+  <% else %>
+    <p class="nodata"><%=t('data.empty.message')%></p>
+  <% end %>
+<% else %>
+  <p class="nodata"><%=t('permission.denied.message')%></p>
+<% end %>

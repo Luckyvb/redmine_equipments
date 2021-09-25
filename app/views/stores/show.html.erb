@@ -1,0 +1,28 @@
+<% if User.current.allowed_to?(:project_view_equipments, nil, :global => true) %>
+  <% allow_edit = User.current.allowed_to?(:project_edit_equipments, nil, :global => true) %>
+  <div class="contextual">
+    <%= link_to(t('store.action.new.title'), {:controller => 'stores', :action => 'new'}, :class => 'icon icon-add') if allow_edit %>
+    <%= link_to(t('store.action.edit.title'), {:controller => 'stores', :action => 'edit', :id => @store.id}, :class => 'icon icon-edit') if allow_edit && !@store.blank? %>
+    <%= link_to(t('store.action.delete.title'), {:controller => 'stores', :action => 'destroy', :id => @store.id}, :class => 'icon icon-del') if allow_edit && !@store.blank? %>
+  </div>
+  <% content_for :sidebar do %>
+    <ul id="options">
+      <li><%= link_to(t('store.action.new.title'), {:controller => 'stores', :action => 'new'}, :class => 'icon icon-add') if allow_edit %></li>
+      <li><%= link_to(t('store.action.edit.title'), {:controller => 'stores', :action => 'edit', :id => @store.id}, :class => 'icon icon-edit') if allow_edit && !@store.blank? %></li>
+      <li><%= link_to(t('store.action.delete.title'), {:controller => 'stores', :action => 'destroy', :id => @store.id}, :class => 'icon icon-del') if allow_edit && !@store.blank? %></li>
+    </ul>
+  <% end %>
+  <h2><%= t('store.title', count: 1) %></h2>
+  <% if !@store.blank? %>
+    <p>
+      <%= t('store.attr.parent') %>:
+      <%= link_to @store.parent.name, {:controller => 'stores', :action => 'show', :id => @store.parent_id}, :class => 'fas fa-info-circle' unless @store.parent_id.blank? %>
+    </p>
+    <p><%= t('store.attr.name') %>:<%= @store.name %></p>
+    <%= link_to t('button_cancel'), {:controller => 'stores', :action => 'index'} %>
+  <% else %>
+    <p class="nodata"><%=t('data.empty.message')%></p>
+  <% end %>
+<% else %>
+  <p class="nodata"><%=t('permission.denied.message')%></p>
+<% end %>

@@ -1,0 +1,7 @@
+<%= labelled_form_for project_organization, url: { controller: :project_organizations, action: action } do |f| %>
+  <div class='box tabular'>
+    <p><%= f.select(:organization_id, options_for_select(Organization.all.map { |c| [c.name, c.id] }, project_organization.organization_id), :label => t('project_organization.attr.organization')) %></p>
+  </div>
+
+  <%= f.submit t('button_save') %>
+<% end %>

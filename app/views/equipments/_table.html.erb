@@ -1,0 +1,100 @@
+<table class="list">
+  <thead>
+    <tr>
+      <th class="checkbox hide-when-print">
+         <%= check_box_tag 'check_all', '', false, :class => 'toggle-selection', :title => "#{l(:button_check_all)}/#{l(:button_uncheck_all)}" %>
+      </th>
+      <%= sort_header_tag('id', caption: t('equipment.attr.id')) %>
+      <%= sort_header_tag('equipment_type', caption: t('equipment.attr.equipment_type')) %>
+      <%= sort_header_tag('vendor_model', caption: t('equipment.attr.vendor_model')) %>
+<% if parent_id.blank? %>
+      <%= sort_header_tag('owner', caption: t('equipment.attr.owner')) %>
+      <%= sort_header_tag('location', caption: t('equipment.attr.location')) %>
+<% end %>
+      <%= sort_header_tag('number', caption: t('equipment.attr.number')) %>
+      <%= sort_header_tag('sn', caption: t('equipment.attr.sn')) %>
+      <%= sort_header_tag('state', caption: t('equipment.attr.state')) %>
+      <%= sort_header_tag('warranty_end', caption: t('equipment.attr.warranty_end')) %>
+      <th colspan="5"></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% if !equipments.blank? %>
+    <% equipments.each do |e| %>
+      <tr class="<%= cycle('odd', 'even') %>">
+        <td class='checkbox hide-when-print'><%= check_box_tag('ids[]', e.id, false, id: nil) %></td>
+        <td><%= link_to e.id, {:controller => 'equipments', :action => 'show', :id => e.id}, :class => 'fas fa-info-circle', :title => "#{t('equipment.attr.description')}: #{e.description}" %></td>
+        <td><%= link_to (e.equipment_type.blank? ? e.equipment_type_id : e.equipment_type.name), {:controller => 'equipment_types', :action => 'show', :id => e.equipment_type.id}, :class => 'fas fa-info-circle' %></td>
+        <td>
+           <%= link_to (e.vendor_model.blank? ? "" : e.vendor_model.vendor.name), {:controller => 'vendors', :action => 'show', :id => e.vendor_model.vendor.id}, :class => 'fas fa-info-circle' %>,&nbsp;
+           <%= link_to (e.vendor_model.blank? ? e.vendor_model_id : e.vendor_model.to_s_wo_vendor), {:controller => 'vendor_models', :action => 'show', :id => e.vendor_model.id}, :class => 'fas fa-info-circle' %>
+        </td>
+  <% if parent_id.blank? %>
+        <td>
+          <%= link_to t("owner_type.#{e.owner_type.downcase}", count:1), {:controller => e.owner_type.downcase+'s', :action => 'index'}, :class => 'fas fa-info-circle' %>:
+          <%= link_to (e.owner.blank? ? e.owner_id : e.owner.to_s), {:controller => e.owner_type.downcase+'s', :action => 'show', :id => e.owner_id}, :class => 'fas fa-info-circle' %>
+        </td>
+        <td>
+          <%= link_to t(e.location_type.downcase+'.title',count:1), {:controller => location_controller_name(e.location_type), :action => 'index'}, :class => 'fas fa-info-circle' unless e.location_type.blank? %>:
+          <%= link_to (e.location.blank? ? e.location_id : e.location.to_s), {:controller => location_controller_name(e.location_type), :action => 'show', :id => e.location_id}, :class => 'fas fa-info-circle' unless e.location_type.blank? %>
+        </td>
+  <% end %>
+        <td><%= e.number %></td>
+        <td><%= e.sn %></td>
+        <td><i class="fa fa-<%= e.state_icon if !e.state.blank? %>" title="<% e.state_title %>"></i></td>
+        <td><%= e.warranty_end.to_date if !e.warranty_end.blank? %></td>
+        <td class="action">
+          <%= content_tag(:i, '', :class => 'fas fa-cubes expand-details', :title => t('attribute.title', count: 2), :onclick => 'equipment_detail(this, 0);') %>
+        </td>
+        <td class="action">
+          <%= content_tag(:i, '', :class => 'fas fa-stream expand-details', :title => t('equipment.action.expand.title'), :onclick => 'equipment_detail(this, 1);') %>
+        </td>
+        <td class="action">
+          <%= content_tag(:i, '', :class => 'fas fa-wrench expand-details', :title => t('service.title', count: 2), :onclick => 'equipment_detail(this, 2);') %>
+        </td>
+        <td class="action">
+          <%= content_tag(:i, '', :class => 'fas fa-history expand-details', :title => t('history.title', count: 2), :onclick => 'equipment_detail(this, 3)') %>
+        </td>
+        <td class="action">
+          <%= link_to l(:button_edit), {:controller => 'equipments', :action => 'edit', :id => e.id}, :class => 'icon icon-only icon-edit', :title => l(:button_edit), :accesskey => accesskey(:edit) %>
+        </td>
+        <td class="action">
+          <%= link_to l(:button_copy), {:controller => 'equipments', :action => 'copy', :id => e.id}, :class => 'icon icon-only icon-copy', :title => l(:button_copy), :accesskey => accesskey(:copy) %>
+        </td>
+        <td class="action">
+          <%= delete_link({ :controller => 'equipments', :action => 'destroy', :id => e.id}, class: 'icon icon-only icon-del', title: l(:button_delete)) %>
+        </td>
+      </tr>
+      <tr style="display:none;">
+        <td colspan="17" class="child-<%= e.depth %>" ><%= render partial: 'attributes', locals: { attributable_type: 'Equipment', attributable_id: e.id, attributes: e.attribute_values } %></td>
+      </tr>
+      <tr style="display:none;">
+        <td colspan="17" class="child-<%= e.depth %>" ><%= render partial: 'childs', locals: { equipments: e.children, parent_id: e.id } %></td>
+      </tr>
+      <tr style="display:none;">
+        <td colspan="17" class="child-<%= e.depth %>" >
+          <div class="contextual">
+            <%= link_to(t('service.action.new.title'), {:controller => 'services', :action => 'new', :equipment => e.id}, :class => 'icon icon-add') if User.current.allowed_to?(:project_edit_equipments, @project, global: false) %>
+          </div>
+          <%= render partial: 'services/table', locals: { services: e.services, equipment: e.id } %></td>
+      </tr>
+      <tr style="display:none;">
+        <td colspan="17" class="child-<%= e.depth %>" ><%= render partial: 'history', locals: { versions: e.versions || p[], equipment: e.id } %></td>
+      </tr>
+    <% end %>
+    <% end %>
+  </tbody>
+</table>
+<span class='pagination'><%= pagination_links_full @eq_pages, @eq_count %></span>
+<script>
+  function equipment_detail(btn, level){
+      let el = $(btn).parent().parent();
+      for(let i = 0; i < 4; i++) {
+          el = el.next("tr");
+          if(i === level)
+              el.slideToggle();
+          else
+              el.slideUp();
+      }
+  }
+</script>

@@ -1,0 +1,44 @@
+.icon-equipments {
+  background-image: url(../images/memory.svg);
+}
+
+a.fa.field-lookup::before, a.far.field-lookup::before, a.fas.field-lookup::before, ul.list a.fa.field-lookup {
+  padding-right: 5px;
+}
+
+table.list > tbody > tr > td > a.fa::before, table.list > tbody > tr > td > a.fas::before, table.list > tbody > tr > td > a.far::before {
+  padding-right: 5px;
+  text-decoration: none;
+  content: none;
+}
+
+table.list > tbody > tr > td > a.fa-info-circle::before {
+  padding-left: 5px;
+  text-decoration: none;
+  content: "\f05a";
+}
+
+table.list td.action {
+  padding: 2px;
+  width: 18px;
+}
+
+table.list td.action > i.fa-list.expand-details {
+  cursor: pointer;
+}
+
+.options-group-lvl-0 {
+  font-weight: bold;
+}
+.options-group-lvl-1 {
+  font-weight: bolder;
+  padding-left: 15px;
+}
+
+.options-group-lvl-2 {
+  padding-left: 30px;
+}
+
+.action .expand-details {
+    cursor: pointer;
+}
