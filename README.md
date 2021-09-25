@@ -11,6 +11,8 @@ Change to redmine/plugins folder and run:
 ```
 bash
 git clone https://github.com/redmine_equipments.git equipments
+bundle install
+bundle exec rake redmine:plugins:migrate RAILS_ENV=production
 ```
 
 Tested with...
