@@ -15,7 +15,7 @@
   <h2><%= t('vendor.title', count: 1) %></h2>
   <% if !@vendor.blank? %>
     <p><%= t('vendor.attr.name') %>:<%= @vendor.name %></p>
-    <p><%= t('vendor.attr.icon') %>:<%= image_tag(@vendor.icon.preview(resize_to_limit: [32, 32]), :label => t('vendor.attr.icon')) if @vendor.icon.attached? %></p>
+    <p><%= t('vendor.attr.icon') %>:<%= @vendor.icon.attached? ? image_tag(@vendor.icon, :label => t('vendor.attr.icon')) : tag.i(:class => 'fas fa-copyright') %></p>
     <p><%= t('vendor.attr.site') %>:<%= link_to @vendor.site, title: @vendor.site do content_tag(:i, '', class: 'fa fa-globe') end unless @vendor.site.blank? %></p>
     <%= link_to t('button_cancel'), {:controller => 'vendors', :action => 'index'} %>
   <% else %>

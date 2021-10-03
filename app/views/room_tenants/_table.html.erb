@@ -8,7 +8,7 @@
 <table class="list">
   <thead>
     <tr>
-      <%= sort_header_tag('room', caption: t('room_tenant.attr.room')) %>
+      <%= sort_header_tag('room', caption: t('room_tenant.attr.room')) if room.blank? %>
       <%= sort_header_tag('organization', caption: t('room_tenant.attr.organization')) %>
       <%= sort_header_tag('start_date', caption: t('room_tenant.attr.start_date')) %>
       <%= sort_header_tag('end_date', caption: t('room_tenant.attr.end_date')) %>
@@ -19,9 +19,11 @@
   <tbody>
     <% room_tenants.each do |t| %>
     <tr class="<%= cycle('odd', 'even') %>">
+      <% if room.blank? %>
       <td>
         <%= link_to t.room.to_s_short, {:controller => 'rooms', :action => 'show', :id => t.room.id}, :class => 'fas fa-info-circle' %>
       </td>
+      <% end %>
       <td>
         <%= link_to t.organization.name, {:controller => 'organizations', :action => 'show', :id => t.organization.id}, :class => 'fas fa-info-circle' %>
       </td>

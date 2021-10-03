@@ -351,6 +351,9 @@ ru:
     group:
       one: "Группа"
       other: "Группы"
+    store:
+      one: "Склад"
+      other: "Склады"
     action:
       new:
         title: "Новый тип владельца"
@@ -412,6 +415,44 @@ ru:
       id: "Id"
       contry_id: "Страна"
       name: "Название"
+  street_type:
+    title:
+      one: "Тип улицы"
+      other: "Типы улиц"
+    action:
+      new:
+        title: "Новый тип улицы"
+        success: "Тип улицы создан"
+      edit:
+        title: "Edit тип улицы"
+        success: "Тип улицы изменен"
+      delete:
+        title: "Delete тип улицы"
+        success: "Тип улицы успешно удален"
+    attr:
+      id: "Id"
+      name: "Name"
+      abbreviation: "Сокращение"
+      description: "Описание"
+  street:
+    title:
+      one: "Улица"
+      other: "Улицы"
+    action:
+      new:
+        title: "New street"
+        success: "Улица создан"
+      edit:
+        title: "Edit street"
+        success: "Улица изменен"
+      delete:
+        title: "Delete street"
+        success: "Улица успешно удалена"
+    attr:
+      id: "Id"
+      city: "Город"
+      street_type: "Тип улицы"
+      name: "Название"
   address:
     title:
       one: "Адрес"
@@ -428,6 +469,7 @@ ru:
         success: "Адрес успешно удален"
     attr:
       id: "Id"
+      street: "Улица"
       name: "Название"
       coordinates: "Координаты"
   floor:

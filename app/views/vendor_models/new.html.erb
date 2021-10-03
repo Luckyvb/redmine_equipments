@@ -1,7 +1,7 @@
 <% if User.current.allowed_to?(:global_edit_catalogs, nil, :global => true) %>
   <h1><%= t('vendor_model.action.new.title') %> </h1>
 
-  <%= render partial: 'form', locals: { vendor_model: @vendor_model, action: :create } %>
+  <%= render partial: 'form', locals: { equipment_types: @equipment_types, vendors: @vendors, vendor_model: @vendor_model, action: :create } %>
 <% else %>
   <p class="nodata"><%=t('permission.denied.message')%></p>
 <% end %>

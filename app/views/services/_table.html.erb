@@ -33,7 +33,7 @@
       <td><%= link_to s.return_by.name, {:controller => 'users', :action => 'show', :id => s.return_by_id}, :class => 'fas fa-info-circle' unless s.return_by_id.blank? %></td>
       <td><%= s.end_date if !s.end_date.blank? %></td>
       <td class="action">
-        <%= content_tag(:i, '', :class => 'fas fa-stream expand-details', :title => t('service.action.expand.title'), :onclick => 'service_detail(this, 0);') %>
+        <%= content_tag(:i, '', :class => 'fas fa-stream expand-details', :title => t('service.action.expand.title'), :onclick => 'expand_detail(this, 0);') %>
       </td>
       <td class="action">
         <%= link_to l(:button_edit), {:controller => 'services', :action => 'edit', :id => s.id}, :class => 'icon icon-only icon-edit', :title => l(:button_edit), :accesskey => accesskey(:edit) if allow_edit %>
@@ -52,15 +52,3 @@
     <% end %>
   </tbody>
 </table>
-<script>
-    function service_detail(btn, level){
-        let el = $(btn).parent().parent();
-        for(let i = 0; i < 4; i++) {
-            el = el.next("tr");
-            if(i === level)
-                el.slideToggle();
-            else
-                el.slideUp();
-        }
-    }
-</script>

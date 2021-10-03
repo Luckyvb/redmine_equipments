@@ -2,7 +2,10 @@
   <div class='box tabular'>
     <p><%= f.text_field :name, :label => t('vendor.attr.name') %></p>
     <p><%= f.text_field :site, :label => t('vendor.attr.site') %></p>
-    <p><%= image_tag(vendor.icon.preview(resize_to_limit: [32, 32]), :label => t('vendor.attr.icon')) if vendor.icon.attached? %></p>
+    <p>
+      <%= image_tag(vendor.icon, :style => "max-width: 16px; max-height: 16px;", :label => t('vendor.attr.icon')) if vendor.icon.attached? %>
+      <%= tag.i :class => 'fas fa-copyright' unless vendor.icon.attached? %>
+    </p>
   </div>
 
   <%= f.submit t('button_save') %>

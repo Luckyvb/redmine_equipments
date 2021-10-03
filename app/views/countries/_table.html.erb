@@ -1,28 +1,35 @@
+<%= error_messages_for 'country' %>
 <table class="list">
   <thead>
     <tr>
       <th><%= t('country.attr.name') %></th>
       <th><%= t('country.attr.short_name') %></th>
       <th><%= t('country.attr.iso') %></th>
-      <th colspan="2"></th>
+      <th colspan="4"></th>
     </tr>
   </thead>
   <tbody>
-    <% countryes.each do |a| %>
+    <% countryes.each do |c| %>
     <tr class="<%= cycle('odd', 'even') %>">
-      <td><%= a.name %></td>
-      <td><%= a.short_name %></td>
-      <td><%= a.iso %></td>
+      <td><%= c.name %></td>
+      <td><%= c.short_name %></td>
+      <td><%= c.iso %></td>
       <td class="action">
-        <%= link_to l(:button_edit),
-                            {:controller => 'countries', :action => 'edit', :id => a.id},
-                            :class => 'icon icon-only icon-edit', :title => l(:button_edit),
-                            :accesskey => accesskey(:edit),
-                            :onclick => 'Element.show("edit-countries"); return false;' %>
+        <%= content_tag(:i, '', :class => 'fas fa-stream expand-details', :title => t('country.action.expand.title'), :onclick => 'expand_detail(this, 0);') %>
       </td>
       <td class="action">
-        <%= delete_link({ :controller => 'countries', :action => 'destroy', :id => a.id}, class: 'icon icon-only icon-del', title: l(:button_delete)) %>
+        <%= link_to l(:button_copy), {:controller => 'countries', :action => 'copy', :id => r.id}, :class => 'icon icon-only icon-copy', :title => l(:button_copy), :accesskey => accesskey(:copy) %>
       </td>
+      <td class="action">
+        <%= link_to l(:button_edit), {:controller => 'countries', :action => 'edit', :id => c.id}, :class => 'icon icon-only icon-edit', :title => l(:button_edit), :accesskey => accesskey(:edit), :onclick => 'Element.show("edit-countries"); return false;' %>
+      </td>
+      <td class="action">
+        <%= delete_link({ :controller => 'countries', :action => 'destroy', :id => c.id}, class: 'icon icon-only icon-del', title: l(:button_delete)) %>
+      </td>
+    </tr>
+    <tr style="display:none;">
+      <td colspan="7" >
+        <%= render partial: 'cities/table', locals: { cities: c.cities, country: c.id } %></td>
     </tr>
     <% end %>
   </tbody>

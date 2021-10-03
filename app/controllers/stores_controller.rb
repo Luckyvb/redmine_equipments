@@ -1,12 +1,9 @@
 class StoresController < ApplicationController
   unloadable
 
-  before_action :find_project_by_project_id
-  #before_action :find_store_project
+  before_action :find_project_by_project_id, :authorize
   before_action :find_store, :except => [:new, :create, :index, :update_responsibles, :update_locations]
   before_action :load_lists, :except => [:create, :index, :update_responsibles, :update_locations]
-
-  #before_action :authorize
 
   helper :sort
   include SortHelper

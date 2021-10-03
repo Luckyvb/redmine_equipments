@@ -5,3 +5,4 @@ gem 'acts_as_list'
 #gem 'db_acts_as_versioned', :git => 'https://github.com/yankee78/acts_as_versioned', branch: 'patch-2'
 gem 'dynamic_selectable', git: 'https://github.com/mattantonelli/dynamic_selectable.git'
 gem 'image_processing'
+gem "active_model_serializers", require: true

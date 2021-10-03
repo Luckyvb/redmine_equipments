@@ -1,3 +1,5 @@
+<%= error_messages_for 'equipment_type' %>
+
 <%= labelled_form_for equipment_type, url: { controller: :equipment_types, action: action } do |f| %>
   <div class='box tabular'>
     <%= #f.association :equipment_type, label: t('equipment_type.attr.name'), collection: EquipmentType.accessible.where.not(id: params[:id]), include_blank: false, input_html: { multiple: false }
@@ -5,6 +7,10 @@
     <p><%= f.select(:parent_id, equipment_type_options_for_select(equipment_type.parent_id, params[:id]), include_blank: true, :label => t('equipment_type.attr.parent')) %></p>
     <p><%= f.text_field :name, :label => t('equipment_type.attr.name') %></p>
     <p><%= f.text_field :number_template, :label => t('equipment_type.attr.number_template') %></p>
+    <p>
+      <%= image_tag equipment_type.icon, :style => "max-width: 32px; max-height: 32px;" if equipment_type.icon.attached? %>
+      <%= f.file_field :icon, :label => t('equipment_type.attr.icon') %>
+    </p>
   </div>
 
   <%= f.submit t('button_save') %>

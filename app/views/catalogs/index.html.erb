@@ -1,9 +1,13 @@
 <% if User.current.allowed_to?(:global_view_catalogs, nil, :global => true) %>
   <h2><%= t('catalog.global.title', count: 2) %></h2>
 
+  <% if User.current.allowed_to?(:global_view_equipments, nil, :global => true) %>
   <ul class='list'>
-    <ol><%= link_to t('organization.title', count: 2), {:controller => 'organizations', :action => :index}, :class => 'fas fa-list field-lookup'
-    %></ol>
+    <ol><%= link_to t('equipment.title', count: 2), {:controller => 'equipments', :action => :index}, :class => 'fas fa-memory field-lookup' %></ol>
+  </ul>
+  <% end %>
+  <ul class='list'>
+    <ol><%= link_to t('organization.title', count: 2), {:controller => 'organizations', :action => :index}, :class => 'fas fa-sitemap field-lookup' %></ol>
     <ol><%= link_to t('equipment_type.title', count: 2), {:controller => 'equipment_types', :action => :index}, :class => 'fas fa-cog field-lookup' %></ol>
     <ol><%= link_to t('attribute.title', count: 2), {:controller => 'attributes', :action => :index}, :class => 'fas fa-tag field-lookup' %></ol>
     <ol><%= link_to t('vendor.title', count: 2), {:controller => 'vendors', :action => :index}, :class => 'fas fa-copyright field-lookup' %></ol>
@@ -13,11 +17,16 @@
     <ol><%= link_to t('service_result_type.title', count: 2), {:controller => 'service_result_types', :action => :index}, :class => 'fas fa-wrench field-lookup' %></ol>
     <ol><%= t('location_type.title', count: 2) %>:
       <ul class='list'>
-        <ol><%= link_to t('country.title', count: 2), {:controller => 'countries', :action => :index}, :class => 'fas fa-list field-lookup' %></ol>
-        <ol><%= link_to t('city.title', count: 2), {:controller => 'cities', :action => :index}, :class => 'fas fa-list field-lookup' %></ol>
-        <ol><%= link_to t('address.title', count: 2), {:controller => 'addresses', :action => :index}, :class => 'fas fa-list field-lookup' %></ol>
-        <ol><%= link_to t('floor.title', count: 2), {:controller => 'floors', :action => :index}, :class => 'fas fa-list field-lookup' %></ol>
-        <ol><%= link_to t('room.title', count: 2), {:controller => 'rooms', :action => :index}, :class => 'fas fa-list field-lookup' %></ol>
+        <ol><%= link_to t('country.title', count: 2), {:controller => 'countries', :action => :index}, :class => 'fas fa-globe field-lookup' %></ol>
+        <ol><%= link_to t('city.title', count: 2), {:controller => 'cities', :action => :index}, :class => 'fas fa-city field-lookup' %></ol>
+        <ol><%= link_to t('street.title', count: 2), {:controller => 'streets', :action => :index}, :class => 'fas fa-map-marked field-lookup' %>
+          <ul class='list'>
+            <ol><%= link_to t('street_type.title', count: 2), {:controller => 'street_types', :action => :index}, :class => 'fas fa-list field-lookup' %></ol>
+          </ul>
+        </ol>
+        <ol><%= link_to t('address.title', count: 2), {:controller => 'addresses', :action => :index}, :class => 'fas fa-building field-lookup' %></ol>
+        <ol><%= link_to t('floor.title', count: 2), {:controller => 'floors', :action => :index}, :class => 'fas fa-cubes field-lookup' %></ol>
+        <ol><%= link_to t('room.title', count: 2), {:controller => 'rooms', :action => :index}, :class => 'fas fa-cube field-lookup' %></ol>
       </ul>
     </ol>
   </ul>

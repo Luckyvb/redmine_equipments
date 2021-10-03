@@ -124,7 +124,6 @@ private
   end
 
   def authorize(ctrl = params[:controller], action = params[:action], global = true)
-    #User.current.allowed_to?(:global_view_catalogs, nil, :global => true) || User.current.allowed_to?(:global_edit_catalogs, nil, :global => global)
     User.current.allowed_to?({:controller => ctrl, :action => action}, nil, :global => true)
   end
 

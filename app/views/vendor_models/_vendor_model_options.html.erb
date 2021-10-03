@@ -1,7 +1,9 @@
 <% vendors.each do |v| %>
-<optgroup label="<%= v.name %>" >
+<optgroup label="<%= v.name %>" data-image="<%=url_for_vendor_icon(v) %>">
   <% v.vendor_models.each do |vm| %>
-    <option value="<%= vm.id %>" data-location-type="Floor"><%= vm.to_s %></option>
+    <% if equipment_type && equipment_type.to_i == vm.equipment_type_id %>
+    <option value="<%= vm.id %>" data-image='<%= url_for_vendor_icon(vm.vendor) %>'><%= vm.to_s_wo_vendor %></option>
+    <% end %>
   <% end %>
 </optgroup>
 <% end %>

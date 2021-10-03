@@ -4,10 +4,9 @@ class VendorModelsController < ApplicationController
   helper :sort
   include SortHelper
 
+  before_action :authorize
   before_action :find_vendor_model, :except => [:new, :create, :index]
   before_action :load_lists, :only => [:new, :edit, :copy]
-
-  #before_action :authorize
 
   def index
     sort_init 'name', 'asc'
@@ -31,7 +30,7 @@ class VendorModelsController < ApplicationController
       @vendor_models = @vendor_models.where(equipment_type_id: etid) || []
     else
       if et
-        @vendor_models = @vendor_models.where('equipment_type.name': et) || []
+        @vendor_models = @vendor_models.where('equipment_types.name': et) || []
       end
     end
 
@@ -68,9 +67,14 @@ class VendorModelsController < ApplicationController
       flash[:notice] = t('vendor_model.action.new.success')
       redirect_back_or_default
     else
+      load_lists
       render :action => 'new'
     end
   rescue => e
+    if @vendor_model.blank?
+      @vendor_model = VendorModel.new()
+    end
+    load_lists
     flash[:error] = "#{t('error')}:#{e.message}"
     render :action => 'new'
   end
@@ -88,6 +92,7 @@ class VendorModelsController < ApplicationController
       render :action => 'edit'
     end
   rescue => e
+    load_lists
     flash[:error] = "#{t('error')}:#{e.message}"
     render :action => 'edit'
   end
@@ -102,6 +107,7 @@ class VendorModelsController < ApplicationController
     flash[:notice] = t('vendor_model.action.delete.success')
     redirect_back_or_default
   rescue => e
+    load_lists
     flash[:error] = "#{t('error')}:#{e.message}"
     render :action => 'index'
   end
@@ -115,12 +121,20 @@ private
   end
 
   def load_lists
+    load_equipment_types
     load_vendors
+  end
+
+  def load_equipment_types
+    @equipment_types = EquipmentType.arrange_serializable(:order => :name)
   end
 
   def load_vendors
     @vendors = (params[:vendor].blank? ? Vendor.accessible : [Vendor.find(params[:vendor])]) || []
-    #@vendors.blank? ? [] : @vendors
+  end
+
+  def authorize(ctrl = params[:controller], action = params[:action], global = true)
+    User.current.allowed_to?({:controller => ctrl, :action => action}, nil, :global => true)
   end
 
   def redirect_back_or_default(default = {:controller => 'vendor_models', :action => 'index'})

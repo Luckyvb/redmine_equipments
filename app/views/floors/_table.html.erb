@@ -1,10 +1,11 @@
+<%= error_messages_for 'floor' %>
 <table class="list">
   <thead>
     <tr>
       <th><%= t('floor.attr.address') %></th>
       <th><%= t('floor.attr.number') %></th>
       <th><%= t('floor.attr.name') %></th>
-      <th colspan="2"></th>
+      <th colspan="4"></th>
     </tr>
   </thead>
   <tbody>
@@ -13,6 +14,9 @@
       <td><%= link_to f.address.to_s, {:controller => 'addresses', :action => 'show', :id => f.address.id}, :class => 'fas fa-info-circle' %></td>
       <td><%= f.number %></td>
       <td><%= f.name %></td>
+      <td class="action">
+        <%= content_tag(:i, '', :class => 'fas fa-stream expand-details', :title => t('floor.action.expand.title'), :onclick => 'expand_detail(this, 0);') %>
+      </td>
        <td class="action">
         <%= link_to l(:button_copy), {:controller => 'floors', :action => 'copy', :id => f.id}, :class => 'icon icon-only icon-copy', :title => l(:button_copy), :accesskey => accesskey(:copy) %>
       </td>
@@ -23,6 +27,13 @@
         <%= delete_link({ :controller => 'floors', :action => 'destroy', :id => f.id}, class: 'icon icon-only icon-del', title: l(:button_delete)) %>
       </td>
     </tr>
+    <tr style="display:none;">
+      <td colspan="7">
+        <%= render partial: 'rooms/table', locals: { rooms: f.rooms, floor: f.id } %></td>
+    </tr>
     <% end %>
   </tbody>
 </table>
+<% if address.blank? && !pages.blank? && !count.blank? %>
+  <span class='pagination'><%= pagination_links_full pages, count %></span>
+<% end %>

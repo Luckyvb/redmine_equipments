@@ -6,7 +6,7 @@ class VendorsController < ApplicationController
   helper :sort
   include SortHelper
 
-  #before_action :authorize
+  before_action :authorize
   before_action :find_vendor, :except => [:new, :create, :index]
 
   def index
@@ -101,15 +101,20 @@ private
   end
 
   def get_site_icon(vendor)
-    Rails.logger.warn "Get Vendor Icon #{vendor.name} site: #{vendor.site}"
     url = "https://www.google.com/s2/favicons?domain=#{vendor.site}"
     download = URI.open(url) #open(url)
-    #Rails.logger.warn download.inspect
-    #vendor.icon.attach(io: download, filename: "vendor_#{vendor.id}.ico")
-    vendor.icon.attach(io: download, filename: "vendor_#{vendor.id}.ico")
-    #vendor.avatar.purge
+    #if download.status == 200
+      type = download.meta["content-type"]
+      ext = type.split("/")
+      Rails.logger.warn "Vendor icon: #{type}, filename: vendor_#{vendor.id}.#{ext[ext.length-1]}"
+      vendor.icon.attach(io: download, filename: "vendor_#{vendor.id}.#{ext[ext.length-1]}", content_type: type)
+    #end
   rescue => e
     flash[:error] = "Save Icon #{t('error')}:#{e.message}"
+  end
+
+  def authorize(ctrl = params[:controller], action = params[:action], global = true)
+    User.current.allowed_to?({:controller => ctrl, :action => action}, nil, :global => true)
   end
 
   def redirect_back_or_default(default = {:controller => 'vendors', :action => 'index'})

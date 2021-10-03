@@ -1,17 +1,21 @@
 <% locations.each do |l| %>
-<optgroup label="<%= l.name %>" >
+  <optgroup label="<%= l.name %>" >
   <% l.cities.each do |c| %>
-  <optgroup label="<%= c.name %>" >
-    <% c.addresses.each do |a| %>
-      <optgroup label="<%= a.name %>" >
-      <% a.floors.each do |f| %>
-        <% f.rooms.each do |r| %>
-          <option value="<%= r.id %>" data-location-type="Room"><%= "#{r.name} (#{r.number})" %></option>
-        <% end %>
+    <optgroup label="<%= c.name %>" >
+      <% c.streets.each do |s| %>
+        <optgroup label="<%= s.name %>" >
+          <% s.addresses.each do |a| %>
+            <optgroup label="<%= a.name %>" >
+            <% a.floors.each do |f| %>
+              <% f.rooms.each do |r| %>
+                <option value="<%= r.id %>" data-location-type="Room"><%= "#{r.name} (#{r.number})" %></option>
+              <% end %>
+            <% end %>
+            </optgroup>
+          <% end %>
+        </optgroup>
       <% end %>
     </optgroup>
-    <% end %>
-  </optgroup>
   <% end %>
-</optgroup>
+  </optgroup>
 <% end %>

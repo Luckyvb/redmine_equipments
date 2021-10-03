@@ -6,7 +6,7 @@
 
   <h2><%= t('city.title', count: 2) %></h2>
 
-  <%= render partial: 'table', locals: { cityes: @cities } %>
+  <%= render partial: 'table', locals: { cities: @cities } %>
 <% else %>
   <p class="nodata"><%=t('permission.denied.message')%></p>
 <% end %>

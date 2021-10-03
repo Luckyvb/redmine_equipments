@@ -1,9 +1,8 @@
 class AddressesController < ApplicationController
   unloadable
 
+  before_action :authorize
   before_action :find_address, :except => [:new, :create, :index]
-
-  #before_action :authorize
 
   def index
     @addresses = Address.accessible.all || []
@@ -16,10 +15,11 @@ class AddressesController < ApplicationController
 
   def copy
     session[:return_to] = request.env["HTTP_REFERER"]
+    a = @address
     @address = Address.new(
-      city_id: @address.city_id,
-      name: @address.name,
-      coordinates: @address.coordinates
+      street: a.street,
+      name: a.name,
+      coordinates: a.coordinates
     )
     render action: 'new'
   end
@@ -75,6 +75,10 @@ private
     @address = Address.accessible.find(params[:id])
   rescue ActiveRecord::RecordNotFound
     render_404
+  end
+
+  def authorize(ctrl = params[:controller], action = params[:action], global = true)
+    User.current.allowed_to?({:controller => ctrl, :action => action}, nil, :global => true)
   end
 
   def redirect_back_or_default(default = {:controller => 'addresses', :action => 'index'})

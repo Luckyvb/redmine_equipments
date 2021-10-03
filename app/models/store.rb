@@ -31,8 +31,13 @@ class Store < ActiveRecord::Base
     #end
   }
 
+  def to_s_full
+    #Rails.logger.warn Project.allowed_to_condition(User.current, :view_equipments).to_sql
+    parent.blank? ? "#{name} (#{location.to_s}, #{responsible.to_s})" : "#{parent.to_s}/#{name} (#{location.to_s}, #{responsible.to_s})"
+  end
+
   def to_s
     #Rails.logger.warn Project.allowed_to_condition(User.current, :view_equipments).to_sql
-    parent.blank? ? "#{name} (#{location.to_s}, #{responsible.to_s})" : "#{parent.to_s}/#{name} (#{location.to_s})"
+    parent.blank? ? "#{name} (#{location.name}" : "#{parent.to_s}/#{name} (#{location.name})"
   end
 end

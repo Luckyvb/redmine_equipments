@@ -42,3 +42,7 @@ table.list td.action > i.fa-list.expand-details {
 .action .expand-details {
     cursor: pointer;
 }
+
+.select_icon::before {
+  padding-right: 5px;
+}

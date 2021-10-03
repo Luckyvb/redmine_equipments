@@ -5,8 +5,23 @@ class FloorsController < ApplicationController
 
   #before_action :authorize
 
+  helper :sort
+  include SortHelper
+
   def index
+    sort_init 'name', 'asc'
+    sort_update 'name' => "#{Floor.table_name}.name"
+
     @floors = Floor.accessible.all || []
+
+    @limit = per_page_option
+    @floors_count = @floors.count
+    @floors_pages = Paginator.new @floors_count, @limit, params[:page]
+    @offset ||= @floors_pages.offset unless @floors_pages.nil?
+
+    if @floors_count > 0 && !@offset.blank?
+      @floors = @floors.drop(@offset).first(@limit)
+    end
   end
 
   def new

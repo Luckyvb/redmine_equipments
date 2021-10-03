@@ -19,11 +19,12 @@
     </tr>
   </thead>
   <tbody>
+    <% img_css = "max-width: 16px; max-height: 16px;" %>
     <% vendor_models.each do |vm| %>
     <tr class="<%= cycle('odd', 'even') %>">
-      <td><%= link_to vm.equipment_type.name, {:controller => 'equipment_types', :action => 'show', :id => vm.equipment_type_id}, :class => 'fas fa-info-circle' %></td>
+      <td><%= link_to (vm.equipment_type.icon.attached? ? image_tag(vm.equipment_type.icon, :style => img_css) : tag.i(:class => 'fas fa-cog')), {:controller => 'equipment_types', :action => 'show', :id => vm.equipment_type_id}, :title => vm.equipment_type.name %></td>
       <% if vendor.blank? %>
-      <td><%= link_to vm.vendor.name, {:controller => 'vendors', :action => 'show', :id => vm.vendor_id}, :class => 'fas fa-info-circle' %></td>
+      <td><%= link_to (vm.vendor.icon.attached? ? image_tag(vm.vendor.icon, :style => img_css) : tag.i(:class => 'fas fa-copyright')), {:controller => 'vendors', :action => 'show', :id => vm.vendor.id}, :title => l(vm.vendor.name)  %></td>
       <% end %>
       <td><%= vm.name %></td>
       <td><%= vm.pn %></td>

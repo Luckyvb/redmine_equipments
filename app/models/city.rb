@@ -7,7 +7,8 @@ class City < ActiveRecord::Base
   attr_accessible :country_id, :name
 
   belongs_to :country
-  has_many :addresses
+  has_many :streets
+  has_many :addresses, through: :streets
   has_many :floors, through: :addresses
   has_many :rooms, through: :floors
   has_many :equipments, through: :rooms

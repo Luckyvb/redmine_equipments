@@ -3,10 +3,10 @@ class Address < ActiveRecord::Base
 
   self.table_name = "addresses"
 
-  validates_presence_of :city_id, :name
-  attr_accessible :city_id, :name, :coordinates
+  validates_presence_of :street_id, :name
+  attr_accessible :street_id, :name, :coordinates
 
-  belongs_to :city
+  belongs_to :street
   has_many :floors
   has_many :rooms, through: :floors
   has_many :equipments, through: :rooms
@@ -22,6 +22,6 @@ class Address < ActiveRecord::Base
   }
 
   def to_s
-    city.blank? ? name : "#{city.to_s}, #{name}"
+    street.blank? ? name : "#{street.to_s}, #{name}"
   end
 end

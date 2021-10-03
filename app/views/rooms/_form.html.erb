@@ -1,3 +1,4 @@
+<%= error_messages_for 'room' %>
 <%= labelled_form_for room, url: { controller: :rooms, action: action } do |f| %>
   <div class='box tabular'>
     <p>
@@ -6,12 +7,11 @@
     </p>
     <p><%= f.select(:floor_id, options_for_select(@floors.map { |a| [a.name, a.id] }, room.floor_id), :label => t('room.attr.floor')) %></p>
     <p><%= f.text_field :number, :label => t('room.attr.number') %></p>
-    <p><%= f.text_area :description, cols: 60, rows: 15, class: 'wiki-edit', :label => t('room.attr.description') %></p>
+    <p><%= f.text_field :name, :label => t('room.attr.name') %></p>
   </div>
 
   <%= f.submit t('button_save') %>
 <% end %>
-<%= wikitoolbar_for 'room_description' %>
 <script>
   $(document).ready(function() {
     let ddl = [{id:'#room_address_id', allowClear: false, disabled: false},
@@ -29,7 +29,4 @@
         initCascadingSelect(prms);
     });
   });
-    //$(document).ready(function() {
-    //    initCascadingSelect({parentId:'#room_address_id', methodName: 'update_floors', variableName: 'address_id', childId: '#room_floor_id'});
-    //});
 </script>

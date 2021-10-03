@@ -4,9 +4,8 @@ class EquipmentTypesController < ApplicationController
   helper :sort
   include SortHelper
 
+  before_action :authorize
   before_action :find_equipment_type, :except => [:new, :create, :index]
-
-  #before_action :authorize
 
   def index
     sort_init [['ancestry', 'asc'], ['name', 'asc']]
@@ -53,6 +52,9 @@ class EquipmentTypesController < ApplicationController
     else
       render :action => 'new'
     end
+  rescue => e
+    flash[:error] = "#{t('error')}:#{e.message}"
+    render :action => 'new'
   end
 
   def edit
@@ -60,6 +62,10 @@ class EquipmentTypesController < ApplicationController
   end
 
   def update
+    Rails.logger.warn "Update equipment type icon: #{params[:equipment_type][:icon].tempfile.inspect}"
+    @equipment_type.icon.attach(params[:equipment_type][:icon])
+    Rails.logger.warn @equipment_type.icon.attached?
+    Rails.logger.warn @equipment_type.icon.inspect
     @equipment_type.attributes = params[:equipment_type]
     if @equipment_type.save
       flash[:notice] = t('equipment_type.action.edit.success')
@@ -67,6 +73,9 @@ class EquipmentTypesController < ApplicationController
     else
       render :action => 'edit'
     end
+  rescue => e
+    flash[:error] = "#{t('error')}:#{e.message}"
+    render :action => 'edit'
   end
 
   def show
@@ -78,6 +87,9 @@ class EquipmentTypesController < ApplicationController
     @equipment_type.destroy
     flash[:notice] = t('equipment_type.action.delete.success')
     redirect_back_or_default
+  rescue => e
+    flash[:error] = "#{t('error')}:#{e.message}"
+    render :action => 'index'
   end
 
 private
@@ -89,7 +101,15 @@ private
   end
 
   def index_params
-    params.permit('parent')
+    params.permit('parent', :icon)
+  end
+
+  def equipment_type_params
+    params.required(:name).permit(parent_id, :name, :number_template, :icon)
+  end
+
+  def authorize(ctrl = params[:controller], action = params[:action], global = true)
+    User.current.allowed_to?({:controller => ctrl, :action => action}, nil, :global => true)
   end
 
   def redirect_back_or_default(default = {:controller => 'equipment_types', :action => 'index'})

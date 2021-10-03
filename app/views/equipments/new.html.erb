@@ -1,7 +1,7 @@
 <% if User.current.allowed_to?(:project_edit_equipments, @project, :global => true) %>
   <h1><%= t('equipment.action.new.title') %> </h1>
 
-  <%= render partial: 'form', locals: { equipment: @equipment, organizations: @organizations, parents: @parents,
+  <%= render partial: 'form', locals: { equipment: @equipment, organizations: @organizations, parents: @parents, equipment_types: @equipment_types,
                                         equipment_types: @equipment_types, vendors: @vendors, owner_types: @owner_types, owners: @owners,
                                         location_types: @location_types, locations: @locations, addresses: @addresses,
                                         consignment_notes: @consignment_notes, tags: @tags, action: :create } %>

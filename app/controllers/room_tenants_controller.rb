@@ -13,7 +13,7 @@ class RoomTenantsController < ApplicationController
     sort_init 'room', 'asc'
     sort_update 'room' => "#{Country.table_name}.short_name, #{City.table_name}.name, #{Address.table_name}.name, #{Floor.table_name}.number, #{Room.table_name}.number", 'organization' => "#{Organization.table_name}.name", 'start_date' => "#{RoomTenant.table_name}.start_date", 'end_date' => "#{RoomTenant.table_name}.end_date"
 
-    sql_join = "LEFT JOIN floors ON floors.id = rooms.floor_id LEFT JOIN addresses ON addresses.id = floors.address_id LEFT JOIN cities ON cities.id = addresses.city_id JOIN countries ON countries.id = cities.country_id"
+    sql_join = "LEFT JOIN floors ON floors.id = rooms.floor_id LEFT JOIN addresses ON addresses.id = floors.address_id LEFT JOIN streets ON streets.id = addresses.street_id LEFT JOIN cities ON cities.id = streets.city_id JOIN countries ON countries.id = cities.country_id"
     @room_tenants = RoomTenant.accessible.includes(:room).joins(:room).joins(sql_join).order(sort_clause) || []
 
     @limit = per_page_option
@@ -27,7 +27,6 @@ class RoomTenantsController < ApplicationController
   end
 
   def init_pages()
-
   end
 
   def new
@@ -44,6 +43,9 @@ class RoomTenantsController < ApplicationController
   def create
     @room_tenant = RoomTenant.new()
     @room_tenant.attributes = params[:room_tenant]
+    if @room_tenant.room_id.blank? && !params[:room].blank?
+      @room_tenant.room_id = params[:room].to_i
+    end
     if @room_tenant.save
       flash[:notice] = t('room_tenant.action.new.success')
       redirect_back_or_default

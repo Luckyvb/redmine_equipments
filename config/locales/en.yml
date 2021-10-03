@@ -353,6 +353,9 @@ en:
     group:
       one: "Group"
       other: "Groups"
+    store:
+      one: "Store"
+      other: "Stores"
     action:
       new:
         title: "New owner type"
@@ -414,6 +417,44 @@ en:
       id: "Id"
       country_id: "Country"
       name: "Name"
+  street_type:
+    title:
+      one: "Street type"
+      other: "Street types"
+    action:
+      new:
+        title: "New street type"
+        success: "Street type created"
+      edit:
+        title: "Edit street type"
+        success: "Street type changed"
+      delete:
+        title: "Delete street type"
+        success: "Street type deleted"
+    attr:
+      id: "Id"
+      name: "Name"
+      abbreviation: "Abbreviation"
+      description: "Description"
+  street:
+    title:
+      one: "Street"
+      other: "Streets"
+    action:
+      new:
+        title: "New street"
+        success: "Street created"
+      edit:
+        title: "Edit street"
+        success: "Street changed"
+      delete:
+        title: "Delete street"
+        success: "Street deleted"
+    attr:
+      id: "Id"
+      city: "City"
+      street_type: "Street type"
+      name: "Name"
   address:
     title:
       one: "Address"
@@ -430,6 +471,7 @@ en:
         success: "Address deleted"
     attr:
       id: "Id"
+      street: "Street"
       name: "Name"
       coordinates: "Coordinates"
   floor:

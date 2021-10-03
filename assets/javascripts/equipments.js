@@ -28,21 +28,29 @@ initSelects = function(ddl) {
         placeholder: "",
         allowClear: el.allowClear,
         disabled: el.disabled,
-        templateResult: function(data) {
-          let $element, $wrapper;
-          if (!data.element) {
-            return data.text;
-          }
-          $element = $(data.element);
-          $wrapper = $('<span></span>');
-          $wrapper.addClass($element[0].className);
-          $wrapper.text(data.text);
-          return $wrapper;
-        }
+        templateSelection: select2ForrmatWithImage,
+        templateResult: select2ForrmatWithImage
       });
     }
   });
 };
+
+function select2ForrmatWithImage(data){
+  let $element, $wrapper;
+  if (!data.element) {
+    return data.text;
+  }
+  $element = $(data.element);
+  var optimage = $element.attr('data-image');
+  if(optimage && optimage !== "") {
+    $wrapper = $('<span><img src="' + optimage + '" style="max-width:16px;max-height:16px" />&nbsp;' + data.text + '</span>' );
+  } else{
+    $wrapper = $('<span></span>');
+    $wrapper.text(data.text);
+  }
+  $wrapper.addClass($element[0].className);
+  return $wrapper;
+}
 
 getCascadingParentValues = function(data, parentId) {
   let parent = $(parentId)
@@ -50,5 +58,16 @@ getCascadingParentValues = function(data, parentId) {
   let pId = parent.prop('parentId');
   if(pId) {
     getCascadingParentValues(data, pId);
+  }
+}
+
+function expand_detail(btn, level, max=1){
+  let el = $(btn).parent().parent();
+  for(let i = 0; i < max; i++) {
+    el = el.next("tr");
+    if(i === level)
+      el.slideToggle();
+    else
+      el.slideUp();
   }
 }

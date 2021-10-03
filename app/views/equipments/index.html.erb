@@ -1,7 +1,8 @@
-<% if User.current.allowed_to?(:project_view_equipments, @project, :global => false) %>
+<% global = @project.blank? ? true : false %>
+<% if User.current.allowed_to?(:project_view_equipments, @project, :global => global) %>
   <div class="contextual">
-    <%= link_to(t('equipment.action.new.title'), {:controller => 'equipments', :action => 'new'}, :class => 'icon icon-add') if User.current.allowed_to?(:project_edit_equipments, @project, :global => false)%>
-    <%= link_to(t('catalog.title', count: 2), {:controller => 'equipments', :action => 'catalogs'}, :class => 'icon icon-folder') if User.current.allowed_to?(:project_view_catalogs, @project, :global => false) %>
+    <%= link_to(t('equipment.action.new.title'), {:controller => 'equipments', :action => 'new'}, :class => 'icon icon-add') if User.current.allowed_to?(:project_edit_equipments, @project, :global => global)%>
+    <%= link_to(t('catalog.title', count: 2), {:controller => 'equipments', :action => 'catalogs'}, :class => 'icon icon-folder') if @project && User.current.allowed_to?(:project_view_catalogs, @project, :global => false) %>
     <%= link_to(t('catalog.global.title', count: 2), {:controller => 'catalogs', :action => 'index'}, :class => 'icon icon-list') if User.current.allowed_to?(:global_view_catalogs, nil, :global => true) %>
   </div>
 

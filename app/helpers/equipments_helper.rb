@@ -1,4 +1,7 @@
 include LocationsHelper
+include OwnersHelper
+include VendorModelsHelper
+include GlobalHelper
 
 module EquipmentsHelper
 
@@ -6,27 +9,18 @@ module EquipmentsHelper
     e.owner_type.downcase+'s'
   end
 
-  def equipment_type_options_for_select(selected_id = nil)
-    et = EquipmentType.arrange_serializable(:order => :name)
-
-    "<options>#{fill_options_select_children(et, selected_id)}</options>".html_safe
-    #ta = EquipmentType.arrange(:order => :name)
-    #"<options>#{fill_range_options_select_children(eta)}</options>"
+  def link_to_equipment_type(e)
+    img_css = "max-width: 16px; max-height: 16px;"
+    icon = !e.equipment_type.blank? && e.equipment_type.icon.attached? ? e.equipment_type.icon : nil
+    title = e.equipment_type.blank? ? e.equipment_type_id : e.equipment_type.name
+    link_to ( icon ? image_tag(icon, :style => img_css) : tag.i(:class => 'fas fa-cog')), {:controller => 'equipment_types', :action => 'show', :id => e.equipment_type.id}, :title => title
   end
 
-  def fill_options_select_children(elements, selected_id = nil, level=0)
-    options = ''
-    elements.each do |e|
-        if !e['children'].blank? && e['children'].any?
-          options << "<optgroup label=\"#{'&nbsp;&nbsp;&nbsp;' * level}#{e['name']}\">"
-          options << fill_options_select_children(e['children'], selected_id, level+1)
-          options << "</optgroup>"
-        else
-          s = " selected=\"selected\"" if !selected_id.blank? && selected_id == e['id']
-          options << "<option value=\"#{e['id']}\"#{s}>#{'&nbsp;' * level}#{e['name']}</option>"
-        end
-    end
-    options
+  def link_to_vendor(e)
+    icon = !e.vendor_model.blank? && !e.vendor_model.vendor.blank? && e.vendor_model.vendor.icon.attached? ? e.vendor_model.vendor.icon : nil
+    img_css = "max-width: 16px; max-height: 16px;"
+    title = e.vendor_model.blank? ? "" : e.vendor_model.vendor.name
+    link_to (icon ? image_tag(icon, :style => img_css) : tag.i(:class => 'fas fa-copyright')), {:controller => 'vendors', :action => 'show', :id => e.vendor_model.vendor.id}, :title=>title
   end
 
   def fill_range_options_select_children(elements)
@@ -45,7 +39,12 @@ module EquipmentsHelper
   end
 
   def path_back_or_default
-    session[:return_to] || {:controller => 'equipments', :action => 'index', :project_id => @equipment.project[:identifier]}
+    base_path_back_or_default('equipments')
+  end
+
+  def equipment_parent_options_for_select(parents, selected_id = nil, css = nil)
+    #css = "select_icon #{p.equipment_type)}"
+    options_for_select(@parents.map { |p| ["#{'»' * p.depth} #{p.to_s}", p.id, :'data-image' => url_for_equipment_type_icon(p.equipment_type), :class => css] }, selected_id)
   end
 
 end

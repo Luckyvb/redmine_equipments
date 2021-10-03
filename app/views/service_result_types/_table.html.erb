@@ -18,10 +18,10 @@
       <td><%= l('value_format.'+srt.value_format.to_s.downcase+'.title', count: 1) %></td>
       <td><%= srt.description %></td>
       <td class="action">
-        <%= link_to l(:button_edit), {:controller => 'service_result_types', :action => 'edit', :id => srt.id}, :class => 'icon icon-only icon-edit', :title => l(:button_edit), :accesskey => accesskey(:edit) %>
+        <%= link_to l(:button_copy), {:controller => 'service_result_types', :action => 'copy', :id => srt.id}, :class => 'icon icon-only icon-copy', :title => l(:button_copy), :accesskey => accesskey(:copy) %>
       </td>
       <td class="action">
-        <%= link_to l(:button_copy), {:controller => 'service_result_types', :action => 'copy', :id => srt.id}, :class => 'icon icon-only icon-copy', :title => l(:button_copy), :accesskey => accesskey(:copy) %>
+        <%= link_to l(:button_edit), {:controller => 'service_result_types', :action => 'edit', :id => srt.id}, :class => 'icon icon-only icon-edit', :title => l(:button_edit), :accesskey => accesskey(:edit) %>
       </td>
       <td class="action">
         <%= delete_link({ :controller => 'service_result_types', :action => 'destroy', :id => srt.id}, class: 'icon icon-only icon-del', title: l(:button_delete)) %>

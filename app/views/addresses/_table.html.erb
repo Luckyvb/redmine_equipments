@@ -1,18 +1,22 @@
+<%= error_messages_for 'address' %>
 <table class="list">
   <thead>
     <tr>
-      <th><%= t('address.attr.city') %></th>
+      <th><%= t('address.attr.street') %></th>
       <th><%= t('address.attr.name') %></th>
       <th><%= t('address.attr.coordinates') %></th>
-      <th colspan="2"></th>
+      <th colspan="4"></th>
     </tr>
   </thead>
   <tbody>
     <% addresses.each do |a| %>
     <tr class="<%= cycle('odd', 'even') %>">
-      <td><%= link_to a.city.to_s, {:controller => 'cities', :action => 'show', :id => a.city_id}, :class => 'fas fa-info-circle' %></td>
+      <td><%= link_to !a.street.blank? ? a.street.to_s : a.street_id, {:controller => 'streets', :action => 'show', :id => a.street_id}, :class => location_type_icon('street') %></td>
       <td><%= a.name %></td>
       <td><%= a.coordinates %></td>
+      <td class="action">
+        <%= content_tag(:i, '', :class => 'fas fa-stream expand-details', :title => t('address.action.expand.title'), :onclick => 'expand_detail(this, 0);') %>
+      </td>
       <td class="action">
         <%= link_to l(:button_copy), {:controller => 'addresses', :action => 'copy', :id => a.id}, :class => 'icon icon-only icon-copy', :title => l(:button_copy), :accesskey => accesskey(:copy) %>
       </td>
@@ -22,6 +26,10 @@
       <td class="action">
         <%= delete_link({ :controller => 'addresses', :action => 'destroy', :id => a.id}, class: 'icon icon-only icon-del', title: l(:button_delete)) %>
       </td>
+    </tr>
+    <tr style="display:none;">
+      <td colspan="7">
+        <%= render partial: 'floors/table', locals: { floors: a.floors, address: a.id } %></td>
     </tr>
     <% end %>
   </tbody>

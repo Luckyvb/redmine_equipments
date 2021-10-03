@@ -14,13 +14,16 @@
   <% end %>
   <h2><%= t('vendor_model.title', count: 1) %></h2>
   <% if !@vendor_model.blank? %>
+    <% img_css = "max-width: 16px; max-height: 16px;" %>
     <p>
       <%= t('vendor_model.attr.equipment_type') %>:
-      <%= link_to @vendor_model.equipment_type.name, {:controller => 'equipment_types', :action => 'show', :id => @vendor_model.equipment_type_id}, :class => 'fas fa-info-circle' %>
+      <%= link_to (vm.equipment_type.icon.attached? ? image_tag(vm.equipment_type.icon, :style => img_css) : tag.i(:class => 'fas fa-cog')), {:controller => 'equipment_types', :action => 'show', :id => vm.equipment_type_id}, :title => vm.equipment_type.name %>
+      <%=  @vendor_model.equipment_type.name %>
     </p>
     <p>
       <%= t('vendor_model.attr.vendor') %>:
-      <%= link_to @vendor_model.vendor.name, {:controller => 'vendors', :action => 'show', :id => @vendor_model.vendor_id}, :class => 'fas fa-info-circle' %>
+      <%= link_to (vm.vendor.icon.attached? ? image_tag(vm.vendor.icon, :style => img_css) : tag.i(:class => 'fas fa-copyright')), {:controller => 'vendors', :action => 'show', :id => vm.vendor.id}, :title => l(vm.vendor.name)  %>
+      <%=  @vendor_model.vendor.name %>
     </p>
     <p><%= t('vendor_model.attr.name') %>:<%= @vendor_model.name %></p>
     <p><%= t('vendor_model.attr.pn') %>:<%= @vendor_model.pn %></p>

@@ -11,7 +11,10 @@
     <% vendors.each do |v| %>
     <tr class="<%= cycle('odd', 'even') %>">
       <td><%= v.name %></td>
-      <td><%= image_tag(v.icon.preview(resize_to_limit: [16, 16]), :label => t('vendor.attr.icon')) if v.icon.attached? %></td>
+      <td>
+        <%= image_tag(v.icon, :style => "max-width: 16px; max-height: 16px;", :label => t('vendor.attr.icon')) if v.icon.attached? %>
+        <%= tag.i :class => 'fas fa-copyright' unless v.icon.attached? %>
+      </td>
       <td><%= link_to v.site, title: v.site do content_tag(:i, '', class: 'fa fa-globe') end unless v.site.blank? %></td>
       <td class="action">
         <%= content_tag(:i, '', :class => 'fas fa-stream expand-details', :title => t('equipment.action.expand.title'), :onclick => 'vendor_detail(this, 0);') %>

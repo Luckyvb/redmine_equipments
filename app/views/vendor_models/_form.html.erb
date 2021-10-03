@@ -1,7 +1,9 @@
+<%= error_messages_for 'vendor_model' %>
+<% vendor_image = "#{Redmine::Utils.relative_url_root}/plugin_assets/equipments/images/vendor.svg" %>
 <%= labelled_form_for vendor_model, url: { controller: :vendor_models, action: action } do |f| %>
   <div class='box tabular'>
-    <p><%= f.select(:equipment_type_id, vm_equipment_type_options_for_select(vendor_model.equipment_type_id), :label => t('vendor_model.attr.equipment_type')) %></p>
-    <p><%= f.select(:vendor_id, options_for_select(@vendors.map { |a| [a.name, a.id] }, vendor_model.vendor_id), :label => t('vendor_model.attr.vendor')) %></p>
+    <p><%= f.select(:equipment_type_id, vm_equipment_type_options_for_select(equipment_types, vendor_model.equipment_type_id), :label => t('vendor_model.attr.equipment_type')) %></p>
+    <p><%= f.select(:vendor_id, options_for_select(vendors.map { |v| [v.name, v.id, :'data-image' => (v.icon.attached? ? url_for(v.icon).to_s : vendor_image) ] }, vendor_model.vendor_id), :label => t('vendor_model.attr.vendor')) %></p>
     <p><%= f.text_field :name, :label => t('vendor_model.attr.name') %></p>
     <p><%= f.text_field :pn, :label => t('vendor_model.attr.pn') %></p>
     <p><%= f.text_field :site, :label => t('vendor_model.attr.site') %></p>

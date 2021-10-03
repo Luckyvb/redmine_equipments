@@ -6,11 +6,9 @@ class EquipmentsController < ApplicationController
   helper :sort
   include SortHelper
 
-  before_action :find_project#, :except => [:destroy]
+  before_action :find_project, :authorize
   before_action :find_equipment, :except => [:new, :create, :index, :catalogs, :update_vendor_models, :update_owner_types, :update_owners, :update_location_types, :update_locations]
   before_action :load_lists, :only => [:new, :edit, :copy]
-
-  #before_action :authorize
 
   def index
     if !params[:project_id] && !(User.current.allowed_to?(:global_view_equipments, nil, global: true) || User.current.allowed_to?(:global_edit_equipments, nil, global: true))  then return end
@@ -184,7 +182,8 @@ class EquipmentsController < ApplicationController
   end
 
   def update_vendor_models
-    load_vendors(params[:equipment_type])
+    @equipment_type = params[:equipment_type]
+    load_vendors(@equipment_type)
     respond_to do |format|
       format.js
     end
@@ -241,9 +240,13 @@ class EquipmentsController < ApplicationController
       if !owner_type.blank? && !owner_id.blank?
         case owner_type
         when "Store", "Equipment", "Division" #"User", "Group"
+          @use_simple_location = true
           owner = owner_type.constantize.find(owner_id.to_i)
           @locations = find_location(lt, owner.location_id)
-          @use_simple_location = true
+        else
+          @locations = Country.all
+          #load_locations(lt)
+          #@use_simple_location = true
         end
       else
         case lt
@@ -293,7 +296,8 @@ private
   def load_lists
     load_organizations
     load_parents
-    load_vendors(@equipment.blank? ? -1 : @equipment.equipment_type_id )
+    load_equipment_types
+    load_vendors(@equipment.blank? ? @equipment_types.first[:id] : @equipment.equipment_type_id )
     load_owner_types
     ot = @equipment.blank? ? @owner_types.first[:id] : @equipment.owner_type
     load_owners(ot)
@@ -323,6 +327,10 @@ private
     else
       @parents = Equipment.where.not(id: params[:id])
     end
+  end
+
+  def load_equipment_types
+    @equipment_types = EquipmentType.arrange_serializable(:order => :name)
   end
 
   def load_vendors(et)
@@ -391,7 +399,7 @@ private
     when "Room"
       #Rails.logger.warn Room.joins('inner joins room_tenants rt on rt.room_id=rooms.id', 'inner join project_organizations po on rt.organization_id=po.organization_id').where('po.project_id': @project[:id]).where('rt.end_date is nil or rt.end_date < now()').to_sql
       #@locations = @project.blank? ? Room.all : Room.joins('inner joins room_tenants rt on rt.room_id=rooms.id', 'inner join project_organizations po on rt.organization_id=po.organization_id').where('po.project_id': @project[:id]).where('rt.end_date is nil or rt.end_date < now()')
-      @locations = Room.joins('inner joins room_tenants rt on rt.room_id=rooms.id', 'inner join project_organizations po on rt.organization_id=po.organization_id').where('po.project_id': @project[:id]).where('rt.end_date is nil or rt.end_date < now()')
+      @locations = Room.joins('inner join room_tenants rt on rt.room_id=rooms.id', 'inner join project_organizations po on rt.organization_id=po.organization_id').where('po.project_id': @project[:id]).where('rt.end_date is NULL or rt.end_date < now()')
     else
       @locations =[]
       Country.all.map { |a|
@@ -416,14 +424,6 @@ private
     case lt
     when "Country", "City", "Address", "Floor", "Room"
       locations = [lt.constantize.find(id)]
-    #when "City"
-    #  locations = [City.find(id)]
-    #when "Address"
-    #  locations = [Address.find(id)]
-    #when "Floor"
-    #  locations = [Floor.find(id)]
-    #when "Room"
-    #  locations = [Room.find(id)]
     else
       locations = []
     end
@@ -431,6 +431,14 @@ private
 
   def index_params
     params.permit('n','et','type','t','v','v_id','vm','vm_id','room')
+  end
+
+  def authorize(ctrl = params[:controller], action = params[:action], global = false)
+    if !@project.blank?
+      super
+    else
+      User.current.allowed_to?({:controller => ctrl, :action => action}, nil, :global => true)
+    end
   end
 
   def redirect_back_or_default(default = {:controller => 'equipments', :action => 'index', :project_id => @equipment.project[:identifier]})

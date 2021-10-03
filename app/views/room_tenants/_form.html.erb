@@ -1,3 +1,5 @@
+<%= error_messages_for 'room_tenant' %>
+
 <%= labelled_form_for room_tenant, url: { controller: :room_tenants, action: action } do |f| %>
   <div class='box tabular'>
     <p><%= f.select(:room_id, options_for_select(@rooms.map { |a| [a.to_s_short, a.id] }, room_tenant.room_id), :label => t('room_tenant.attr.room')) %></p>
@@ -13,7 +15,7 @@
 <script>
     $(document).ready(function() {
         let lists = [
-            {id: '#room_tenant_room_id', allowClear: false, disabled: <%=!@room.blank?%>},
+            {id: '#room_tenant_room_id', allowClear: false, disabled: false /*<%=!@room.blank?%>*/},
             {id: '#room_tenant_organization_id', allowClear: false, disabled: false}
         ];
         initSelects(lists);

@@ -21,7 +21,7 @@ class RoomsController < ApplicationController
       @rooms = Room.accessible.all
     end
 
-    sql_join = "LEFT JOIN addresses ON addresses.id = floors.address_id LEFT JOIN cities ON cities.id = addresses.city_id JOIN countries ON countries.id = cities.country_id"
+    sql_join = "LEFT JOIN addresses ON addresses.id = floors.address_id LEFT JOIN streets ON streets.id = addresses.street_id LEFT JOIN cities ON cities.id = streets.city_id JOIN countries ON countries.id = cities.country_id"
     @rooms = @rooms.includes(:floor).joins(:floor).joins(sql_join).order(sort_clause) unless @rooms.nil?
 
     #Rails.logger.warn @rooms.to_sql

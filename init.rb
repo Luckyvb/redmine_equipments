@@ -37,6 +37,8 @@ Redmine::Plugin.register :equipments do
       :service_result_types => [:index, :show],
       :countries => [:index, :show],
       :cities => [:index, :show],
+      :streets => [:index, :show],
+      :street_types => [:index, :show],
       :addresses => [:index, :show],
       :floors => [:index, :show],
       :rooms => [:index, :show],
@@ -52,6 +54,8 @@ Redmine::Plugin.register :equipments do
       :service_result_types => [:index, :show, :new, :copy, :create, :edit, :update, :destroy],
       :countries => [:index, :show, :new, :copy, :create, :edit, :update, :destroy],
       :cities => [:index, :show, :new, :copy, :create, :edit, :update, :destroy],
+      :streets => [:index, :show, :new, :copy, :create, :edit, :update, :destroy],
+      :street_types => [:index, :show, :new, :copy, :create, :edit, :update, :destroy],
       :addresses => [:index, :show, :new, :copy, :create, :edit, :update, :destroy],
       :floors => [:index, :show, :new, :copy, :create, :edit, :update, :destroy],
       :rooms => [:index, :show, :new, :copy, :create, :edit, :update, :destroy],
@@ -68,7 +72,7 @@ Redmine::Plugin.register :equipments do
       :attribute_values => [:index, :show]
     }
     permission :project_edit_equipments, {
-      :equipments => [:catalogs, :index, :show, :new, :copy, :create, :edit, :update, :destroy],
+      :equipments => [:catalogs, :index, :show, :new, :copy, :create, :edit, :update, :destroy, :update_vendor_models, :update_owner_types, :update_owners, :update_location_types, :update_locations],
       :services => [:index, :show, :new, :copy, :create, :edit, :update, :destroy],
       :service_results => [:index, :show, :new, :copy, :create, :edit, :update, :destroy],
       :consignment_notes => [:index, :show, :new, :copy, :create, :edit, :update, :destroy],
@@ -90,9 +94,9 @@ Redmine::Plugin.register :equipments do
 
   #  if Redmine::Plugin::registered_plugins.include?(:fontawesome)
   if Redmine::Plugin.installed?(:fontawesome)
-    menu :top_menu, :equipments, { :controller => 'equipments', :action => 'index' }, :caption => '', :html => {:class => 'fa fa-memory', :title => I18n.t('equipments.title') }, :after => :projects, :if => Proc.new {User.current.admin}
+    menu :top_menu, :equipments, { :controller => 'catalogs', :action => 'index' }, :caption => '', :html => {:class => 'fa fa-memory', :title => I18n.t('equipments.title') }, :after => :projects, :if => Proc.new {User.current.admin || User.current.allowed_to?({:controller => 'equipments', :action => 'index'}, nil, :global => true)}
   else
-    menu :top_menu, :equipments, { :controller => 'equipments', :action => 'index' }, :caption => '', :html => {:class => 'icon icon-only icon-equipments', :title => 'Equipments' }, :after => :projects, :if => Proc.new {User.current.admin}
+    menu :top_menu, :equipments, { :controller => 'catalogs', :action => 'index' }, :caption => '', :html => {:class => 'icon icon-only icon-equipments', :title => 'Equipments' }, :after => :projects, :if => Proc.new {User.current.admin || User.current.allowed_to?({:controller => 'equipments', :action => 'index'}, nil, :global => true)}
   end
 
   menu :project_menu, :equipments, { :controller => 'equipments', :action => 'index' }, :caption => :project_module_equipments, :after => :wiki, :param => :project_id

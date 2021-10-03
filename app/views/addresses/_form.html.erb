@@ -1,6 +1,7 @@
+<%= error_messages_for 'address' %>
 <%= labelled_form_for address, url: { controller: :addresses, action: action } do |f| %>
   <div class='box tabular'>
-    <p><%= f.select(:city_id, options_for_select(City.accessible.map { |c| [c.to_s, c.id] }, address.city_id), :label => t('address.attr.city')) %></p>
+    <p><%= f.select(:street_id, options_for_select(Street.accessible.map { |c| [c.to_s, c.id] }, address.street_id), :label => t('address.attr.street')) %></p>
     <p><%= f.text_field :name, :label => t('address.attr.name') %></p>
     <p><%= f.text_field :coordinates, :label => t('address.attr.coordinates') %></p>
   </div>

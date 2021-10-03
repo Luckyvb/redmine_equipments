@@ -1,3 +1,5 @@
+<%= error_messages_for 'room' %>
+
 <table class="list">
   <thead>
     <tr>
@@ -5,7 +7,7 @@
       <%= sort_header_tag('floor', caption: t('room.attr.floor')) %>
       <%= sort_header_tag('number', caption: t('room.attr.number')) %>
       <%= sort_header_tag('name', caption: t('room.attr.name')) %>
-      <th colspan="3"></th>
+      <th colspan="4"></th>
     </tr>
   </thead>
   <tbody>
@@ -18,13 +20,13 @@
       <td><%= r.number %></td>
       <td><%= r.name %></td>
       <td class="action">
-        <%= content_tag(:i, '', :class => 'fas fa-stream expand-details', :title => t('room.action.expand.title'), :onclick => 'rooms_detail(this, 0);') %>
-      </td>
-      <td class="action">
-        <%= link_to l(:button_edit), {:controller => 'rooms', :action => 'edit', :id => r.id}, :class => 'icon icon-only icon-edit', :title => l(:button_edit), :accesskey => accesskey(:edit), :onclick => 'Element.show("edit-rooms"); return false;' %>
+        <%= content_tag(:i, '', :class => 'fas fa-stream expand-details', :title => t('room.action.expand.title'), :onclick => 'expand_detail(this, 0);') %>
       </td>
       <td class="action">
         <%= link_to l(:button_copy), {:controller => 'rooms', :action => 'copy', :id => r.id}, :class => 'icon icon-only icon-copy', :title => l(:button_copy), :accesskey => accesskey(:copy) %>
+      </td>
+      <td class="action">
+        <%= link_to l(:button_edit), {:controller => 'rooms', :action => 'edit', :id => r.id}, :class => 'icon icon-only icon-edit', :title => l(:button_edit), :accesskey => accesskey(:edit), :onclick => 'Element.show("edit-rooms"); return false;' %>
       </td>
       <td class="action">
         <%= delete_link({ :controller => 'rooms', :action => 'destroy', :id => r.id}, class: 'icon icon-only icon-del', title: l(:button_delete)) %>
@@ -37,18 +39,6 @@
     <% end %>
   </tbody>
 </table>
-<% if !pages.blank? && !count.blank? %>
+<% if floor.blank? && !pages.blank? && !count.blank? %>
 <span class='pagination'><%= pagination_links_full pages, count %></span>
 <% end %>
-<script>
-    function rooms_detail(btn, level){
-        let el = $(btn).parent().parent();
-        for(let i = 0; i < 4; i++) {
-            el = el.next("tr");
-            if(i === level)
-                el.slideToggle();
-            else
-                el.slideUp();
-        }
-    }
-</script>

@@ -15,6 +15,10 @@
   <h2><%= t('address.title', count: 1) %></h2>
   <% if !@address.blank? %>
     <p>
+      <%= t('address.attr.street') %>:
+      <%= link_to !@address.street.blank? ? @address.street.to_s : @address.street_id, {:controller => 'streets', :action => 'show', :id => @address.street_id}, :class => location_type_icon('street') %>
+    </p>
+    <p>
       <%= t('address.attr.name') %>:
       <%= @address.name %>
     </p>

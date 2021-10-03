@@ -4,9 +4,8 @@ class ServiceTypesController < ApplicationController
   helper :sort
   include SortHelper
 
+  before_action :authorize
   before_action :find_service_type, :except => [:new, :create, :index]
-
-  #before_action :authorize
 
   def index
     sort_init [['name', 'asc']]
@@ -89,6 +88,10 @@ private
     @service_type = ServiceType.accessible.find(params[:id])
   rescue ActiveRecord::RecordNotFound
     render_404
+  end
+
+  def authorize(ctrl = params[:controller], action = params[:action], global = true)
+    User.current.allowed_to?({:controller => ctrl, :action => action}, nil, :global => true)
   end
 
   def redirect_back_or_default(default = {:controller => 'service_types', :action => 'index'})
